@@ -1,0 +1,550 @@
+The target system is: Windows -  - 
+The host system is: Darwin - 13.3.0 - x86_64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /usr/local/mingw32/bin/cc 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.exe"
+
+The C compiler identification is GNU, found in "/Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/3.0.0/CompilerIdC/a.exe"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec3001411951/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec3001411951.dir/build.make CMakeFiles/cmTryCompileExec3001411951.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3001411951.dir/testCCompiler.c.obj
+/usr/local/mingw32/bin/cc    -o CMakeFiles/cmTryCompileExec3001411951.dir/testCCompiler.c.obj   -c /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTryCompileExec3001411951.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3001411951.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec3001411951.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec3001411951.dir/objects.a @CMakeFiles/cmTryCompileExec3001411951.dir/objects1.rsp
+/usr/local/mingw32/bin/cc       -Wl,--whole-archive CMakeFiles/cmTryCompileExec3001411951.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec3001411951.exe -Wl,--out-implib,libcmTryCompileExec3001411951.dll.a -Wl,--major-image-version,0,--minor-image-version,0  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec3020094690/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec3020094690.dir/build.make CMakeFiles/cmTryCompileExec3020094690.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3020094690.dir/CMakeCCompilerABI.c.obj
+/usr/local/mingw32/bin/cc    -o CMakeFiles/cmTryCompileExec3020094690.dir/CMakeCCompilerABI.c.obj   -c /usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CMakeCCompilerABI.c
+Linking C executable cmTryCompileExec3020094690.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3020094690.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec3020094690.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec3020094690.dir/objects.a @CMakeFiles/cmTryCompileExec3020094690.dir/objects1.rsp
+/usr/local/mingw32/bin/cc     -v -Wl,--whole-archive CMakeFiles/cmTryCompileExec3020094690.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec3020094690.exe -Wl,--out-implib,libcmTryCompileExec3020094690.dll.a -Wl,--major-image-version,0,--minor-image-version,0   
+Using built-in specs.
+COLLECT_GCC=/usr/local/mingw32/bin/cc
+COLLECT_LTO_WRAPPER=/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/lto-wrapper
+Target: i686-pc-mingw32
+Configured with: ../gcc-4.6.2-1-mingw32-src/gcc-4.6.2/configure -v --prefix=/usr/local/mingw32 --target=i686-pc-mingw32 --with-headers=/usr/local/mingw32/i686-pc-mingw32/include --with-gcc --with-gnu-ld --with-gnu-as --enable-threads --disable-nls --enable-languages=c,fortran,c++ --disable-win32-registry --disable-shared --enable-sjlj-exceptions --enable-libgcj --disable-java-awt --without-x --enable-java-gc=boehm --disable-libgcj-debug --enable-interpreter --enable-hash-synchronization --enable-libstdcxx-debug
+Thread model: win32
+gcc version 4.6.2 (GCC) 
+COMPILER_PATH=/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/bin/
+LIBRARY_PATH=/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3020094690.exe' '-mtune=generic' '-march=pentiumpro'
+ /usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/collect2 -Bdynamic -o cmTryCompileExec3020094690.exe /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/crt2.o /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtbegin.o -L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2 -L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib --whole-archive CMakeFiles/cmTryCompileExec3020094690.dir/objects.a --no-whole-archive --out-implib libcmTryCompileExec3020094690.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lmoldname -lmingwex -lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lmoldname -lmingwex -lmsvcrt /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtend.o
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTryCompileExec3020094690/fast"]
+  ignore line: [/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec3020094690.dir/build.make CMakeFiles/cmTryCompileExec3020094690.dir/build]
+  ignore line: [/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building C object CMakeFiles/cmTryCompileExec3020094690.dir/CMakeCCompilerABI.c.obj]
+  ignore line: [/usr/local/mingw32/bin/cc    -o CMakeFiles/cmTryCompileExec3020094690.dir/CMakeCCompilerABI.c.obj   -c /usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTryCompileExec3020094690.exe]
+  ignore line: [/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3020094690.dir/link.txt --verbose=1]
+  ignore line: [/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec3020094690.dir/objects.a]
+  ignore line: [/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec3020094690.dir/objects.a @CMakeFiles/cmTryCompileExec3020094690.dir/objects1.rsp]
+  ignore line: [/usr/local/mingw32/bin/cc     -v -Wl,--whole-archive CMakeFiles/cmTryCompileExec3020094690.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec3020094690.exe -Wl,--out-implib,libcmTryCompileExec3020094690.dll.a -Wl,--major-image-version,0,--minor-image-version,0   ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/usr/local/mingw32/bin/cc]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/lto-wrapper]
+  ignore line: [Target: i686-pc-mingw32]
+  ignore line: [Configured with: ../gcc-4.6.2-1-mingw32-src/gcc-4.6.2/configure -v --prefix=/usr/local/mingw32 --target=i686-pc-mingw32 --with-headers=/usr/local/mingw32/i686-pc-mingw32/include --with-gcc --with-gnu-ld --with-gnu-as --enable-threads --disable-nls --enable-languages=c,fortran,c++ --disable-win32-registry --disable-shared --enable-sjlj-exceptions --enable-libgcj --disable-java-awt --without-x --enable-java-gc=boehm --disable-libgcj-debug --enable-interpreter --enable-hash-synchronization --enable-libstdcxx-debug]
+  ignore line: [Thread model: win32]
+  ignore line: [gcc version 4.6.2 (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/bin/]
+  ignore line: [LIBRARY_PATH=/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3020094690.exe' '-mtune=generic' '-march=pentiumpro']
+  link line: [ /usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/collect2 -Bdynamic -o cmTryCompileExec3020094690.exe /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/crt2.o /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtbegin.o -L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2 -L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib --whole-archive CMakeFiles/cmTryCompileExec3020094690.dir/objects.a --no-whole-archive --out-implib libcmTryCompileExec3020094690.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lmoldname -lmingwex -lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lmoldname -lmingwex -lmsvcrt /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtend.o]
+    arg [/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/collect2] ==> ignore
+    arg [-Bdynamic] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec3020094690.exe] ==> ignore
+    arg [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/crt2.o] ==> ignore
+    arg [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtbegin.o] ==> ignore
+    arg [-L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2] ==> dir [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2]
+    arg [-L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib] ==> dir [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib]
+    arg [--whole-archive] ==> ignore
+    arg [CMakeFiles/cmTryCompileExec3020094690.dir/objects.a] ==> ignore
+    arg [--no-whole-archive] ==> ignore
+    arg [--out-implib] ==> ignore
+    arg [libcmTryCompileExec3020094690.dll.a] ==> ignore
+    arg [--major-image-version] ==> ignore
+    arg [0] ==> ignore
+    arg [--minor-image-version] ==> ignore
+    arg [0] ==> ignore
+    arg [-lmingw32] ==> lib [mingw32]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lmoldname] ==> lib [moldname]
+    arg [-lmingwex] ==> lib [mingwex]
+    arg [-lmsvcrt] ==> lib [msvcrt]
+    arg [-ladvapi32] ==> lib [advapi32]
+    arg [-lshell32] ==> lib [shell32]
+    arg [-luser32] ==> lib [user32]
+    arg [-lkernel32] ==> lib [kernel32]
+    arg [-lmingw32] ==> lib [mingw32]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lmoldname] ==> lib [moldname]
+    arg [-lmingwex] ==> lib [mingwex]
+    arg [-lmsvcrt] ==> lib [msvcrt]
+    arg [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtend.o] ==> ignore
+  remove lib [gcc]
+  remove lib [gcc]
+  collapse library dir [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2] ==> [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2]
+  collapse library dir [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib] ==> [/usr/local/mingw32/i686-pc-mingw32/lib]
+  implicit libs: [mingw32;moldname;mingwex;msvcrt;advapi32;shell32;user32;kernel32;mingw32;moldname;mingwex;msvcrt]
+  implicit dirs: [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2;/usr/local/mingw32/i686-pc-mingw32/lib]
+  implicit fwks: []
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /usr/local/mingw32/bin/c++ 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.exe"
+
+The CXX compiler identification is GNU, found in "/Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/3.0.0/CompilerIdCXX/a.exe"
+
+Determining if the CXX compiler works passed with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec18687812/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec18687812.dir/build.make CMakeFiles/cmTryCompileExec18687812.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec18687812.dir/testCXXCompiler.cxx.obj
+/usr/local/mingw32/bin/c++     -o CMakeFiles/cmTryCompileExec18687812.dir/testCXXCompiler.cxx.obj -c /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTryCompileExec18687812.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec18687812.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec18687812.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec18687812.dir/objects.a @CMakeFiles/cmTryCompileExec18687812.dir/objects1.rsp
+/usr/local/mingw32/bin/c++       -Wl,--whole-archive CMakeFiles/cmTryCompileExec18687812.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec18687812.exe -Wl,--out-implib,libcmTryCompileExec18687812.dll.a -Wl,--major-image-version,0,--minor-image-version,0  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec2794595071/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec2794595071.dir/build.make CMakeFiles/cmTryCompileExec2794595071.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec2794595071.dir/CMakeCXXCompilerABI.cpp.obj
+/usr/local/mingw32/bin/c++     -o CMakeFiles/cmTryCompileExec2794595071.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTryCompileExec2794595071.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2794595071.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec2794595071.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec2794595071.dir/objects.a @CMakeFiles/cmTryCompileExec2794595071.dir/objects1.rsp
+/usr/local/mingw32/bin/c++     -v -Wl,--whole-archive CMakeFiles/cmTryCompileExec2794595071.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec2794595071.exe -Wl,--out-implib,libcmTryCompileExec2794595071.dll.a -Wl,--major-image-version,0,--minor-image-version,0   
+Using built-in specs.
+COLLECT_GCC=/usr/local/mingw32/bin/c++
+COLLECT_LTO_WRAPPER=/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/lto-wrapper
+Target: i686-pc-mingw32
+Configured with: ../gcc-4.6.2-1-mingw32-src/gcc-4.6.2/configure -v --prefix=/usr/local/mingw32 --target=i686-pc-mingw32 --with-headers=/usr/local/mingw32/i686-pc-mingw32/include --with-gcc --with-gnu-ld --with-gnu-as --enable-threads --disable-nls --enable-languages=c,fortran,c++ --disable-win32-registry --disable-shared --enable-sjlj-exceptions --enable-libgcj --disable-java-awt --without-x --enable-java-gc=boehm --disable-libgcj-debug --enable-interpreter --enable-hash-synchronization --enable-libstdcxx-debug
+Thread model: win32
+gcc version 4.6.2 (GCC) 
+COMPILER_PATH=/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/bin/
+LIBRARY_PATH=/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec2794595071.exe' '-mtune=generic' '-march=pentiumpro'
+ /usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/collect2 -Bdynamic -o cmTryCompileExec2794595071.exe /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/crt2.o /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtbegin.o -L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2 -L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib --whole-archive CMakeFiles/cmTryCompileExec2794595071.dir/objects.a --no-whole-archive --out-implib libcmTryCompileExec2794595071.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc -lmoldname -lmingwex -lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lmoldname -lmingwex -lmsvcrt /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtend.o
+
+
+Parsed CXX implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTryCompileExec2794595071/fast"]
+  ignore line: [/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec2794595071.dir/build.make CMakeFiles/cmTryCompileExec2794595071.dir/build]
+  ignore line: [/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building CXX object CMakeFiles/cmTryCompileExec2794595071.dir/CMakeCXXCompilerABI.cpp.obj]
+  ignore line: [/usr/local/mingw32/bin/c++     -o CMakeFiles/cmTryCompileExec2794595071.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTryCompileExec2794595071.exe]
+  ignore line: [/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2794595071.dir/link.txt --verbose=1]
+  ignore line: [/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec2794595071.dir/objects.a]
+  ignore line: [/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec2794595071.dir/objects.a @CMakeFiles/cmTryCompileExec2794595071.dir/objects1.rsp]
+  ignore line: [/usr/local/mingw32/bin/c++     -v -Wl,--whole-archive CMakeFiles/cmTryCompileExec2794595071.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec2794595071.exe -Wl,--out-implib,libcmTryCompileExec2794595071.dll.a -Wl,--major-image-version,0,--minor-image-version,0   ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/usr/local/mingw32/bin/c++]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/lto-wrapper]
+  ignore line: [Target: i686-pc-mingw32]
+  ignore line: [Configured with: ../gcc-4.6.2-1-mingw32-src/gcc-4.6.2/configure -v --prefix=/usr/local/mingw32 --target=i686-pc-mingw32 --with-headers=/usr/local/mingw32/i686-pc-mingw32/include --with-gcc --with-gnu-ld --with-gnu-as --enable-threads --disable-nls --enable-languages=c,fortran,c++ --disable-win32-registry --disable-shared --enable-sjlj-exceptions --enable-libgcj --disable-java-awt --without-x --enable-java-gc=boehm --disable-libgcj-debug --enable-interpreter --enable-hash-synchronization --enable-libstdcxx-debug]
+  ignore line: [Thread model: win32]
+  ignore line: [gcc version 4.6.2 (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/bin/]
+  ignore line: [LIBRARY_PATH=/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec2794595071.exe' '-mtune=generic' '-march=pentiumpro']
+  link line: [ /usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/collect2 -Bdynamic -o cmTryCompileExec2794595071.exe /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/crt2.o /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtbegin.o -L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2 -L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib --whole-archive CMakeFiles/cmTryCompileExec2794595071.dir/objects.a --no-whole-archive --out-implib libcmTryCompileExec2794595071.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc -lmoldname -lmingwex -lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lmoldname -lmingwex -lmsvcrt /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtend.o]
+    arg [/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/collect2] ==> ignore
+    arg [-Bdynamic] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec2794595071.exe] ==> ignore
+    arg [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/crt2.o] ==> ignore
+    arg [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtbegin.o] ==> ignore
+    arg [-L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2] ==> dir [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2]
+    arg [-L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib] ==> dir [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib]
+    arg [--whole-archive] ==> ignore
+    arg [CMakeFiles/cmTryCompileExec2794595071.dir/objects.a] ==> ignore
+    arg [--no-whole-archive] ==> ignore
+    arg [--out-implib] ==> ignore
+    arg [libcmTryCompileExec2794595071.dll.a] ==> ignore
+    arg [--major-image-version] ==> ignore
+    arg [0] ==> ignore
+    arg [--minor-image-version] ==> ignore
+    arg [0] ==> ignore
+    arg [-lstdc++] ==> lib [stdc++]
+    arg [-lmingw32] ==> lib [mingw32]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lmoldname] ==> lib [moldname]
+    arg [-lmingwex] ==> lib [mingwex]
+    arg [-lmsvcrt] ==> lib [msvcrt]
+    arg [-ladvapi32] ==> lib [advapi32]
+    arg [-lshell32] ==> lib [shell32]
+    arg [-luser32] ==> lib [user32]
+    arg [-lkernel32] ==> lib [kernel32]
+    arg [-lmingw32] ==> lib [mingw32]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lmoldname] ==> lib [moldname]
+    arg [-lmingwex] ==> lib [mingwex]
+    arg [-lmsvcrt] ==> lib [msvcrt]
+    arg [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtend.o] ==> ignore
+  remove lib [gcc]
+  remove lib [gcc]
+  collapse library dir [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2] ==> [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2]
+  collapse library dir [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib] ==> [/usr/local/mingw32/i686-pc-mingw32/lib]
+  implicit libs: [stdc++;mingw32;moldname;mingwex;msvcrt;advapi32;shell32;user32;kernel32;mingw32;moldname;mingwex;msvcrt]
+  implicit dirs: [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2;/usr/local/mingw32/i686-pc-mingw32/lib]
+  implicit fwks: []
+
+
+Determining if the function sgemm_ exists passed with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec2793208354/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec2793208354.dir/build.make CMakeFiles/cmTryCompileExec2793208354.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2793208354.dir/CheckFunctionExists.c.obj
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=sgemm_   -o CMakeFiles/cmTryCompileExec2793208354.dir/CheckFunctionExists.c.obj   -c /usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec2793208354.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2793208354.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec2793208354.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec2793208354.dir/objects.a @CMakeFiles/cmTryCompileExec2793208354.dir/objects1.rsp
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=sgemm_    -Wl,--whole-archive CMakeFiles/cmTryCompileExec2793208354.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec2793208354.exe -Wl,--out-implib,libcmTryCompileExec2793208354.dll.a -Wl,--major-image-version,0,--minor-image-version,0  /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+
+
+Determining if the function cheev_ exists passed with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec1591796533/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec1591796533.dir/build.make CMakeFiles/cmTryCompileExec1591796533.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1591796533.dir/CheckFunctionExists.c.obj
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=cheev_   -o CMakeFiles/cmTryCompileExec1591796533.dir/CheckFunctionExists.c.obj   -c /usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec1591796533.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1591796533.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec1591796533.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec1591796533.dir/objects.a @CMakeFiles/cmTryCompileExec1591796533.dir/objects1.rsp
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=cheev_    -Wl,--whole-archive CMakeFiles/cmTryCompileExec1591796533.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec1591796533.exe -Wl,--out-implib,libcmTryCompileExec1591796533.dll.a -Wl,--major-image-version,0,--minor-image-version,0  /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+
+
+Compiling the Fortran compiler identification source file "CMakeFortranCompilerId.F" succeeded.
+Compiler: /usr/local/mingw32/bin/gfortran 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the Fortran compiler identification source "CMakeFortranCompilerId.F" produced "a.exe"
+
+The Fortran compiler identification is GNU, found in "/Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/3.0.0/CompilerIdFortran/a.exe"
+
+Determining if the Fortran compiler works passed with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec3469855195/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec3469855195.dir/build.make CMakeFiles/cmTryCompileExec3469855195.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building Fortran object CMakeFiles/cmTryCompileExec3469855195.dir/testFortranCompiler.f.obj
+/usr/local/mingw32/bin/gfortran    -c /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/testFortranCompiler.f -o CMakeFiles/cmTryCompileExec3469855195.dir/testFortranCompiler.f.obj
+Linking Fortran executable cmTryCompileExec3469855195.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3469855195.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec3469855195.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec3469855195.dir/objects.a @CMakeFiles/cmTryCompileExec3469855195.dir/objects1.rsp
+/usr/local/mingw32/bin/gfortran       -Wl,--whole-archive CMakeFiles/cmTryCompileExec3469855195.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec3469855195.exe -Wl,--out-implib,libcmTryCompileExec3469855195.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
+
+
+Detecting Fortran compiler ABI info compiled with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec4269509366/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec4269509366.dir/build.make CMakeFiles/cmTryCompileExec4269509366.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building Fortran object CMakeFiles/cmTryCompileExec4269509366.dir/CMakeFortranCompilerABI.F.obj
+/usr/local/mingw32/bin/gfortran    -c /usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CMakeFortranCompilerABI.F -o CMakeFiles/cmTryCompileExec4269509366.dir/CMakeFortranCompilerABI.F.obj
+Linking Fortran executable cmTryCompileExec4269509366.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4269509366.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec4269509366.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec4269509366.dir/objects.a @CMakeFiles/cmTryCompileExec4269509366.dir/objects1.rsp
+/usr/local/mingw32/bin/gfortran     -v -Wl,--whole-archive CMakeFiles/cmTryCompileExec4269509366.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec4269509366.exe -Wl,--out-implib,libcmTryCompileExec4269509366.dll.a -Wl,--major-image-version,0,--minor-image-version,0   
+Driving: /usr/local/mingw32/bin/gfortran -v -Wl,--whole-archive CMakeFiles/cmTryCompileExec4269509366.dir/objects.a -Wl,--no-whole-archive -o cmTryCompileExec4269509366.exe -Wl,--out-implib,libcmTryCompileExec4269509366.dll.a -Wl,--major-image-version,0,--minor-image-version,0 -l gfortran
+Using built-in specs.
+COLLECT_GCC=/usr/local/mingw32/bin/gfortran
+COLLECT_LTO_WRAPPER=/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/lto-wrapper
+Target: i686-pc-mingw32
+Configured with: ../gcc-4.6.2-1-mingw32-src/gcc-4.6.2/configure -v --prefix=/usr/local/mingw32 --target=i686-pc-mingw32 --with-headers=/usr/local/mingw32/i686-pc-mingw32/include --with-gcc --with-gnu-ld --with-gnu-as --enable-threads --disable-nls --enable-languages=c,fortran,c++ --disable-win32-registry --disable-shared --enable-sjlj-exceptions --enable-libgcj --disable-java-awt --without-x --enable-java-gc=boehm --disable-libgcj-debug --enable-interpreter --enable-hash-synchronization --enable-libstdcxx-debug
+Thread model: win32
+gcc version 4.6.2 (GCC) 
+Reading specs from /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/libgfortran.spec
+rename spec lib to liborig
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec4269509366.exe' '-mtune=generic' '-march=pentiumpro'
+COMPILER_PATH=/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/bin/
+LIBRARY_PATH=/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec4269509366.exe' '-mtune=generic' '-march=pentiumpro'
+ /usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/collect2 -Bdynamic -o cmTryCompileExec4269509366.exe /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/crt2.o /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtbegin.o -L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2 -L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib --whole-archive CMakeFiles/cmTryCompileExec4269509366.dir/objects.a --no-whole-archive --out-implib libcmTryCompileExec4269509366.dll.a --major-image-version 0 --minor-image-version 0 -lgfortran -lmingw32 -lgcc -lmoldname -lmingwex -lmsvcrt -lquadmath -lm -lmingw32 -lgcc -lmoldname -lmingwex -lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lmoldname -lmingwex -lmsvcrt /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtend.o
+
+
+Parsed Fortran implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTryCompileExec4269509366/fast"]
+  ignore line: [/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec4269509366.dir/build.make CMakeFiles/cmTryCompileExec4269509366.dir/build]
+  ignore line: [/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building Fortran object CMakeFiles/cmTryCompileExec4269509366.dir/CMakeFortranCompilerABI.F.obj]
+  ignore line: [/usr/local/mingw32/bin/gfortran    -c /usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CMakeFortranCompilerABI.F -o CMakeFiles/cmTryCompileExec4269509366.dir/CMakeFortranCompilerABI.F.obj]
+  ignore line: [Linking Fortran executable cmTryCompileExec4269509366.exe]
+  ignore line: [/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4269509366.dir/link.txt --verbose=1]
+  ignore line: [/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec4269509366.dir/objects.a]
+  ignore line: [/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec4269509366.dir/objects.a @CMakeFiles/cmTryCompileExec4269509366.dir/objects1.rsp]
+  ignore line: [/usr/local/mingw32/bin/gfortran     -v -Wl,--whole-archive CMakeFiles/cmTryCompileExec4269509366.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec4269509366.exe -Wl,--out-implib,libcmTryCompileExec4269509366.dll.a -Wl,--major-image-version,0,--minor-image-version,0   ]
+  ignore line: [Driving: /usr/local/mingw32/bin/gfortran -v -Wl,--whole-archive CMakeFiles/cmTryCompileExec4269509366.dir/objects.a -Wl,--no-whole-archive -o cmTryCompileExec4269509366.exe -Wl,--out-implib,libcmTryCompileExec4269509366.dll.a -Wl,--major-image-version,0,--minor-image-version,0 -l gfortran]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/usr/local/mingw32/bin/gfortran]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/lto-wrapper]
+  ignore line: [Target: i686-pc-mingw32]
+  ignore line: [Configured with: ../gcc-4.6.2-1-mingw32-src/gcc-4.6.2/configure -v --prefix=/usr/local/mingw32 --target=i686-pc-mingw32 --with-headers=/usr/local/mingw32/i686-pc-mingw32/include --with-gcc --with-gnu-ld --with-gnu-as --enable-threads --disable-nls --enable-languages=c,fortran,c++ --disable-win32-registry --disable-shared --enable-sjlj-exceptions --enable-libgcj --disable-java-awt --without-x --enable-java-gc=boehm --disable-libgcj-debug --enable-interpreter --enable-hash-synchronization --enable-libstdcxx-debug]
+  ignore line: [Thread model: win32]
+  ignore line: [gcc version 4.6.2 (GCC) ]
+  ignore line: [Reading specs from /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/libgfortran.spec]
+  ignore line: [rename spec lib to liborig]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec4269509366.exe' '-mtune=generic' '-march=pentiumpro']
+  ignore line: [COMPILER_PATH=/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/bin/]
+  ignore line: [LIBRARY_PATH=/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/:/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec4269509366.exe' '-mtune=generic' '-march=pentiumpro']
+  link line: [ /usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/collect2 -Bdynamic -o cmTryCompileExec4269509366.exe /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/crt2.o /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtbegin.o -L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2 -L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib --whole-archive CMakeFiles/cmTryCompileExec4269509366.dir/objects.a --no-whole-archive --out-implib libcmTryCompileExec4269509366.dll.a --major-image-version 0 --minor-image-version 0 -lgfortran -lmingw32 -lgcc -lmoldname -lmingwex -lmsvcrt -lquadmath -lm -lmingw32 -lgcc -lmoldname -lmingwex -lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lmoldname -lmingwex -lmsvcrt /usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtend.o]
+    arg [/usr/local/mingw32/libexec/gcc/i686-pc-mingw32/4.6.2/collect2] ==> ignore
+    arg [-Bdynamic] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec4269509366.exe] ==> ignore
+    arg [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib/crt2.o] ==> ignore
+    arg [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtbegin.o] ==> ignore
+    arg [-L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2] ==> dir [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2]
+    arg [-L/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib] ==> dir [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib]
+    arg [--whole-archive] ==> ignore
+    arg [CMakeFiles/cmTryCompileExec4269509366.dir/objects.a] ==> ignore
+    arg [--no-whole-archive] ==> ignore
+    arg [--out-implib] ==> ignore
+    arg [libcmTryCompileExec4269509366.dll.a] ==> ignore
+    arg [--major-image-version] ==> ignore
+    arg [0] ==> ignore
+    arg [--minor-image-version] ==> ignore
+    arg [0] ==> ignore
+    arg [-lgfortran] ==> lib [gfortran]
+    arg [-lmingw32] ==> lib [mingw32]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lmoldname] ==> lib [moldname]
+    arg [-lmingwex] ==> lib [mingwex]
+    arg [-lmsvcrt] ==> lib [msvcrt]
+    arg [-lquadmath] ==> lib [quadmath]
+    arg [-lm] ==> lib [m]
+    arg [-lmingw32] ==> lib [mingw32]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lmoldname] ==> lib [moldname]
+    arg [-lmingwex] ==> lib [mingwex]
+    arg [-lmsvcrt] ==> lib [msvcrt]
+    arg [-ladvapi32] ==> lib [advapi32]
+    arg [-lshell32] ==> lib [shell32]
+    arg [-luser32] ==> lib [user32]
+    arg [-lkernel32] ==> lib [kernel32]
+    arg [-lmingw32] ==> lib [mingw32]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lmoldname] ==> lib [moldname]
+    arg [-lmingwex] ==> lib [mingwex]
+    arg [-lmsvcrt] ==> lib [msvcrt]
+    arg [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/crtend.o] ==> ignore
+  remove lib [gcc]
+  remove lib [gcc]
+  remove lib [gcc]
+  collapse library dir [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2] ==> [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2]
+  collapse library dir [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2/../../../../i686-pc-mingw32/lib] ==> [/usr/local/mingw32/i686-pc-mingw32/lib]
+  implicit libs: [gfortran;mingw32;moldname;mingwex;msvcrt;quadmath;m;mingw32;moldname;mingwex;msvcrt;advapi32;shell32;user32;kernel32;mingw32;moldname;mingwex;msvcrt]
+  implicit dirs: [/usr/local/mingw32/lib/gcc/i686-pc-mingw32/4.6.2;/usr/local/mingw32/i686-pc-mingw32/lib]
+  implicit fwks: []
+
+
+Determining if the Fortran compiler supports Fortran 90 passed with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec1703266936/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec1703266936.dir/build.make CMakeFiles/cmTryCompileExec1703266936.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building Fortran object CMakeFiles/cmTryCompileExec1703266936.dir/testFortranCompilerF90.f90.obj
+/usr/local/mingw32/bin/gfortran    -c /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/testFortranCompilerF90.f90 -o CMakeFiles/cmTryCompileExec1703266936.dir/testFortranCompilerF90.f90.obj
+Linking Fortran executable cmTryCompileExec1703266936.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1703266936.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec1703266936.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec1703266936.dir/objects.a @CMakeFiles/cmTryCompileExec1703266936.dir/objects1.rsp
+/usr/local/mingw32/bin/gfortran       -Wl,--whole-archive CMakeFiles/cmTryCompileExec1703266936.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec1703266936.exe -Wl,--out-implib,libcmTryCompileExec1703266936.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
+
+
+Determining if the function tgamma exists passed with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec4186740844/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec4186740844.dir/build.make CMakeFiles/cmTryCompileExec4186740844.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec4186740844.dir/CheckFunctionExists.c.obj
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=tgamma   -o CMakeFiles/cmTryCompileExec4186740844.dir/CheckFunctionExists.c.obj   -c /usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CheckFunctionExists.c
+/usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CheckFunctionExists.c:3:6: warning: conflicting types for built-in function 'tgamma' [enabled by default]
+Linking C executable cmTryCompileExec4186740844.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4186740844.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec4186740844.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec4186740844.dir/objects.a @CMakeFiles/cmTryCompileExec4186740844.dir/objects1.rsp
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=tgamma    -Wl,--whole-archive CMakeFiles/cmTryCompileExec4186740844.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec4186740844.exe -Wl,--out-implib,libcmTryCompileExec4186740844.dll.a -Wl,--major-image-version,0,--minor-image-version,0  /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+
+
+Determining if the function lgamma exists passed with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec782523497/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec782523497.dir/build.make CMakeFiles/cmTryCompileExec782523497.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec782523497.dir/CheckFunctionExists.c.obj
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=lgamma   -o CMakeFiles/cmTryCompileExec782523497.dir/CheckFunctionExists.c.obj   -c /usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CheckFunctionExists.c
+/usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CheckFunctionExists.c:3:6: warning: conflicting types for built-in function 'lgamma' [enabled by default]
+Linking C executable cmTryCompileExec782523497.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec782523497.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec782523497.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec782523497.dir/objects.a @CMakeFiles/cmTryCompileExec782523497.dir/objects1.rsp
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=lgamma    -Wl,--whole-archive CMakeFiles/cmTryCompileExec782523497.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec782523497.exe -Wl,--out-implib,libcmTryCompileExec782523497.dll.a -Wl,--major-image-version,0,--minor-image-version,0  /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+
+
+Determining if the function trunc exists passed with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec3815921899/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec3815921899.dir/build.make CMakeFiles/cmTryCompileExec3815921899.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3815921899.dir/CheckFunctionExists.c.obj
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=trunc   -o CMakeFiles/cmTryCompileExec3815921899.dir/CheckFunctionExists.c.obj   -c /usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CheckFunctionExists.c
+/usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CheckFunctionExists.c:3:6: warning: conflicting types for built-in function 'trunc' [enabled by default]
+Linking C executable cmTryCompileExec3815921899.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3815921899.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec3815921899.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec3815921899.dir/objects.a @CMakeFiles/cmTryCompileExec3815921899.dir/objects1.rsp
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=trunc    -Wl,--whole-archive CMakeFiles/cmTryCompileExec3815921899.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec3815921899.exe -Wl,--out-implib,libcmTryCompileExec3815921899.dll.a -Wl,--major-image-version,0,--minor-image-version,0  /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+
+
+Determining if the function round exists passed with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec865837937/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec865837937.dir/build.make CMakeFiles/cmTryCompileExec865837937.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec865837937.dir/CheckFunctionExists.c.obj
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=round   -o CMakeFiles/cmTryCompileExec865837937.dir/CheckFunctionExists.c.obj   -c /usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CheckFunctionExists.c
+/usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CheckFunctionExists.c:3:6: warning: conflicting types for built-in function 'round' [enabled by default]
+Linking C executable cmTryCompileExec865837937.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec865837937.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec865837937.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec865837937.dir/objects.a @CMakeFiles/cmTryCompileExec865837937.dir/objects1.rsp
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=round    -Wl,--whole-archive CMakeFiles/cmTryCompileExec865837937.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec865837937.exe -Wl,--out-implib,libcmTryCompileExec865837937.dll.a -Wl,--major-image-version,0,--minor-image-version,0  /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+
+
+Determining if the isfinite exist passed with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec2362313105/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec2362313105.dir/build.make CMakeFiles/cmTryCompileExec2362313105.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2362313105.dir/CheckSymbolExists.c.obj
+/usr/local/mingw32/bin/cc    -o CMakeFiles/cmTryCompileExec2362313105.dir/CheckSymbolExists.c.obj   -c /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec2362313105.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2362313105.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec2362313105.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec2362313105.dir/objects.a @CMakeFiles/cmTryCompileExec2362313105.dir/objects1.rsp
+/usr/local/mingw32/bin/cc       -Wl,--whole-archive CMakeFiles/cmTryCompileExec2362313105.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec2362313105.exe -Wl,--out-implib,libcmTryCompileExec2362313105.dll.a -Wl,--major-image-version,0,--minor-image-version,0  /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+
+File /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <math.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef isfinite
+  return ((int*)(&isfinite))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function finite exists passed with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec1330369313/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec1330369313.dir/build.make CMakeFiles/cmTryCompileExec1330369313.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1330369313.dir/CheckFunctionExists.c.obj
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=finite   -o CMakeFiles/cmTryCompileExec1330369313.dir/CheckFunctionExists.c.obj   -c /usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CheckFunctionExists.c
+/usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CheckFunctionExists.c:3:6: warning: conflicting types for built-in function 'finite' [enabled by default]
+Linking C executable cmTryCompileExec1330369313.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1330369313.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec1330369313.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec1330369313.dir/objects.a @CMakeFiles/cmTryCompileExec1330369313.dir/objects1.rsp
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=finite    -Wl,--whole-archive CMakeFiles/cmTryCompileExec1330369313.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec1330369313.exe -Wl,--out-implib,libcmTryCompileExec1330369313.dll.a -Wl,--major-image-version,0,--minor-image-version,0  /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+
+
+Determining if the function isnan exists passed with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec2351352686/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec2351352686.dir/build.make CMakeFiles/cmTryCompileExec2351352686.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2351352686.dir/CheckFunctionExists.c.obj
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=isnan   -o CMakeFiles/cmTryCompileExec2351352686.dir/CheckFunctionExists.c.obj   -c /usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CheckFunctionExists.c
+/usr/local/Cellar/cmake/3.0.0/share/cmake/Modules/CheckFunctionExists.c:3:6: warning: conflicting types for built-in function 'isnan' [enabled by default]
+Linking C executable cmTryCompileExec2351352686.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2351352686.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec2351352686.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec2351352686.dir/objects.a @CMakeFiles/cmTryCompileExec2351352686.dir/objects1.rsp
+/usr/local/mingw32/bin/cc   -DCHECK_FUNCTION_EXISTS=isnan    -Wl,--whole-archive CMakeFiles/cmTryCompileExec2351352686.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec2351352686.exe -Wl,--out-implib,libcmTryCompileExec2351352686.dll.a -Wl,--major-image-version,0,--minor-image-version,0  /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll /usr/local/mingw32/i686-pc-mingw32/bin/libblas.dll /usr/local/mingw32/i686-pc-mingw32/bin/liblapack.dll -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+
+

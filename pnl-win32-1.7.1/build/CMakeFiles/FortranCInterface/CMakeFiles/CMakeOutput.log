@@ -1,0 +1,19 @@
+Performing C SOURCE FILE Test C_SUPPORTS_DOLLAR succeded with the following output:
+Change Dir: /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/FortranCInterface/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec832558938/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTryCompileExec832558938.dir/build.make CMakeFiles/cmTryCompileExec832558938.dir/build
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_progress_report /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/FortranCInterface/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec832558938.dir/src.c.obj
+/usr/local/mingw32/bin/cc   -DC_SUPPORTS_DOLLAR   -o CMakeFiles/cmTryCompileExec832558938.dir/src.c.obj   -c /Users/jl/tmp/pnl-20140722/pnl-win32-1.7.1/build/CMakeFiles/FortranCInterface/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTryCompileExec832558938.exe
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec832558938.dir/link.txt --verbose=1
+/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/cmTryCompileExec832558938.dir/objects.a
+/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/cmTryCompileExec832558938.dir/objects.a @CMakeFiles/cmTryCompileExec832558938.dir/objects1.rsp
+/usr/local/mingw32/bin/cc   -DC_SUPPORTS_DOLLAR    -Wl,--whole-archive CMakeFiles/cmTryCompileExec832558938.dir/objects.a -Wl,--no-whole-archive  -o cmTryCompileExec832558938.exe -Wl,--out-implib,libcmTryCompileExec832558938.dll.a -Wl,--major-image-version,0,--minor-image-version,0  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+
+Source file was:
+
+extern int dollar$(void);
+int main() { return 0; }
+

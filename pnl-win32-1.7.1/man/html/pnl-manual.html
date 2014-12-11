@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>Pnl Manual</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
+<!-- xhtml,uni-html4,2,subsection+,next,html --> 
+<meta name="src" content="pnl-manual.tex" /> 
+<meta name="date" content="2014-07-22 17:33:00" /> 
+<link rel="stylesheet" type="text/css" href="pnl-manual.css" /> 
+</head><body 
+>
+<div class="maketitle">
+                                                                                    
+
+                                                                                    
+                                                                                    
+
+                                                                                    
+
+<h2 class="titleHead">Pnl Manual</h2>
+<div class="author" ></div><br />
+<div class="date" ><span 
+class="ec-lmr-12">July 22, 2014</span></div>
+</div>
+<div class="tableofcontents">
+<span class="likesectionToc" ><a 
+href="pnl-manualli1.html#x2-1000" id="QQ2-2-1">Contents</a></span>
+<br /><span class="sectionToc" >1 <a 
+href="pnl-manualse1.html#x3-20001" id="QQ2-3-2">Introduction</a></span>
+<br />&#x00A0;<span class="subsectionToc" >1.1 <a 
+href="pnl-manualse1.html#x3-30001.1" id="QQ2-3-3">What is Pnl</a></span>
+<br />&#x00A0;<span class="subsectionToc" >1.2 <a 
+href="pnl-manualse1.html#x3-40001.2" id="QQ2-3-4">A few helpful conventions</a></span>
+<br />&#x00A0;<span class="subsectionToc" >1.3 <a 
+href="pnl-manualse1.html#x3-50001.3" id="QQ2-3-6">Using Pnl</a></span>
+<br /><span class="sectionToc" >2 <a 
+href="pnl-manualse2.html#x4-100002" id="QQ2-4-11">Objects</a></span>
+<br />&#x00A0;<span class="subsectionToc" >2.1 <a 
+href="pnl-manualse2.html#x4-110002.1" id="QQ2-4-12">The top-level object</a></span>
+<br />&#x00A0;<span class="subsectionToc" >2.2 <a 
+href="pnl-manualse2.html#x4-120002.2" id="QQ2-4-14">List object</a></span>
+<br />&#x00A0;<span class="subsectionToc" >2.3 <a 
+href="pnl-manualse2.html#x4-130002.3" id="QQ2-4-15">Array object</a></span>
+<br /><span class="sectionToc" >3 <a 
+href="pnl-manualse3.html#x5-140003" id="QQ2-5-16">Mathematical framework</a></span>
+<br />&#x00A0;<span class="subsectionToc" >3.1 <a 
+href="pnl-manualse3.html#x5-150003.1" id="QQ2-5-17">General tools</a></span>
+<br />&#x00A0;<span class="subsectionToc" >3.2 <a 
+href="pnl-manualse3.html#x5-190003.2" id="QQ2-5-21">Complex numbers</a></span>
+<br /><span class="sectionToc" >4 <a 
+href="pnl-manualse4.html#x6-230004" id="QQ2-6-25">Linear Algebra</a></span>
+<br />&#x00A0;<span class="subsectionToc" >4.1 <a 
+href="pnl-manualse4.html#x6-240004.1" id="QQ2-6-26">Vectors</a></span>
+<br />&#x00A0;<span class="subsectionToc" >4.2 <a 
+href="pnl-manualse4.html#x6-390004.2" id="QQ2-6-41">Compact Vectors</a></span>
+<br />&#x00A0;<span class="subsectionToc" >4.3 <a 
+href="pnl-manualse4.html#x6-420004.3" id="QQ2-6-44">Matrices</a></span>
+<br />&#x00A0;<span class="subsectionToc" >4.4 <a 
+href="pnl-manualse4.html#x6-580004.4" id="QQ2-6-60">Tridiagonal Matrices</a></span>
+<br />&#x00A0;<span class="subsectionToc" >4.5 <a 
+href="pnl-manualse4.html#x6-670004.5" id="QQ2-6-69">Band Matrices</a></span>
+<br />&#x00A0;<span class="subsectionToc" >4.6 <a 
+href="pnl-manualse4.html#x6-740004.6" id="QQ2-6-76">Sparse Matrices</a></span>
+<br />&#x00A0;<span class="subsectionToc" >4.7 <a 
+href="pnl-manualse4.html#x6-810004.7" id="QQ2-6-83">Hyper Matrices</a></span>
+<br />&#x00A0;<span class="subsectionToc" >4.8 <a 
+href="pnl-manualse4.html#x6-880004.8" id="QQ2-6-90">Iterative Solvers</a></span>
+<br /><span class="sectionToc" >5 <a 
+href="pnl-manualse5.html#x7-950005" id="QQ2-7-97">Cumulative distribution Functions</a></span>
+<br /><span class="sectionToc" >6 <a 
+href="pnl-manualse6.html#x8-960006" id="QQ2-8-98">Random Number Generators</a></span>
+<br />&#x00A0;<span class="subsectionToc" >6.1 <a 
+href="pnl-manualse6.html#x8-970006.1" id="QQ2-8-100">The rng interface</a></span>
+<br />&#x00A0;<span class="subsectionToc" >6.2 <a 
+href="pnl-manualse6.html#x8-980006.2" id="QQ2-8-101">The <span 
+class="ec-lmri-10x-x-109">rand </span>interface (deprecated)</a></span>
+<br /><span class="sectionToc" >7 <a 
+href="pnl-manualse7.html#x9-1020007" id="QQ2-9-105">Function bases and regression</a></span>
+<br />&#x00A0;<span class="subsectionToc" >7.1 <a 
+href="pnl-manualse7.html#x9-1030007.1" id="QQ2-9-106">Overview</a></span>
+<br />&#x00A0;<span class="subsectionToc" >7.2 <a 
+href="pnl-manualse7.html#x9-1040007.2" id="QQ2-9-108">Functions</a></span>
+                                                                                    
+
+                                                                                    
+<br /><span class="sectionToc" >8 <a 
+href="pnl-manualse8.html#x10-1050008" id="QQ2-10-109">Numerical integration</a></span>
+<br />&#x00A0;<span class="subsectionToc" >8.1 <a 
+href="pnl-manualse8.html#x10-1060008.1" id="QQ2-10-110">Overview</a></span>
+<br />&#x00A0;<span class="subsectionToc" >8.2 <a 
+href="pnl-manualse8.html#x10-1070008.2" id="QQ2-10-111">Functions</a></span>
+<br /><span class="sectionToc" >9 <a 
+href="pnl-manualse9.html#x11-1080009" id="QQ2-11-112">Fast Fourier Transform</a></span>
+<br />&#x00A0;<span class="subsectionToc" >9.1 <a 
+href="pnl-manualse9.html#x11-1090009.1" id="QQ2-11-113">Overview</a></span>
+<br />&#x00A0;<span class="subsectionToc" >9.2 <a 
+href="pnl-manualse9.html#x11-1110009.2" id="QQ2-11-115">Functions</a></span>
+<br /><span class="sectionToc" >10 <a 
+href="pnl-manualse10.html#x12-11200010" id="QQ2-12-116">Inverse Laplace Transform</a></span>
+<br /><span class="sectionToc" >11 <a 
+href="pnl-manualse11.html#x13-11300011" id="QQ2-13-117">Ordinary differential equations</a></span>
+<br />&#x00A0;<span class="subsectionToc" >11.1 <a 
+href="pnl-manualse11.html#x13-11400011.1" id="QQ2-13-118">Overview</a></span>
+<br />&#x00A0;<span class="subsectionToc" >11.2 <a 
+href="pnl-manualse11.html#x13-11500011.2" id="QQ2-13-119">Functions</a></span>
+<br /><span class="sectionToc" >12 <a 
+href="pnl-manualse12.html#x14-11600012" id="QQ2-14-120">Nonlinear Constrained Optimization</a></span>
+<br />&#x00A0;<span class="subsectionToc" >12.1 <a 
+href="pnl-manualse12.html#x14-11700012.1" id="QQ2-14-121">Overview</a></span>
+<br />&#x00A0;<span class="subsectionToc" >12.2 <a 
+href="pnl-manualse12.html#x14-11800012.2" id="QQ2-14-122">Functions</a></span>
+<br /><span class="sectionToc" >13 <a 
+href="pnl-manualse13.html#x15-11900013" id="QQ2-15-123">Root finding</a></span>
+<br />&#x00A0;<span class="subsectionToc" >13.1 <a 
+href="pnl-manualse13.html#x15-12000013.1" id="QQ2-15-124">Overview</a></span>
+<br />&#x00A0;<span class="subsectionToc" >13.2 <a 
+href="pnl-manualse13.html#x15-12100013.2" id="QQ2-15-125">Functions</a></span>
+<br /><span class="sectionToc" >14 <a 
+href="pnl-manualse14.html#x16-12400014" id="QQ2-16-128">Special functions</a></span>
+<br />&#x00A0;<span class="subsectionToc" >14.1 <a 
+href="pnl-manualse14.html#x16-12500014.1" id="QQ2-16-129">Real Bessel functions</a></span>
+<br />&#x00A0;<span class="subsectionToc" >14.2 <a 
+href="pnl-manualse14.html#x16-12600014.2" id="QQ2-16-130">Complex Bessel functions</a></span>
+<br />&#x00A0;<span class="subsectionToc" >14.3 <a 
+href="pnl-manualse14.html#x16-12700014.3" id="QQ2-16-131">Error functions</a></span>
+<br />&#x00A0;<span class="subsectionToc" >14.4 <a 
+href="pnl-manualse14.html#x16-12800014.4" id="QQ2-16-132">Gamma functions</a></span>
+<br />&#x00A0;<span class="subsectionToc" >14.5 <a 
+href="pnl-manualse14.html#x16-12900014.5" id="QQ2-16-133">Digamma function</a></span>
+<br />&#x00A0;<span class="subsectionToc" >14.6 <a 
+href="pnl-manualse14.html#x16-13000014.6" id="QQ2-16-134">Incomplete Gamma functions</a></span>
+<br />&#x00A0;<span class="subsectionToc" >14.7 <a 
+href="pnl-manualse14.html#x16-13100014.7" id="QQ2-16-135">Exponential integrals</a></span>
+<br />&#x00A0;<span class="subsectionToc" >14.8 <a 
+href="pnl-manualse14.html#x16-13200014.8" id="QQ2-16-136">Hypergeometric functions</a></span>
+<br /><span class="sectionToc" >15 <a 
+href="pnl-manualse15.html#x17-13300015" id="QQ2-17-137">Some bindings</a></span>
+<br />&#x00A0;<span class="subsectionToc" >15.1 <a 
+href="pnl-manualse15.html#x17-13400015.1" id="QQ2-17-138">MPI bindings</a></span>
+<br />&#x00A0;<span class="subsectionToc" >15.2 <a 
+href="pnl-manualse15.html#x17-13700015.2" id="QQ2-17-141">The save/load interface</a></span>
+<br /><span class="sectionToc" >16 <a 
+href="pnl-manualse16.html#x18-13800016" id="QQ2-18-142">Financial functions</a></span>
+<br /><span class="sectionToc" ><a 
+href="pnl-manualse16.html#Q1-18-143">Index</a></span>
+<br /><span class="likesectionToc" ><a 
+href="pnl-manualli2.html#x19-13900016" id="QQ2-19-144">Index</a></span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--l. 499--><p class="noindent" ><span class="next">[<a 
+href="pnl-manualli1.html" id="tailpnl-manual" >next</a>]</span></p> 
+</body></html> 
+
+                                                                                    
+
+

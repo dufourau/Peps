@@ -1,0 +1,1076 @@
+\begin{theindex}
+
+  \item ABS, \LNK{pnl-manualse3.html}{dx5-17006}{}{76}
+
+  \indexspace
+
+  \item C_op_amcb, \LNK{pnl-manualse3.html}{dx5-22042}{}{146}
+  \item C_op_amib, \LNK{pnl-manualse3.html}{dx5-22043}{}{147}
+  \item C_op_apcb, \LNK{pnl-manualse3.html}{dx5-22041}{}{145}
+  \item C_op_apib, \LNK{pnl-manualse3.html}{dx5-22040}{}{144}
+  \item C_op_damb, \LNK{pnl-manualse3.html}{dx5-22045}{}{149}
+  \item C_op_damcb, \LNK{pnl-manualse3.html}{dx5-22049}{}{153}
+  \item C_op_damib, \LNK{pnl-manualse3.html}{dx5-22047}{}{151}
+  \item C_op_dapb, \LNK{pnl-manualse3.html}{dx5-22044}{}{148}
+  \item C_op_dapcb, \LNK{pnl-manualse3.html}{dx5-22048}{}{152}
+  \item C_op_dapib, \LNK{pnl-manualse3.html}{dx5-22046}{}{150}
+  \item C_op_idamb, \LNK{pnl-manualse3.html}{dx5-22051}{}{155}
+  \item C_op_idamcb, \LNK{pnl-manualse3.html}{dx5-22053}{}{157}
+  \item C_op_idapb, \LNK{pnl-manualse3.html}{dx5-22050}{}{154}
+  \item C_op_idapcb, \LNK{pnl-manualse3.html}{dx5-22052}{}{156}
+  \item Cabs, \LNK{pnl-manualse3.html}{dx5-22021}{}{125}
+  \item Cadd, \LNK{pnl-manualse3.html}{dx5-22003}{}{107}
+  \item Carg, \LNK{pnl-manualse3.html}{dx5-22036}{}{140}
+  \item Ccos, \LNK{pnl-manualse3.html}{dx5-22028}{}{132}
+  \item Ccosh, \LNK{pnl-manualse3.html}{dx5-22032}{}{136}
+  \item Ccotan, \LNK{pnl-manualse3.html}{dx5-22031}{}{135}
+  \item Ccotanh, \LNK{pnl-manualse3.html}{dx5-22035}{}{139}
+  \item Cdiv, \LNK{pnl-manualse3.html}{dx5-22019}{}{123}
+  \item Cexp, \LNK{pnl-manualse3.html}{dx5-22024}{}{128}
+  \item CI, \LNK{pnl-manualse3.html}{dx5-21003}{}{104}
+  \item CIexp, \LNK{pnl-manualse3.html}{dx5-22025}{}{129}
+  \item Cimag, \LNK{pnl-manualse3.html}{dx5-22002}{}{106}
+  \item Cinv, \LNK{pnl-manualse3.html}{dx5-22018}{}{122}
+  \item Clgamma, \LNK{pnl-manualse3.html}{dx5-22038}{}{142}
+  \item Clog, \LNK{pnl-manualse3.html}{dx5-22023}{}{127}
+  \item Cminus, \LNK{pnl-manualse3.html}{dx5-22009}{}{113}
+  \item Cmul, \LNK{pnl-manualse3.html}{dx5-22010}{}{114}
+  \item Complex, \LNK{pnl-manualse3.html}{dx5-22015}{}{119}
+  \item Complex_polar, \LNK{pnl-manualse3.html}{dx5-22016}{}{120}
+  \item CONE, \LNK{pnl-manualse3.html}{dx5-21002}{}{103}
+  \item Conj, \LNK{pnl-manualse3.html}{dx5-22017}{}{121}
+  \item Cpow, \LNK{pnl-manualse3.html}{dx5-22026}{}{130}
+  \item Cpow_real, \LNK{pnl-manualse3.html}{dx5-22027}{}{131}
+  \item Cprintf, \LNK{pnl-manualse3.html}{dx5-22039}{}{143}
+  \item CRadd, \LNK{pnl-manualse3.html}{dx5-22004}{}{108}
+  \item CRdiv, \LNK{pnl-manualse3.html}{dx5-22013}{}{117}
+  \item Creal, \LNK{pnl-manualse3.html}{dx5-22001}{}{105}
+  \item CRmul, \LNK{pnl-manualse3.html}{dx5-22012}{}{116}
+  \item CRsub, \LNK{pnl-manualse3.html}{dx5-22007}{}{111}
+  \item Csin, \LNK{pnl-manualse3.html}{dx5-22029}{}{133}
+  \item Csinh, \LNK{pnl-manualse3.html}{dx5-22033}{}{137}
+  \item Csqr_norm, \LNK{pnl-manualse3.html}{dx5-22020}{}{124}
+  \item Csqrt, \LNK{pnl-manualse3.html}{dx5-22022}{}{126}
+  \item Csub, \LNK{pnl-manualse3.html}{dx5-22006}{}{110}
+  \item Ctan, \LNK{pnl-manualse3.html}{dx5-22030}{}{134}
+  \item Ctanh, \LNK{pnl-manualse3.html}{dx5-22034}{}{138}
+  \item Ctgamma, \LNK{pnl-manualse3.html}{dx5-22037}{}{141}
+  \item CUB, \LNK{pnl-manualse3.html}{dx5-17009}{}{79}
+  \item CZERO, \LNK{pnl-manualse3.html}{dx5-21001}{}{102}
+
+  \indexspace
+
+  \item DBL_EPSILON, \LNK{pnl-manualse3.html}{dx5-16023}{}{66}
+  \item DBL_MAX, \LNK{pnl-manualse3.html}{dx5-16021}{}{64}
+  \item DOUBLE_MAX, \LNK{pnl-manualse3.html}{dx5-16022}{}{65}
+
+  \indexspace
+
+  \item GET, \LNK{pnl-manualse4.html}{dx6-30001}{}{182}
+  \item GET_COMPLEX, \LNK{pnl-manualse4.html}{dx6-30003}{}{184}
+  \item GET_IMAG, \LNK{pnl-manualse4.html}{dx6-38012}{}{248}
+  \item GET_INT, \LNK{pnl-manualse4.html}{dx6-30002}{}{183}
+  \item GET_REAL, \LNK{pnl-manualse4.html}{dx6-38011}{}{247}
+
+  \indexspace
+
+  \item INT_MAX, \LNK{pnl-manualse3.html}{dx5-16019}{}{62}
+
+  \indexspace
+
+  \item LET, \LNK{pnl-manualse4.html}{dx6-30004}{}{185}
+  \item LET_COMPLEX, \LNK{pnl-manualse4.html}{dx6-30006}{}{187}
+  \item LET_IMAG, \LNK{pnl-manualse4.html}{dx6-38014}{}{250}
+  \item LET_INT, \LNK{pnl-manualse4.html}{dx6-30005}{}{186}
+  \item LET_REAL, \LNK{pnl-manualse4.html}{dx6-38013}{}{249}
+
+  \indexspace
+
+  \item M_1_PI, \LNK{pnl-manualse3.html}{dx5-16010}{}{53}
+  \item M_1_SQRT2PI, \LNK{pnl-manualse3.html}{dx5-16017}{}{60}
+  \item M_2_PI, \LNK{pnl-manualse3.html}{dx5-16011}{}{54}
+  \item M_2_SQRTPI, \LNK{pnl-manualse3.html}{dx5-16012}{}{55}
+  \item M_2PI, \LNK{pnl-manualse3.html}{dx5-16007}{}{50}
+  \item M_E, \LNK{pnl-manualse3.html}{dx5-16001}{}{44}
+  \item M_EULER, \LNK{pnl-manualse3.html}{dx5-16015}{}{58}
+  \item M_LN10, \LNK{pnl-manualse3.html}{dx5-16005}{}{48}
+  \item M_LN2, \LNK{pnl-manualse3.html}{dx5-16004}{}{47}
+  \item M_LOG10E, \LNK{pnl-manualse3.html}{dx5-16003}{}{46}
+  \item M_LOG2E, \LNK{pnl-manualse3.html}{dx5-16002}{}{45}
+  \item M_PI, \LNK{pnl-manualse3.html}{dx5-16006}{}{49}
+  \item M_PI_2, \LNK{pnl-manualse3.html}{dx5-16008}{}{51}
+  \item M_PI_4, \LNK{pnl-manualse3.html}{dx5-16009}{}{52}
+  \item M_SQRT1_2, \LNK{pnl-manualse3.html}{dx5-16016}{}{59}
+  \item M_SQRT2, \LNK{pnl-manualse3.html}{dx5-16014}{}{57}
+  \item M_SQRT2_PI, \LNK{pnl-manualse3.html}{dx5-16018}{}{61}
+  \item M_SQRT2PI, \LNK{pnl-manualse3.html}{dx5-16013}{}{56}
+  \item MAX, \LNK{pnl-manualse3.html}{dx5-17005}{}{75}
+  \item MAX_INT, \LNK{pnl-manualse3.html}{dx5-16020}{}{63}
+  \item MGET, \LNK{pnl-manualse4.html}{dx6-46001}{}{284}
+  \item MGET_COMPLEX, \LNK{pnl-manualse4.html}{dx6-46003}{}{286}
+  \item MGET_INT, \LNK{pnl-manualse4.html}{dx6-46002}{}{285}
+  \item MIN, \LNK{pnl-manualse3.html}{dx5-17004}{}{74}
+  \item MLET, \LNK{pnl-manualse4.html}{dx6-46004}{}{287}
+  \item MLET_COMPLEX, \LNK{pnl-manualse4.html}{dx6-46006}{}{289}
+  \item MLET_INT, \LNK{pnl-manualse4.html}{dx6-46005}{}{288}
+
+  \indexspace
+
+  \item NAN, \LNK{pnl-manualse3.html}{dx5-16027}{}{70}
+
+  \indexspace
+
+  \item pnl_acosh, \LNK{pnl-manualse3.html}{dx5-18016}{}{95}
+  \item pnl_activate_mtherr, 
+		\LNK{pnl-manualse14.html}{dx16-124002}{}{711}
+  \item PNL_ALTERNATE, \LNK{pnl-manualse3.html}{dx5-17003}{}{73}
+  \item pnl_array_clone, \LNK{pnl-manualse2.html}{dx4-13005}{}{38}
+  \item pnl_array_copy, \LNK{pnl-manualse2.html}{dx4-13004}{}{37}
+  \item pnl_array_create, \LNK{pnl-manualse2.html}{dx4-13003}{}{36}
+  \item pnl_array_free, \LNK{pnl-manualse2.html}{dx4-13006}{}{39}
+  \item pnl_array_get, \LNK{pnl-manualse2.html}{dx4-13008}{}{41}
+  \item pnl_array_new, \LNK{pnl-manualse2.html}{dx4-13002}{}{35}
+  \item pnl_array_print, \LNK{pnl-manualse2.html}{dx4-13010}{}{43}
+  \item pnl_array_resize, \LNK{pnl-manualse2.html}{dx4-13007}{}{40}
+  \item pnl_array_set, \LNK{pnl-manualse2.html}{dx4-13009}{}{42}
+  \item pnl_asinh, \LNK{pnl-manualse3.html}{dx5-18017}{}{96}
+  \item pnl_atanh, \LNK{pnl-manualse3.html}{dx5-18018}{}{97}
+  \item pnl_band_mat_clone, \LNK{pnl-manualse4.html}{dx6-70005}{}{443}
+  \item pnl_band_mat_copy, \LNK{pnl-manualse4.html}{dx6-70006}{}{444}
+  \item pnl_band_mat_create, \LNK{pnl-manualse4.html}{dx6-70002}{}{440}
+  \item pnl_band_mat_create_from_mat, 
+		\LNK{pnl-manualse4.html}{dx6-70003}{}{441}
+  \item pnl_band_mat_div_band_mat_term, 
+		\LNK{pnl-manualse4.html}{dx6-72008}{}{459}
+  \item pnl_band_mat_div_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-72003}{}{454}
+  \item pnl_band_mat_free, \LNK{pnl-manualse4.html}{dx6-70004}{}{442}
+  \item pnl_band_mat_get, \LNK{pnl-manualse4.html}{dx6-71002}{}{448}
+  \item pnl_band_mat_inv_term, 
+		\LNK{pnl-manualse4.html}{dx6-72007}{}{458}
+  \item pnl_band_mat_lAxpby, \LNK{pnl-manualse4.html}{dx6-73001}{}{464}
+  \item pnl_band_mat_lget, \LNK{pnl-manualse4.html}{dx6-71003}{}{449}
+  \item pnl_band_mat_lu, \LNK{pnl-manualse4.html}{dx6-73005}{}{468}
+  \item pnl_band_mat_lu_syslin, 
+		\LNK{pnl-manualse4.html}{dx6-73007}{}{470}
+  \item pnl_band_mat_lu_syslin_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-73006}{}{469}
+  \item pnl_band_mat_map, \LNK{pnl-manualse4.html}{dx6-72010}{}{461}
+  \item pnl_band_mat_map_band_mat_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-72012}{}{463}
+  \item pnl_band_mat_map_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-72011}{}{462}
+  \item pnl_band_mat_minus_band_mat, 
+		\LNK{pnl-manualse4.html}{dx6-72006}{}{457}
+  \item pnl_band_mat_minus_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-72002}{}{453}
+  \item pnl_band_mat_mult_band_mat_term, 
+		\LNK{pnl-manualse4.html}{dx6-72009}{}{460}
+  \item pnl_band_mat_mult_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-72004}{}{455}
+  \item pnl_band_mat_mult_vect_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-73002}{}{465}
+  \item pnl_band_mat_new, \LNK{pnl-manualse4.html}{dx6-70001}{}{439}
+  \item PNL_BAND_MAT_OBJECT, \LNK{pnl-manualse2.html}{dx4-11008}{}{7}
+  \item pnl_band_mat_plus_band_mat, 
+		\LNK{pnl-manualse4.html}{dx6-72005}{}{456}
+  \item pnl_band_mat_plus_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-72001}{}{452}
+  \item pnl_band_mat_print_as_full, 
+		\LNK{pnl-manualse4.html}{dx6-71005}{}{451}
+  \item pnl_band_mat_resize, \LNK{pnl-manualse4.html}{dx6-70008}{}{446}
+  \item pnl_band_mat_set, \LNK{pnl-manualse4.html}{dx6-71001}{}{447}
+  \item pnl_band_mat_set_all, 
+		\LNK{pnl-manualse4.html}{dx6-71004}{}{450}
+  \item pnl_band_mat_syslin, \LNK{pnl-manualse4.html}{dx6-73004}{}{467}
+  \item pnl_band_mat_syslin_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-73003}{}{466}
+  \item pnl_band_mat_to_mat, \LNK{pnl-manualse4.html}{dx6-70007}{}{445}
+  \item pnl_basis_add_elt, \LNK{pnl-manualse7.html}{dx9-104015}{}{639}
+  \item PNL_BASIS_CANONICAL, 
+		\LNK{pnl-manualse7.html}{dx9-103002}{}{622}
+  \item pnl_basis_clone, \LNK{pnl-manualse7.html}{dx9-104008}{}{632}
+  \item pnl_basis_copy, \LNK{pnl-manualse7.html}{dx9-104009}{}{633}
+  \item pnl_basis_create, \LNK{pnl-manualse7.html}{dx9-104004}{}{628}
+  \item pnl_basis_create_from_degree, 
+		\LNK{pnl-manualse7.html}{dx9-104005}{}{629}
+  \item pnl_basis_create_from_hyperbolic_degree, 
+		\LNK{pnl-manualse7.html}{dx9-104011}{}{635}
+  \item pnl_basis_create_from_prod_degree, 
+		\LNK{pnl-manualse7.html}{dx9-104006}{}{630}
+  \item pnl_basis_create_from_tensor, 
+		\LNK{pnl-manualse7.html}{dx9-104007}{}{631}
+  \item pnl_basis_del_elt, \LNK{pnl-manualse7.html}{dx9-104013}{}{637}
+  \item pnl_basis_del_elt_i, 
+		\LNK{pnl-manualse7.html}{dx9-104014}{}{638}
+  \item pnl_basis_eval, \LNK{pnl-manualse7.html}{dx9-104032}{}{655}
+  \item pnl_basis_eval_D, \LNK{pnl-manualse7.html}{dx9-104033}{}{656}
+  \item pnl_basis_eval_D2, \LNK{pnl-manualse7.html}{dx9-104034}{}{657}
+  \item pnl_basis_eval_D2_vect, 
+		\LNK{pnl-manualse7.html}{dx9-104027}{}{650}
+  \item pnl_basis_eval_D_vect, 
+		\LNK{pnl-manualse7.html}{dx9-104026}{}{649}
+  \item pnl_basis_eval_derivs, 
+		\LNK{pnl-manualse7.html}{dx9-104035}{}{658}
+  \item pnl_basis_eval_derivs_vect, 
+		\LNK{pnl-manualse7.html}{dx9-104024}{}{647}
+  \item pnl_basis_eval_vect, 
+		\LNK{pnl-manualse7.html}{dx9-104025}{}{648}
+  \item pnl_basis_fit_ls, \LNK{pnl-manualse7.html}{dx9-104019}{}{642}
+  \item pnl_basis_free, \LNK{pnl-manualse7.html}{dx9-104012}{}{636}
+  \item PNL_BASIS_HERMITE, \LNK{pnl-manualse7.html}{dx9-103003}{}{623}
+  \item pnl_basis_i, \LNK{pnl-manualse7.html}{dx9-104029}{}{652}
+  \item pnl_basis_i_D, \LNK{pnl-manualse7.html}{dx9-104030}{}{653}
+  \item pnl_basis_i_D2, \LNK{pnl-manualse7.html}{dx9-104031}{}{654}
+  \item pnl_basis_i_D2_vect, 
+		\LNK{pnl-manualse7.html}{dx9-104023}{}{646}
+  \item pnl_basis_i_D_vect, \LNK{pnl-manualse7.html}{dx9-104022}{}{645}
+  \item pnl_basis_i_vect, \LNK{pnl-manualse7.html}{dx9-104021}{}{644}
+  \item pnl_basis_ik, \LNK{pnl-manualse7.html}{dx9-104028}{}{651}
+  \item pnl_basis_ik_vect, \LNK{pnl-manualse7.html}{dx9-104020}{}{643}
+  \item pnl_basis_new, \LNK{pnl-manualse7.html}{dx9-104002}{}{626}
+  \item PNL_BASIS_OBJECT, \LNK{pnl-manualse2.html}{dx4-11010}{}{9}
+  \item pnl_basis_print, \LNK{pnl-manualse7.html}{dx9-104003}{}{627}
+  \item pnl_basis_set_domain, 
+		\LNK{pnl-manualse7.html}{dx9-104017}{}{640}
+  \item pnl_basis_set_from_tensor, 
+		\LNK{pnl-manualse7.html}{dx9-104010}{}{634}
+  \item pnl_basis_set_reduced, 
+		\LNK{pnl-manualse7.html}{dx9-104018}{}{641}
+  \item PNL_BASIS_TCHEBYCHEV, 
+		\LNK{pnl-manualse7.html}{dx9-103004}{}{624}
+  \item pnl_basis_type_register, 
+		\LNK{pnl-manualse7.html}{dx9-104001}{}{625}
+  \item pnl_bessel_h1, \LNK{pnl-manualse14.html}{dx16-125010}{}{721}
+  \item pnl_bessel_h1_scaled, 
+		\LNK{pnl-manualse14.html}{dx16-125011}{}{722}
+  \item pnl_bessel_h2, \LNK{pnl-manualse14.html}{dx16-125012}{}{723}
+  \item pnl_bessel_h2_scaled, 
+		\LNK{pnl-manualse14.html}{dx16-125013}{}{724}
+  \item pnl_bessel_i, \LNK{pnl-manualse14.html}{dx16-125001}{}{712}
+  \item pnl_bessel_i_scaled, 
+		\LNK{pnl-manualse14.html}{dx16-125002}{}{713}
+  \item pnl_bessel_j, \LNK{pnl-manualse14.html}{dx16-125004}{}{715}
+  \item pnl_bessel_j_scaled, 
+		\LNK{pnl-manualse14.html}{dx16-125005}{}{716}
+  \item pnl_bessel_k, \LNK{pnl-manualse14.html}{dx16-125008}{}{719}
+  \item pnl_bessel_k_scaled, 
+		\LNK{pnl-manualse14.html}{dx16-125009}{}{720}
+  \item pnl_bessel_rati, \LNK{pnl-manualse14.html}{dx16-125003}{}{714}
+  \item pnl_bessel_y, \LNK{pnl-manualse14.html}{dx16-125006}{}{717}
+  \item pnl_bessel_y_scaled, 
+		\LNK{pnl-manualse14.html}{dx16-125007}{}{718}
+  \item pnl_bicg_solver_create, 
+		\LNK{pnl-manualse4.html}{dx6-92002}{}{522}
+  \item pnl_bicg_solver_free, 
+		\LNK{pnl-manualse4.html}{dx6-92004}{}{524}
+  \item pnl_bicg_solver_initialisation, 
+		\LNK{pnl-manualse4.html}{dx6-92003}{}{523}
+  \item pnl_bicg_solver_new, \LNK{pnl-manualse4.html}{dx6-92001}{}{521}
+  \item pnl_bicg_solver_solve, 
+		\LNK{pnl-manualse4.html}{dx6-92005}{}{525}
+  \item pnl_bs_call, \LNK{pnl-manualse16.html}{dx18-138003}{}{774}
+  \item pnl_bs_call_put, \LNK{pnl-manualse16.html}{dx18-138005}{}{776}
+  \item pnl_bs_gamma, \LNK{pnl-manualse16.html}{dx18-138007}{}{778}
+  \item pnl_bs_implicit_vol, 
+		\LNK{pnl-manualse16.html}{dx18-138008}{}{779}
+  \item pnl_bs_matrix_implicit_vol, 
+		\LNK{pnl-manualse16.html}{dx18-138009}{}{780}
+  \item pnl_bs_put, \LNK{pnl-manualse16.html}{dx18-138004}{}{775}
+  \item pnl_bs_vega, \LNK{pnl-manualse16.html}{dx18-138006}{}{777}
+  \item pnl_cdf2nor, \LNK{pnl-manualse5.html}{dx7-95016}{}{549}
+  \item pnl_cdf_bet, \LNK{pnl-manualse5.html}{dx7-95001}{}{534}
+  \item pnl_cdf_bin, \LNK{pnl-manualse5.html}{dx7-95002}{}{535}
+  \item pnl_cdf_chi, \LNK{pnl-manualse5.html}{dx7-95003}{}{536}
+  \item pnl_cdf_chn, \LNK{pnl-manualse5.html}{dx7-95004}{}{537}
+  \item pnl_cdf_f, \LNK{pnl-manualse5.html}{dx7-95005}{}{538}
+  \item pnl_cdf_fnc, \LNK{pnl-manualse5.html}{dx7-95006}{}{539}
+  \item pnl_cdf_gam, \LNK{pnl-manualse5.html}{dx7-95007}{}{540}
+  \item pnl_cdf_nbn, \LNK{pnl-manualse5.html}{dx7-95008}{}{541}
+  \item pnl_cdf_nor, \LNK{pnl-manualse5.html}{dx7-95009}{}{542}
+  \item pnl_cdf_poi, \LNK{pnl-manualse5.html}{dx7-95010}{}{543}
+  \item pnl_cdf_t, \LNK{pnl-manualse5.html}{dx7-95011}{}{544}
+  \item pnl_cdfbchi2n, \LNK{pnl-manualse5.html}{dx7-95013}{}{546}
+  \item pnl_cdfchi2n, \LNK{pnl-manualse5.html}{dx7-95012}{}{545}
+  \item pnl_cdfnor, \LNK{pnl-manualse5.html}{dx7-95015}{}{548}
+  \item pnl_cell_free, \LNK{pnl-manualse2.html}{dx4-12008}{}{24}
+  \item pnl_cell_new, \LNK{pnl-manualse2.html}{dx4-12004}{}{20}
+  \item pnl_cf_call_bs, \LNK{pnl-manualse16.html}{dx18-138001}{}{772}
+  \item pnl_cf_put_bs, \LNK{pnl-manualse16.html}{dx18-138002}{}{773}
+  \item pnl_cg_solver_create, 
+		\LNK{pnl-manualse4.html}{dx6-91002}{}{517}
+  \item pnl_cg_solver_free, \LNK{pnl-manualse4.html}{dx6-91004}{}{519}
+  \item pnl_cg_solver_initialisation, 
+		\LNK{pnl-manualse4.html}{dx6-91003}{}{518}
+  \item pnl_cg_solver_new, \LNK{pnl-manualse4.html}{dx6-91001}{}{516}
+  \item pnl_cg_solver_solve, \LNK{pnl-manualse4.html}{dx6-91005}{}{520}
+  \item pnl_complex_bessel_h1, 
+		\LNK{pnl-manualse14.html}{dx16-126010}{}{734}
+  \item pnl_complex_bessel_h1_scaled, 
+		\LNK{pnl-manualse14.html}{dx16-126011}{}{735}
+  \item pnl_complex_bessel_h2, 
+		\LNK{pnl-manualse14.html}{dx16-126012}{}{736}
+  \item pnl_complex_bessel_h2_scaled, 
+		\LNK{pnl-manualse14.html}{dx16-126013}{}{737}
+  \item pnl_complex_bessel_i, 
+		\LNK{pnl-manualse14.html}{dx16-126001}{}{725}
+  \item pnl_complex_bessel_i_scaled, 
+		\LNK{pnl-manualse14.html}{dx16-126002}{}{726}
+  \item pnl_complex_bessel_j, 
+		\LNK{pnl-manualse14.html}{dx16-126004}{}{728}
+  \item pnl_complex_bessel_j_scaled, 
+		\LNK{pnl-manualse14.html}{dx16-126005}{}{729}
+  \item pnl_complex_bessel_k, 
+		\LNK{pnl-manualse14.html}{dx16-126008}{}{732}
+  \item pnl_complex_bessel_k_scaled, 
+		\LNK{pnl-manualse14.html}{dx16-126009}{}{733}
+  \item pnl_complex_bessel_rati, 
+		\LNK{pnl-manualse14.html}{dx16-126003}{}{727}
+  \item pnl_complex_bessel_y, 
+		\LNK{pnl-manualse14.html}{dx16-126006}{}{730}
+  \item pnl_complex_bessel_y_scaled, 
+		\LNK{pnl-manualse14.html}{dx16-126007}{}{731}
+  \item pnl_cosm1, \LNK{pnl-manualse3.html}{dx5-18021}{}{100}
+  \item pnl_dcmt_create_array, 
+		\LNK{pnl-manualse6.html}{dx8-101002}{}{617}
+  \item pnl_dcmt_free, \LNK{pnl-manualse6.html}{dx8-101004}{}{619}
+  \item pnl_dcmt_free_array, 
+		\LNK{pnl-manualse6.html}{dx8-101005}{}{620}
+  \item pnl_dcmt_genrand_double, 
+		\LNK{pnl-manualse6.html}{dx8-101003}{}{618}
+  \item pnl_dcmt_get_parameter, 
+		\LNK{pnl-manualse6.html}{dx8-101001}{}{616}
+  \item pnl_deactivate_mtherr, 
+		\LNK{pnl-manualse14.html}{dx16-124001}{}{710}
+  \item pnl_expm1, \LNK{pnl-manualse3.html}{dx5-18020}{}{99}
+  \item pnl_fact, \LNK{pnl-manualse3.html}{dx5-18013}{}{92}
+  \item pnl_fft, \LNK{pnl-manualse9.html}{dx11-111003}{}{669}
+  \item pnl_fft2, \LNK{pnl-manualse9.html}{dx11-111005}{}{671}
+  \item pnl_fft2d, \LNK{pnl-manualse9.html}{dx11-111015}{}{681}
+  \item pnl_fft2d_inplace, \LNK{pnl-manualse9.html}{dx11-111013}{}{679}
+  \item pnl_fft_inplace, \LNK{pnl-manualse9.html}{dx11-111001}{}{667}
+  \item PNL_GET_PARENT_TYPE, \LNK{pnl-manualse2.html}{dx4-11016}{}{15}
+  \item PNL_GET_TYPE, \LNK{pnl-manualse2.html}{dx4-11015}{}{14}
+  \item PNL_GET_TYPENAME, \LNK{pnl-manualse2.html}{dx4-11014}{}{13}
+  \item pnl_gmres_solver_create, 
+		\LNK{pnl-manualse4.html}{dx6-93002}{}{527}
+  \item pnl_gmres_solver_free, 
+		\LNK{pnl-manualse4.html}{dx6-93004}{}{529}
+  \item pnl_gmres_solver_initialisation, 
+		\LNK{pnl-manualse4.html}{dx6-93003}{}{528}
+  \item pnl_gmres_solver_new, 
+		\LNK{pnl-manualse4.html}{dx6-93001}{}{526}
+  \item pnl_gmres_solver_solve, 
+		\LNK{pnl-manualse4.html}{dx6-93005}{}{530}
+  \item pnl_hmat_clone, \LNK{pnl-manualse4.html}{dx6-84007}{}{502}
+  \item pnl_hmat_copy, \LNK{pnl-manualse4.html}{dx6-84006}{}{501}
+  \item pnl_hmat_create, \LNK{pnl-manualse4.html}{dx6-84002}{}{497}
+  \item pnl_hmat_create_from_ptr, 
+		\LNK{pnl-manualse4.html}{dx6-84004}{}{499}
+  \item pnl_hmat_create_from_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-84003}{}{498}
+  \item pnl_hmat_free, \LNK{pnl-manualse4.html}{dx6-84005}{}{500}
+  \item pnl_hmat_get, \LNK{pnl-manualse4.html}{dx6-85002}{}{505}
+  \item pnl_hmat_lget, \LNK{pnl-manualse4.html}{dx6-85003}{}{506}
+  \item pnl_hmat_mult_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-87002}{}{511}
+  \item pnl_hmat_new, \LNK{pnl-manualse4.html}{dx6-84001}{}{496}
+  \item PNL_HMAT_OBJECT, \LNK{pnl-manualse2.html}{dx4-11007}{}{6}
+  \item pnl_hmat_plus_hmat, \LNK{pnl-manualse4.html}{dx6-87001}{}{510}
+  \item pnl_hmat_print, \LNK{pnl-manualse4.html}{dx6-86001}{}{509}
+  \item pnl_hmat_resize, \LNK{pnl-manualse4.html}{dx6-84008}{}{503}
+  \item pnl_hmat_set, \LNK{pnl-manualse4.html}{dx6-85001}{}{504}
+  \item pnl_ifft, \LNK{pnl-manualse9.html}{dx11-111004}{}{670}
+  \item pnl_ifft2, \LNK{pnl-manualse9.html}{dx11-111006}{}{672}
+  \item pnl_ifft2d, \LNK{pnl-manualse9.html}{dx11-111016}{}{682}
+  \item pnl_ifft2d_inplace, 
+		\LNK{pnl-manualse9.html}{dx11-111014}{}{680}
+  \item pnl_ifft_inplace, \LNK{pnl-manualse9.html}{dx11-111002}{}{668}
+  \item pnl_ilap_cdf_euler, 
+		\LNK{pnl-manualse10.html}{dx12-112003}{}{687}
+  \item pnl_ilap_euler, \LNK{pnl-manualse10.html}{dx12-112002}{}{686}
+  \item pnl_ilap_fft, \LNK{pnl-manualse10.html}{dx12-112004}{}{688}
+  \item pnl_ilap_gs, \LNK{pnl-manualse10.html}{dx12-112005}{}{689}
+  \item pnl_ilap_gs_basic, 
+		\LNK{pnl-manualse10.html}{dx12-112006}{}{690}
+  \item PNL_INF, \LNK{pnl-manualse3.html}{dx5-16026}{}{69}
+  \item pnl_integration, \LNK{pnl-manualse8.html}{dx10-107001}{}{659}
+  \item pnl_integration_2d, 
+		\LNK{pnl-manualse8.html}{dx10-107002}{}{660}
+  \item pnl_integration_GK, 
+		\LNK{pnl-manualse8.html}{dx10-107004}{}{662}
+  \item pnl_integration_GK2D, 
+		\LNK{pnl-manualse8.html}{dx10-107006}{}{664}
+  \item pnl_integration_qag, 
+		\LNK{pnl-manualse8.html}{dx10-107007}{}{665}
+  \item pnl_integration_qagp, 
+		\LNK{pnl-manualse8.html}{dx10-107008}{}{666}
+  \item pnl_integration_qng, 
+		\LNK{pnl-manualse8.html}{dx10-107003}{}{661}
+  \item pnl_integration_qng_2d, 
+		\LNK{pnl-manualse8.html}{dx10-107005}{}{663}
+  \item pnl_inv_cdfnor, \LNK{pnl-manualse5.html}{dx7-95017}{}{550}
+  \item pnl_iround, \LNK{pnl-manualse3.html}{dx5-18011}{}{90}
+  \item PNL_IS_EVEN, \LNK{pnl-manualse3.html}{dx5-17002}{}{72}
+  \item PNL_IS_ODD, \LNK{pnl-manualse3.html}{dx5-17001}{}{71}
+  \item pnl_isfinite, \LNK{pnl-manualse3.html}{dx5-18006}{}{85}
+  \item pnl_isinf, \LNK{pnl-manualse3.html}{dx5-18005}{}{84}
+  \item pnl_isnan, \LNK{pnl-manualse3.html}{dx5-18004}{}{83}
+  \item pnl_itrunc, \LNK{pnl-manualse3.html}{dx5-18007}{}{86}
+  \item pnl_lgamma, \LNK{pnl-manualse3.html}{dx5-18014}{}{93}
+  \item PNL_LIST_ARRAY, \LNK{pnl-manualse2.html}{dx4-11013}{}{12}
+  \item pnl_list_clone, \LNK{pnl-manualse2.html}{dx4-12006}{}{22}
+  \item pnl_list_concat, \LNK{pnl-manualse2.html}{dx4-12015}{}{31}
+  \item pnl_list_copy, \LNK{pnl-manualse2.html}{dx4-12005}{}{21}
+  \item pnl_list_free, \LNK{pnl-manualse2.html}{dx4-12007}{}{23}
+  \item pnl_list_get, \LNK{pnl-manualse2.html}{dx4-12009}{}{25}
+  \item pnl_list_insert_first, 
+		\LNK{pnl-manualse2.html}{dx4-12010}{}{26}
+  \item pnl_list_insert_last, \LNK{pnl-manualse2.html}{dx4-12011}{}{27}
+  \item pnl_list_new, \LNK{pnl-manualse2.html}{dx4-12003}{}{19}
+  \item PNL_LIST_OBJECT, \LNK{pnl-manualse2.html}{dx4-11012}{}{11}
+  \item pnl_list_print, \LNK{pnl-manualse2.html}{dx4-12017}{}{33}
+  \item pnl_list_remove_first, 
+		\LNK{pnl-manualse2.html}{dx4-12013}{}{29}
+  \item pnl_list_remove_i, \LNK{pnl-manualse2.html}{dx4-12014}{}{30}
+  \item pnl_list_remove_last, \LNK{pnl-manualse2.html}{dx4-12012}{}{28}
+  \item pnl_list_resize, \LNK{pnl-manualse2.html}{dx4-12016}{}{32}
+  \item pnl_log1p, \LNK{pnl-manualse3.html}{dx5-18019}{}{98}
+  \item pnl_lround, \LNK{pnl-manualse3.html}{dx5-18012}{}{91}
+  \item pnl_ltrunc, \LNK{pnl-manualse3.html}{dx5-18008}{}{87}
+  \item pnl_mat_add_row, \LNK{pnl-manualse4.html}{dx6-46021}{}{304}
+  \item pnl_mat_axpy, \LNK{pnl-manualse4.html}{dx6-52007}{}{343}
+  \item pnl_mat_bernoulli, \LNK{pnl-manualse6.html}{dx8-97039}{}{589}
+  \item pnl_mat_bicg_solver_solve, 
+		\LNK{pnl-manualse4.html}{dx6-94002}{}{532}
+  \item pnl_mat_cg_solver_solve, 
+		\LNK{pnl-manualse4.html}{dx6-94001}{}{531}
+  \item pnl_mat_chol, \LNK{pnl-manualse4.html}{dx6-53001}{}{359}
+  \item pnl_mat_chol_syslin, \LNK{pnl-manualse4.html}{dx6-53006}{}{364}
+  \item pnl_mat_chol_syslin_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-53007}{}{365}
+  \item pnl_mat_chol_syslin_mat, 
+		\LNK{pnl-manualse4.html}{dx6-53013}{}{371}
+  \item pnl_mat_clone, \LNK{pnl-manualse4.html}{dx6-45014}{}{278}
+  \item pnl_mat_col_permute, \LNK{pnl-manualse4.html}{dx6-57010}{}{391}
+  \item pnl_mat_complex_create_from_mat, 
+		\LNK{pnl-manualse4.html}{dx6-56001}{}{381}
+  \item pnl_mat_copy, \LNK{pnl-manualse4.html}{dx6-45007}{}{271}
+  \item pnl_mat_create, \LNK{pnl-manualse4.html}{dx6-45002}{}{266}
+  \item pnl_mat_create_diag, \LNK{pnl-manualse4.html}{dx6-45009}{}{273}
+  \item pnl_mat_create_diag_from_ptr, 
+		\LNK{pnl-manualse4.html}{dx6-45008}{}{272}
+  \item pnl_mat_create_from_file, 
+		\LNK{pnl-manualse4.html}{dx6-45010}{}{274}
+  \item pnl_mat_create_from_list, 
+		\LNK{pnl-manualse4.html}{dx6-45006}{}{270}
+  \item pnl_mat_create_from_ptr, 
+		\LNK{pnl-manualse4.html}{dx6-45005}{}{269}
+  \item pnl_mat_create_from_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-45003}{}{267}
+  \item pnl_mat_create_from_sp_mat, 
+		\LNK{pnl-manualse4.html}{dx6-77007}{}{480}
+  \item pnl_mat_create_from_zero, 
+		\LNK{pnl-manualse4.html}{dx6-45004}{}{268}
+  \item pnl_mat_cross, \LNK{pnl-manualse4.html}{dx6-52013}{}{349}
+  \item pnl_mat_cumprod, \LNK{pnl-manualse4.html}{dx6-49012}{}{325}
+  \item pnl_mat_cumsum, \LNK{pnl-manualse4.html}{dx6-49009}{}{322}
+  \item pnl_mat_del_row, \LNK{pnl-manualse4.html}{dx6-46022}{}{305}
+  \item pnl_mat_dgemm, \LNK{pnl-manualse4.html}{dx6-52016}{}{352}
+  \item pnl_mat_dgemv, \LNK{pnl-manualse4.html}{dx6-52015}{}{351}
+  \item pnl_mat_dger, \LNK{pnl-manualse4.html}{dx6-52008}{}{344}
+  \item pnl_mat_div_mat_term, 
+		\LNK{pnl-manualse4.html}{dx6-49002}{}{315}
+  \item pnl_mat_div_scalar, \LNK{pnl-manualse4.html}{dx6-48004}{}{313}
+  \item pnl_mat_eigen, \LNK{pnl-manualse4.html}{dx6-52022}{}{358}
+  \item pnl_mat_eq, \LNK{pnl-manualse4.html}{dx6-50001}{}{326}
+  \item pnl_mat_eq_all, \LNK{pnl-manualse4.html}{dx6-50002}{}{327}
+  \item pnl_mat_exp, \LNK{pnl-manualse4.html}{dx6-52020}{}{356}
+  \item pnl_mat_extract_subblock, 
+		\LNK{pnl-manualse4.html}{dx6-45018}{}{282}
+  \item pnl_mat_find, \LNK{pnl-manualse4.html}{dx6-51009}{}{336}
+  \item pnl_mat_fprint, \LNK{pnl-manualse4.html}{dx6-47002}{}{307}
+  \item pnl_mat_fprint_nsp, \LNK{pnl-manualse4.html}{dx6-47004}{}{309}
+  \item pnl_mat_free, \LNK{pnl-manualse4.html}{dx6-45011}{}{275}
+  \item pnl_mat_get, \LNK{pnl-manualse4.html}{dx6-46008}{}{291}
+  \item pnl_mat_get_col, \LNK{pnl-manualse4.html}{dx6-46016}{}{299}
+  \item pnl_mat_get_row, \LNK{pnl-manualse4.html}{dx6-46015}{}{298}
+  \item pnl_mat_gmres_solver_solve, 
+		\LNK{pnl-manualse4.html}{dx6-94003}{}{533}
+  \item pnl_mat_inverse, \LNK{pnl-manualse4.html}{dx6-53017}{}{375}
+  \item pnl_mat_inverse_with_chol, 
+		\LNK{pnl-manualse4.html}{dx6-53018}{}{376}
+  \item pnl_mat_lAxpby, \LNK{pnl-manualse4.html}{dx6-52014}{}{350}
+  \item pnl_mat_lget, \LNK{pnl-manualse4.html}{dx6-46009}{}{292}
+  \item pnl_mat_log, \LNK{pnl-manualse4.html}{dx6-52021}{}{357}
+  \item pnl_mat_lower_inverse, 
+		\LNK{pnl-manualse4.html}{dx6-53016}{}{374}
+  \item pnl_mat_lower_syslin, 
+		\LNK{pnl-manualse4.html}{dx6-53005}{}{363}
+  \item pnl_mat_ls, \LNK{pnl-manualse4.html}{dx6-55003}{}{379}
+  \item pnl_mat_ls_mat, \LNK{pnl-manualse4.html}{dx6-55004}{}{380}
+  \item pnl_mat_lu, \LNK{pnl-manualse4.html}{dx6-53003}{}{361}
+  \item pnl_mat_lu_syslin, \LNK{pnl-manualse4.html}{dx6-53008}{}{366}
+  \item pnl_mat_lu_syslin_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-53009}{}{367}
+  \item pnl_mat_lu_syslin_mat, 
+		\LNK{pnl-manualse4.html}{dx6-53014}{}{372}
+  \item pnl_mat_map, \LNK{pnl-manualse4.html}{dx6-49004}{}{317}
+  \item pnl_mat_map_inplace, \LNK{pnl-manualse4.html}{dx6-49003}{}{316}
+  \item pnl_mat_map_mat, \LNK{pnl-manualse4.html}{dx6-49006}{}{319}
+  \item pnl_mat_map_mat_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-49005}{}{318}
+  \item pnl_mat_max, \LNK{pnl-manualse4.html}{dx6-51001}{}{328}
+  \item pnl_mat_max_index, \LNK{pnl-manualse4.html}{dx6-51005}{}{332}
+  \item pnl_mat_min, \LNK{pnl-manualse4.html}{dx6-51002}{}{329}
+  \item pnl_mat_min_index, \LNK{pnl-manualse4.html}{dx6-51004}{}{331}
+  \item pnl_mat_minmax, \LNK{pnl-manualse4.html}{dx6-51003}{}{330}
+  \item pnl_mat_minmax_index, 
+		\LNK{pnl-manualse4.html}{dx6-51006}{}{333}
+  \item pnl_mat_minus_mat, \LNK{pnl-manualse4.html}{dx6-52002}{}{338}
+  \item pnl_mat_minus_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-48002}{}{311}
+  \item pnl_mat_mult_mat, \LNK{pnl-manualse4.html}{dx6-52017}{}{353}
+  \item pnl_mat_mult_mat_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-52018}{}{354}
+  \item pnl_mat_mult_mat_term, 
+		\LNK{pnl-manualse4.html}{dx6-49001}{}{314}
+  \item pnl_mat_mult_scalar, \LNK{pnl-manualse4.html}{dx6-48003}{}{312}
+  \item pnl_mat_mult_vect, \LNK{pnl-manualse4.html}{dx6-52009}{}{345}
+  \item pnl_mat_mult_vect_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-52010}{}{346}
+  \item pnl_mat_mult_vect_transpose, 
+		\LNK{pnl-manualse4.html}{dx6-52011}{}{347}
+  \item pnl_mat_mult_vect_transpose_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-52012}{}{348}
+  \item pnl_mat_new, \LNK{pnl-manualse4.html}{dx6-45001}{}{265}
+  \item PNL_MAT_OBJECT, \LNK{pnl-manualse2.html}{dx4-11005}{}{4}
+  \item pnl_mat_pchol, \LNK{pnl-manualse4.html}{dx6-53002}{}{360}
+  \item pnl_mat_plus_mat, \LNK{pnl-manualse4.html}{dx6-52001}{}{337}
+  \item pnl_mat_plus_scalar, \LNK{pnl-manualse4.html}{dx6-48001}{}{310}
+  \item pnl_mat_poisson, \LNK{pnl-manualse6.html}{dx8-97040}{}{590}
+  \item pnl_mat_print, \LNK{pnl-manualse4.html}{dx6-47001}{}{306}
+  \item pnl_mat_print_nsp, \LNK{pnl-manualse4.html}{dx6-47003}{}{308}
+  \item pnl_mat_prod, \LNK{pnl-manualse4.html}{dx6-49010}{}{323}
+  \item pnl_mat_prod_vect, \LNK{pnl-manualse4.html}{dx6-49011}{}{324}
+  \item pnl_mat_qr, \LNK{pnl-manualse4.html}{dx6-55001}{}{377}
+  \item pnl_mat_qr_syslin, \LNK{pnl-manualse4.html}{dx6-55002}{}{378}
+  \item pnl_mat_qsort, \LNK{pnl-manualse4.html}{dx6-51007}{}{334}
+  \item pnl_mat_qsort_index, \LNK{pnl-manualse4.html}{dx6-51008}{}{335}
+  \item pnl_mat_rand_normal, \LNK{pnl-manualse6.html}{dx8-98021}{}{611}
+  \item pnl_mat_rand_uni, \LNK{pnl-manualse6.html}{dx8-98019}{}{609}
+  \item pnl_mat_rand_uni2, \LNK{pnl-manualse6.html}{dx8-98020}{}{610}
+  \item pnl_mat_resize, \LNK{pnl-manualse4.html}{dx6-45015}{}{279}
+  \item pnl_mat_rng_normal, \LNK{pnl-manualse6.html}{dx8-97038}{}{588}
+  \item pnl_mat_rng_uni, \LNK{pnl-manualse6.html}{dx8-97036}{}{586}
+  \item pnl_mat_rng_uni2, \LNK{pnl-manualse6.html}{dx8-97037}{}{587}
+  \item pnl_mat_row_permute, \LNK{pnl-manualse4.html}{dx6-57011}{}{392}
+  \item pnl_mat_scalar_prod, \LNK{pnl-manualse4.html}{dx6-52019}{}{355}
+  \item pnl_mat_set, \LNK{pnl-manualse4.html}{dx6-46007}{}{290}
+  \item pnl_mat_set_all, \LNK{pnl-manualse4.html}{dx6-46010}{}{293}
+  \item pnl_mat_set_col, \LNK{pnl-manualse4.html}{dx6-46019}{}{302}
+  \item pnl_mat_set_diag, \LNK{pnl-manualse4.html}{dx6-46013}{}{296}
+  \item pnl_mat_set_from_ptr, 
+		\LNK{pnl-manualse4.html}{dx6-46014}{}{297}
+  \item pnl_mat_set_id, \LNK{pnl-manualse4.html}{dx6-46012}{}{295}
+  \item pnl_mat_set_row, \LNK{pnl-manualse4.html}{dx6-46020}{}{303}
+  \item pnl_mat_set_subblock, 
+		\LNK{pnl-manualse4.html}{dx6-45019}{}{283}
+  \item pnl_mat_set_zero, \LNK{pnl-manualse4.html}{dx6-46011}{}{294}
+  \item pnl_mat_sq_transpose, 
+		\LNK{pnl-manualse4.html}{dx6-52003}{}{339}
+  \item pnl_mat_sum, \LNK{pnl-manualse4.html}{dx6-49007}{}{320}
+  \item pnl_mat_sum_vect, \LNK{pnl-manualse4.html}{dx6-49008}{}{321}
+  \item pnl_mat_swap_rows, \LNK{pnl-manualse4.html}{dx6-46018}{}{301}
+  \item pnl_mat_syslin, \LNK{pnl-manualse4.html}{dx6-53010}{}{368}
+  \item pnl_mat_syslin_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-53011}{}{369}
+  \item pnl_mat_syslin_mat, \LNK{pnl-manualse4.html}{dx6-53012}{}{370}
+  \item pnl_mat_tr, \LNK{pnl-manualse4.html}{dx6-52005}{}{341}
+  \item pnl_mat_trace, \LNK{pnl-manualse4.html}{dx6-52006}{}{342}
+  \item pnl_mat_transpose, \LNK{pnl-manualse4.html}{dx6-52004}{}{340}
+  \item pnl_mat_upper_inverse, 
+		\LNK{pnl-manualse4.html}{dx6-53015}{}{373}
+  \item pnl_mat_upper_syslin, 
+		\LNK{pnl-manualse4.html}{dx6-53004}{}{362}
+  \item pnl_mat_wrap_array, \LNK{pnl-manualse4.html}{dx6-45012}{}{276}
+  \item pnl_mat_wrap_hmat, \LNK{pnl-manualse4.html}{dx6-85004}{}{507}
+  \item pnl_mat_wrap_vect, \LNK{pnl-manualse4.html}{dx6-45013}{}{277}
+  \item pnl_mt_genrand, \LNK{pnl-manualse6.html}{dx8-100002}{}{614}
+  \item pnl_mt_genrand_double, 
+		\LNK{pnl-manualse6.html}{dx8-100003}{}{615}
+  \item pnl_mt_sseed, \LNK{pnl-manualse6.html}{dx8-100001}{}{613}
+  \item pnl_multiroot_newton, 
+		\LNK{pnl-manualse13.html}{dx15-123001}{}{707}
+  \item pnl_nan, \LNK{pnl-manualse3.html}{dx5-18001}{}{80}
+  \item PNL_NEGINF, \LNK{pnl-manualse3.html}{dx5-16024}{}{67}
+  \item pnl_neginf, \LNK{pnl-manualse3.html}{dx5-18003}{}{82}
+  \item pnl_normal_density, \LNK{pnl-manualse5.html}{dx7-95014}{}{547}
+  \item PNL_OBJECT, \LNK{pnl-manualse2.html}{dx4-11003}{}{2}
+  \item pnl_object_create, \LNK{pnl-manualse2.html}{dx4-11017}{}{16}
+  \item pnl_object_load, \LNK{pnl-manualse15.html}{dx17-137004}{}{770}
+  \item pnl_object_load_into_list, 
+		\LNK{pnl-manualse15.html}{dx17-137005}{}{771}
+  \item pnl_object_mpi_bcast, 
+		\LNK{pnl-manualse15.html}{dx17-136007}{}{763}
+  \item pnl_object_mpi_irecv, 
+		\LNK{pnl-manualse15.html}{dx17-136010}{}{766}
+  \item pnl_object_mpi_isend, 
+		\LNK{pnl-manualse15.html}{dx17-136009}{}{765}
+  \item pnl_object_mpi_pack, 
+		\LNK{pnl-manualse15.html}{dx17-136002}{}{758}
+  \item pnl_object_mpi_pack_size, 
+		\LNK{pnl-manualse15.html}{dx17-136001}{}{757}
+  \item pnl_object_mpi_recv, 
+		\LNK{pnl-manualse15.html}{dx17-136006}{}{762}
+  \item pnl_object_mpi_reduce, 
+		\LNK{pnl-manualse15.html}{dx17-136008}{}{764}
+  \item pnl_object_mpi_send, 
+		\LNK{pnl-manualse15.html}{dx17-136004}{}{760}
+  \item pnl_object_mpi_ssend, 
+		\LNK{pnl-manualse15.html}{dx17-136005}{}{761}
+  \item pnl_object_mpi_unpack, 
+		\LNK{pnl-manualse15.html}{dx17-136003}{}{759}
+  \item pnl_object_save, \LNK{pnl-manualse15.html}{dx17-137003}{}{769}
+  \item pnl_ode_rkf45, \LNK{pnl-manualse11.html}{dx13-115001}{}{692}
+  \item pnl_ode_rkf45_step, 
+		\LNK{pnl-manualse11.html}{dx13-115002}{}{693}
+  \item pnl_optim_intpoints_bfgs_solve, 
+		\LNK{pnl-manualse12.html}{dx14-118001}{}{694}
+  \item pnl_permutation_create, 
+		\LNK{pnl-manualse4.html}{dx6-57003}{}{384}
+  \item pnl_permutation_fprint, 
+		\LNK{pnl-manualse4.html}{dx6-57012}{}{393}
+  \item pnl_permutation_free, 
+		\LNK{pnl-manualse4.html}{dx6-57004}{}{385}
+  \item pnl_permutation_inverse, 
+		\LNK{pnl-manualse4.html}{dx6-57005}{}{386}
+  \item pnl_permutation_new, \LNK{pnl-manualse4.html}{dx6-57002}{}{383}
+  \item pnl_permutation_print, 
+		\LNK{pnl-manualse4.html}{dx6-57013}{}{394}
+  \item PNL_POSINF, \LNK{pnl-manualse3.html}{dx5-16025}{}{68}
+  \item pnl_posinf, \LNK{pnl-manualse3.html}{dx5-18002}{}{81}
+  \item pnl_pow_i, \LNK{pnl-manualse3.html}{dx5-18022}{}{101}
+  \item pnl_rand_bernoulli, \LNK{pnl-manualse6.html}{dx8-98005}{}{595}
+  \item pnl_rand_bessel, \LNK{pnl-manualse6.html}{dx8-98014}{}{604}
+  \item pnl_rand_chi2, \LNK{pnl-manualse6.html}{dx8-98013}{}{603}
+  \item pnl_rand_exp, \LNK{pnl-manualse6.html}{dx8-98007}{}{597}
+  \item pnl_rand_gamma, \LNK{pnl-manualse6.html}{dx8-98012}{}{602}
+  \item pnl_rand_gauss, \LNK{pnl-manualse6.html}{dx8-98022}{}{612}
+  \item pnl_rand_init, \LNK{pnl-manualse6.html}{dx8-98001}{}{591}
+  \item pnl_rand_name, \LNK{pnl-manualse6.html}{dx8-98004}{}{594}
+  \item pnl_rand_normal, \LNK{pnl-manualse6.html}{dx8-98010}{}{600}
+  \item pnl_rand_or_quasi, \LNK{pnl-manualse6.html}{dx8-98002}{}{592}
+  \item pnl_rand_poisson, \LNK{pnl-manualse6.html}{dx8-98006}{}{596}
+  \item pnl_rand_poisson1, \LNK{pnl-manualse6.html}{dx8-98011}{}{601}
+  \item pnl_rand_sseed, \LNK{pnl-manualse6.html}{dx8-98003}{}{593}
+  \item pnl_rand_uni, \LNK{pnl-manualse6.html}{dx8-98008}{}{598}
+  \item pnl_rand_uni_ab, \LNK{pnl-manualse6.html}{dx8-98009}{}{599}
+  \item pnl_real_fft, \LNK{pnl-manualse9.html}{dx11-111007}{}{673}
+  \item pnl_real_fft2, \LNK{pnl-manualse9.html}{dx11-111011}{}{677}
+  \item pnl_real_fft2d, \LNK{pnl-manualse9.html}{dx11-111017}{}{683}
+  \item pnl_real_fft_inplace, 
+		\LNK{pnl-manualse9.html}{dx11-111009}{}{675}
+  \item pnl_real_ifft, \LNK{pnl-manualse9.html}{dx11-111008}{}{674}
+  \item pnl_real_ifft2, \LNK{pnl-manualse9.html}{dx11-111012}{}{678}
+  \item pnl_real_ifft2d, \LNK{pnl-manualse9.html}{dx11-111018}{}{684}
+  \item pnl_real_ifft_inplace, 
+		\LNK{pnl-manualse9.html}{dx11-111010}{}{676}
+  \item pnl_rng_bernoulli, \LNK{pnl-manualse6.html}{dx8-97014}{}{564}
+  \item pnl_rng_bessel, \LNK{pnl-manualse6.html}{dx8-97026}{}{576}
+  \item pnl_rng_chi2, \LNK{pnl-manualse6.html}{dx8-97025}{}{575}
+  \item pnl_rng_clone, \LNK{pnl-manualse6.html}{dx8-97007}{}{557}
+  \item pnl_rng_copy, \LNK{pnl-manualse6.html}{dx8-97006}{}{556}
+  \item pnl_rng_create, \LNK{pnl-manualse6.html}{dx8-97003}{}{553}
+  \item pnl_rng_create_from_file, 
+		\LNK{pnl-manualse15.html}{dx17-137001}{}{767}
+  \item pnl_rng_dblexp, \LNK{pnl-manualse6.html}{dx8-97017}{}{567}
+  \item pnl_rng_dcmt_create_array, 
+		\LNK{pnl-manualse6.html}{dx8-97010}{}{560}
+  \item pnl_rng_dcmt_create_array_id, 
+		\LNK{pnl-manualse6.html}{dx8-97009}{}{559}
+  \item pnl_rng_dcmt_create_id, 
+		\LNK{pnl-manualse6.html}{dx8-97008}{}{558}
+  \item pnl_rng_exp, \LNK{pnl-manualse6.html}{dx8-97016}{}{566}
+  \item pnl_rng_free, \LNK{pnl-manualse6.html}{dx8-97002}{}{552}
+  \item pnl_rng_gamma, \LNK{pnl-manualse6.html}{dx8-97024}{}{574}
+  \item pnl_rng_gauss, \LNK{pnl-manualse6.html}{dx8-97027}{}{577}
+  \item pnl_rng_get_from_id, \LNK{pnl-manualse6.html}{dx8-97013}{}{563}
+  \item pnl_rng_init, \LNK{pnl-manualse6.html}{dx8-97012}{}{562}
+  \item pnl_rng_invgauss, \LNK{pnl-manualse6.html}{dx8-97022}{}{572}
+  \item pnl_rng_lognormal, \LNK{pnl-manualse6.html}{dx8-97021}{}{571}
+  \item pnl_rng_new, \LNK{pnl-manualse6.html}{dx8-97011}{}{561}
+  \item pnl_rng_normal, \LNK{pnl-manualse6.html}{dx8-97020}{}{570}
+  \item PNL_RNG_OBJECT, \LNK{pnl-manualse2.html}{dx4-11011}{}{10}
+  \item pnl_rng_poisson, \LNK{pnl-manualse6.html}{dx8-97015}{}{565}
+  \item pnl_rng_poisson1, \LNK{pnl-manualse6.html}{dx8-97023}{}{573}
+  \item pnl_rng_save_to_file, 
+		\LNK{pnl-manualse15.html}{dx17-137002}{}{768}
+  \item pnl_rng_sdim, \LNK{pnl-manualse6.html}{dx8-97005}{}{555}
+  \item pnl_rng_sseed, \LNK{pnl-manualse6.html}{dx8-97004}{}{554}
+  \item pnl_rng_uni, \LNK{pnl-manualse6.html}{dx8-97018}{}{568}
+  \item pnl_rng_uni_ab, \LNK{pnl-manualse6.html}{dx8-97019}{}{569}
+  \item pnl_root_bisection, 
+		\LNK{pnl-manualse13.html}{dx15-122004}{}{706}
+  \item pnl_root_brent, \LNK{pnl-manualse13.html}{dx15-122001}{}{703}
+  \item pnl_root_fsolve, \LNK{pnl-manualse13.html}{dx15-123002}{}{708}
+  \item pnl_root_fsolve_lsq, 
+		\LNK{pnl-manualse13.html}{dx15-123003}{}{709}
+  \item pnl_root_newton, \LNK{pnl-manualse13.html}{dx15-122003}{}{705}
+  \item pnl_root_newton_bisection, 
+		\LNK{pnl-manualse13.html}{dx15-122002}{}{704}
+  \item pnl_round, \LNK{pnl-manualse3.html}{dx5-18010}{}{89}
+  \item pnl_sf_choose, \LNK{pnl-manualse14.html}{dx16-128005}{}{746}
+  \item pnl_sf_erf, \LNK{pnl-manualse14.html}{dx16-127001}{}{738}
+  \item pnl_sf_erfc, \LNK{pnl-manualse14.html}{dx16-127002}{}{739}
+  \item pnl_sf_expint_En, \LNK{pnl-manualse14.html}{dx16-131001}{}{751}
+  \item pnl_sf_fact, \LNK{pnl-manualse14.html}{dx16-128001}{}{742}
+  \item pnl_sf_gamma, \LNK{pnl-manualse14.html}{dx16-128002}{}{743}
+  \item pnl_sf_gamma_inc, \LNK{pnl-manualse14.html}{dx16-130001}{}{748}
+  \item pnl_sf_gamma_inc_P, 
+		\LNK{pnl-manualse14.html}{dx16-130002}{}{749}
+  \item pnl_sf_gamma_inc_Q, 
+		\LNK{pnl-manualse14.html}{dx16-130003}{}{750}
+  \item pnl_sf_hyperg_0F1, 
+		\LNK{pnl-manualse14.html}{dx16-132004}{}{755}
+  \item pnl_sf_hyperg_1F1, 
+		\LNK{pnl-manualse14.html}{dx16-132002}{}{753}
+  \item pnl_sf_hyperg_2F0, 
+		\LNK{pnl-manualse14.html}{dx16-132003}{}{754}
+  \item pnl_sf_hyperg_2F1, 
+		\LNK{pnl-manualse14.html}{dx16-132001}{}{752}
+  \item pnl_sf_hyperg_U, \LNK{pnl-manualse14.html}{dx16-132005}{}{756}
+  \item pnl_sf_log_erf, \LNK{pnl-manualse14.html}{dx16-127003}{}{740}
+  \item pnl_sf_log_erfc, \LNK{pnl-manualse14.html}{dx16-127004}{}{741}
+  \item pnl_sf_log_gamma, \LNK{pnl-manualse14.html}{dx16-128003}{}{744}
+  \item pnl_sf_log_gamma_sgn, 
+		\LNK{pnl-manualse14.html}{dx16-128004}{}{745}
+  \item pnl_sf_psi, \LNK{pnl-manualse14.html}{dx16-129001}{}{747}
+  \item PNL_SIGN, \LNK{pnl-manualse3.html}{dx5-17007}{}{77}
+  \item pnl_sp_mat_clone, \LNK{pnl-manualse4.html}{dx6-77003}{}{476}
+  \item pnl_sp_mat_copy, \LNK{pnl-manualse4.html}{dx6-77004}{}{477}
+  \item pnl_sp_mat_create, \LNK{pnl-manualse4.html}{dx6-77002}{}{475}
+  \item pnl_sp_mat_create_from_mat, 
+		\LNK{pnl-manualse4.html}{dx6-77008}{}{481}
+  \item pnl_sp_mat_div_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-79004}{}{488}
+  \item pnl_sp_mat_eq, \LNK{pnl-manualse4.html}{dx6-77009}{}{482}
+  \item pnl_sp_mat_fprint, \LNK{pnl-manualse4.html}{dx6-80001}{}{489}
+  \item pnl_sp_mat_free, \LNK{pnl-manualse4.html}{dx6-77005}{}{478}
+  \item pnl_sp_mat_get, \LNK{pnl-manualse4.html}{dx6-78002}{}{484}
+  \item pnl_sp_mat_lAxpby, \LNK{pnl-manualse4.html}{dx6-80004}{}{492}
+  \item pnl_sp_mat_minus_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-79002}{}{486}
+  \item pnl_sp_mat_mult_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-79003}{}{487}
+  \item pnl_sp_mat_mult_vect, 
+		\LNK{pnl-manualse4.html}{dx6-80003}{}{491}
+  \item pnl_sp_mat_new, \LNK{pnl-manualse4.html}{dx6-77001}{}{474}
+  \item PNL_SP_MAT_OBJECT, \LNK{pnl-manualse2.html}{dx4-11006}{}{5}
+  \item pnl_sp_mat_plus_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-79001}{}{485}
+  \item pnl_sp_mat_print, \LNK{pnl-manualse4.html}{dx6-80002}{}{490}
+  \item pnl_sp_mat_resize, \LNK{pnl-manualse4.html}{dx6-77006}{}{479}
+  \item pnl_sp_mat_set, \LNK{pnl-manualse4.html}{dx6-78001}{}{483}
+  \item pnl_tgamma, \LNK{pnl-manualse3.html}{dx5-18015}{}{94}
+  \item pnl_tridiag_mat_clone, 
+		\LNK{pnl-manualse4.html}{dx6-61009}{}{405}
+  \item pnl_tridiag_mat_copy, 
+		\LNK{pnl-manualse4.html}{dx6-61008}{}{404}
+  \item pnl_tridiag_mat_create, 
+		\LNK{pnl-manualse4.html}{dx6-61002}{}{398}
+  \item pnl_tridiag_mat_create_from_mat, 
+		\LNK{pnl-manualse4.html}{dx6-61006}{}{402}
+  \item pnl_tridiag_mat_create_from_ptr, 
+		\LNK{pnl-manualse4.html}{dx6-61005}{}{401}
+  \item pnl_tridiag_mat_create_from_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-61003}{}{399}
+  \item pnl_tridiag_mat_create_from_two_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-61004}{}{400}
+  \item pnl_tridiag_mat_div_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-64006}{}{418}
+  \item pnl_tridiag_mat_div_tridiag_mat_term, 
+		\LNK{pnl-manualse4.html}{dx6-65002}{}{420}
+  \item pnl_tridiag_mat_fprint, 
+		\LNK{pnl-manualse4.html}{dx6-63001}{}{411}
+  \item pnl_tridiag_mat_free, 
+		\LNK{pnl-manualse4.html}{dx6-61010}{}{406}
+  \item pnl_tridiag_mat_get, \LNK{pnl-manualse4.html}{dx6-62002}{}{409}
+  \item pnl_tridiag_mat_lAxpby, 
+		\LNK{pnl-manualse4.html}{dx6-66003}{}{425}
+  \item pnl_tridiag_mat_lget, 
+		\LNK{pnl-manualse4.html}{dx6-62003}{}{410}
+  \item pnl_tridiag_mat_lu_clone, 
+		\LNK{pnl-manualse4.html}{dx6-66010}{}{432}
+  \item pnl_tridiag_mat_lu_compute, 
+		\LNK{pnl-manualse4.html}{dx6-66013}{}{435}
+  \item pnl_tridiag_mat_lu_copy, 
+		\LNK{pnl-manualse4.html}{dx6-66009}{}{431}
+  \item pnl_tridiag_mat_lu_create, 
+		\LNK{pnl-manualse4.html}{dx6-66008}{}{430}
+  \item pnl_tridiag_mat_lu_free, 
+		\LNK{pnl-manualse4.html}{dx6-66011}{}{433}
+  \item pnl_tridiag_mat_lu_new, 
+		\LNK{pnl-manualse4.html}{dx6-66007}{}{429}
+  \item pnl_tridiag_mat_lu_resize, 
+		\LNK{pnl-manualse4.html}{dx6-66012}{}{434}
+  \item pnl_tridiag_mat_lu_syslin, 
+		\LNK{pnl-manualse4.html}{dx6-66015}{}{437}
+  \item pnl_tridiag_mat_lu_syslin_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-66014}{}{436}
+  \item pnl_tridiag_mat_map_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-65003}{}{421}
+  \item pnl_tridiag_mat_map_tridiag_mat_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-65004}{}{422}
+  \item pnl_tridiag_mat_minus_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-64004}{}{416}
+  \item pnl_tridiag_mat_minus_tridiag_mat, 
+		\LNK{pnl-manualse4.html}{dx6-64002}{}{414}
+  \item pnl_tridiag_mat_mult_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-64005}{}{417}
+  \item pnl_tridiag_mat_mult_tridiag_mat_term, 
+		\LNK{pnl-manualse4.html}{dx6-65001}{}{419}
+  \item pnl_tridiag_mat_mult_vect, 
+		\LNK{pnl-manualse4.html}{dx6-66002}{}{424}
+  \item pnl_tridiag_mat_mult_vect_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-66001}{}{423}
+  \item pnl_tridiag_mat_new, \LNK{pnl-manualse4.html}{dx6-61001}{}{397}
+  \item pnl_tridiag_mat_plus_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-64003}{}{415}
+  \item pnl_tridiag_mat_plus_tridiag_mat, 
+		\LNK{pnl-manualse4.html}{dx6-64001}{}{413}
+  \item pnl_tridiag_mat_print, 
+		\LNK{pnl-manualse4.html}{dx6-63002}{}{412}
+  \item pnl_tridiag_mat_resize, 
+		\LNK{pnl-manualse4.html}{dx6-61011}{}{407}
+  \item pnl_tridiag_mat_scalar_prod, 
+		\LNK{pnl-manualse4.html}{dx6-66004}{}{426}
+  \item pnl_tridiag_mat_set, \LNK{pnl-manualse4.html}{dx6-62001}{}{408}
+  \item pnl_tridiag_mat_syslin, 
+		\LNK{pnl-manualse4.html}{dx6-66006}{}{428}
+  \item pnl_tridiag_mat_syslin_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-66005}{}{427}
+  \item pnl_tridiag_mat_to_mat, 
+		\LNK{pnl-manualse4.html}{dx6-61007}{}{403}
+  \item PNL_TRIDIAGMAT_OBJECT, \LNK{pnl-manualse2.html}{dx4-11009}{}{8}
+  \item pnl_trunc, \LNK{pnl-manualse3.html}{dx5-18009}{}{88}
+  \item pnl_vect_axpby, \LNK{pnl-manualse4.html}{dx6-33010}{}{213}
+  \item pnl_vect_clone, \LNK{pnl-manualse4.html}{dx6-28010}{}{170}
+  \item pnl_vect_compact_copy, 
+		\LNK{pnl-manualse4.html}{dx6-41005}{}{256}
+  \item pnl_vect_compact_create, 
+		\LNK{pnl-manualse4.html}{dx6-41002}{}{253}
+  \item pnl_vect_compact_create_from_ptr, 
+		\LNK{pnl-manualse4.html}{dx6-41003}{}{254}
+  \item pnl_vect_compact_free, 
+		\LNK{pnl-manualse4.html}{dx6-41006}{}{257}
+  \item pnl_vect_compact_get, 
+		\LNK{pnl-manualse4.html}{dx6-41008}{}{259}
+  \item pnl_vect_compact_new, 
+		\LNK{pnl-manualse4.html}{dx6-41001}{}{252}
+  \item pnl_vect_compact_resize, 
+		\LNK{pnl-manualse4.html}{dx6-41004}{}{255}
+  \item pnl_vect_compact_set_all, 
+		\LNK{pnl-manualse4.html}{dx6-41009}{}{260}
+  \item pnl_vect_compact_set_ptr, 
+		\LNK{pnl-manualse4.html}{dx6-41010}{}{261}
+  \item pnl_vect_compact_to_pnl_vect, 
+		\LNK{pnl-manualse4.html}{dx6-41007}{}{258}
+  \item pnl_vect_complex_create_from_array, 
+		\LNK{pnl-manualse4.html}{dx6-38002}{}{238}
+  \item pnl_vect_complex_get_imag, 
+		\LNK{pnl-manualse4.html}{dx6-38006}{}{242}
+  \item pnl_vect_complex_get_real, 
+		\LNK{pnl-manualse4.html}{dx6-38005}{}{241}
+  \item pnl_vect_complex_lget_imag, 
+		\LNK{pnl-manualse4.html}{dx6-38008}{}{244}
+  \item pnl_vect_complex_lget_real, 
+		\LNK{pnl-manualse4.html}{dx6-38007}{}{243}
+  \item pnl_vect_complex_mult_double, 
+		\LNK{pnl-manualse4.html}{dx6-38001}{}{237}
+  \item pnl_vect_complex_set_imag, 
+		\LNK{pnl-manualse4.html}{dx6-38010}{}{246}
+  \item pnl_vect_complex_set_real, 
+		\LNK{pnl-manualse4.html}{dx6-38009}{}{245}
+  \item pnl_vect_complex_split_in_array, 
+		\LNK{pnl-manualse4.html}{dx6-38003}{}{239}
+  \item pnl_vect_complex_split_in_vect, 
+		\LNK{pnl-manualse4.html}{dx6-38004}{}{240}
+  \item pnl_vect_copy, \LNK{pnl-manualse4.html}{dx6-28009}{}{169}
+  \item pnl_vect_create, \LNK{pnl-manualse4.html}{dx6-28002}{}{162}
+  \item pnl_vect_create_from_file, 
+		\LNK{pnl-manualse4.html}{dx6-28008}{}{168}
+  \item pnl_vect_create_from_list, 
+		\LNK{pnl-manualse4.html}{dx6-28007}{}{167}
+  \item pnl_vect_create_from_mat, 
+		\LNK{pnl-manualse4.html}{dx6-28006}{}{166}
+  \item pnl_vect_create_from_ptr, 
+		\LNK{pnl-manualse4.html}{dx6-28005}{}{165}
+  \item pnl_vect_create_from_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-28004}{}{164}
+  \item pnl_vect_create_from_zero, 
+		\LNK{pnl-manualse4.html}{dx6-28003}{}{163}
+  \item pnl_vect_create_submat, 
+		\LNK{pnl-manualse4.html}{dx6-45016}{}{280}
+  \item pnl_vect_create_subvect, 
+		\LNK{pnl-manualse4.html}{dx6-28013}{}{173}
+  \item pnl_vect_create_subvect_with_ind, 
+		\LNK{pnl-manualse4.html}{dx6-28011}{}{171}
+  \item pnl_vect_cross, \LNK{pnl-manualse4.html}{dx6-34005}{}{222}
+  \item pnl_vect_cumprod, \LNK{pnl-manualse4.html}{dx6-33014}{}{217}
+  \item pnl_vect_cumsum, \LNK{pnl-manualse4.html}{dx6-33012}{}{215}
+  \item pnl_vect_dist, \LNK{pnl-manualse4.html}{dx6-34006}{}{223}
+  \item pnl_vect_div_scalar, \LNK{pnl-manualse4.html}{dx6-32005}{}{203}
+  \item pnl_vect_div_vect_term, 
+		\LNK{pnl-manualse4.html}{dx6-33004}{}{207}
+  \item pnl_vect_eq, \LNK{pnl-manualse4.html}{dx6-35001}{}{224}
+  \item pnl_vect_eq_all, \LNK{pnl-manualse4.html}{dx6-35002}{}{225}
+  \item pnl_vect_extract_submat, 
+		\LNK{pnl-manualse4.html}{dx6-45017}{}{281}
+  \item pnl_vect_extract_subvect, 
+		\LNK{pnl-manualse4.html}{dx6-28014}{}{174}
+  \item pnl_vect_extract_subvect_with_ind, 
+		\LNK{pnl-manualse4.html}{dx6-28012}{}{172}
+  \item pnl_vect_find, \LNK{pnl-manualse4.html}{dx6-36009}{}{234}
+  \item pnl_vect_fprint, \LNK{pnl-manualse4.html}{dx6-31002}{}{194}
+  \item pnl_vect_fprint_asrow, 
+		\LNK{pnl-manualse4.html}{dx6-31004}{}{196}
+  \item pnl_vect_fprint_nsp, \LNK{pnl-manualse4.html}{dx6-31006}{}{198}
+  \item pnl_vect_free, \LNK{pnl-manualse4.html}{dx6-28015}{}{175}
+  \item pnl_vect_get, \LNK{pnl-manualse4.html}{dx6-30008}{}{189}
+  \item pnl_vect_inv_term, \LNK{pnl-manualse4.html}{dx6-33003}{}{206}
+  \item pnl_vect_lget, \LNK{pnl-manualse4.html}{dx6-30009}{}{190}
+  \item pnl_vect_map, \LNK{pnl-manualse4.html}{dx6-33006}{}{209}
+  \item pnl_vect_map_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-33007}{}{210}
+  \item pnl_vect_map_vect, \LNK{pnl-manualse4.html}{dx6-33008}{}{211}
+  \item pnl_vect_map_vect_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-33009}{}{212}
+  \item pnl_vect_max, \LNK{pnl-manualse4.html}{dx6-36001}{}{226}
+  \item pnl_vect_max_index, \LNK{pnl-manualse4.html}{dx6-36005}{}{230}
+  \item pnl_vect_min, \LNK{pnl-manualse4.html}{dx6-36002}{}{227}
+  \item pnl_vect_min_index, \LNK{pnl-manualse4.html}{dx6-36004}{}{229}
+  \item pnl_vect_minmax, \LNK{pnl-manualse4.html}{dx6-36003}{}{228}
+  \item pnl_vect_minmax_index, 
+		\LNK{pnl-manualse4.html}{dx6-36006}{}{231}
+  \item pnl_vect_minus, \LNK{pnl-manualse4.html}{dx6-32001}{}{199}
+  \item pnl_vect_minus_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-32003}{}{201}
+  \item pnl_vect_minus_vect, \LNK{pnl-manualse4.html}{dx6-33002}{}{205}
+  \item pnl_vect_mult_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-32004}{}{202}
+  \item pnl_vect_mult_vect_term, 
+		\LNK{pnl-manualse4.html}{dx6-33005}{}{208}
+  \item pnl_vect_new, \LNK{pnl-manualse4.html}{dx6-28001}{}{161}
+  \item pnl_vect_norm_infty, \LNK{pnl-manualse4.html}{dx6-34003}{}{220}
+  \item pnl_vect_norm_one, \LNK{pnl-manualse4.html}{dx6-34002}{}{219}
+  \item pnl_vect_norm_two, \LNK{pnl-manualse4.html}{dx6-34001}{}{218}
+  \item PNL_VECT_OBJECT, \LNK{pnl-manualse2.html}{dx4-11004}{}{3}
+  \item pnl_vect_permute, \LNK{pnl-manualse4.html}{dx6-57006}{}{387}
+  \item pnl_vect_permute_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-57007}{}{388}
+  \item pnl_vect_permute_inverse, 
+		\LNK{pnl-manualse4.html}{dx6-57008}{}{389}
+  \item pnl_vect_permute_inverse_inplace, 
+		\LNK{pnl-manualse4.html}{dx6-57009}{}{390}
+  \item pnl_vect_plus_scalar, 
+		\LNK{pnl-manualse4.html}{dx6-32002}{}{200}
+  \item pnl_vect_plus_vect, \LNK{pnl-manualse4.html}{dx6-33001}{}{204}
+  \item pnl_vect_print, \LNK{pnl-manualse4.html}{dx6-31001}{}{193}
+  \item pnl_vect_print_asrow, 
+		\LNK{pnl-manualse4.html}{dx6-31003}{}{195}
+  \item pnl_vect_print_nsp, \LNK{pnl-manualse4.html}{dx6-31005}{}{197}
+  \item pnl_vect_prod, \LNK{pnl-manualse4.html}{dx6-33013}{}{216}
+  \item pnl_vect_qsort, \LNK{pnl-manualse4.html}{dx6-36007}{}{232}
+  \item pnl_vect_qsort_index, 
+		\LNK{pnl-manualse4.html}{dx6-36008}{}{233}
+  \item pnl_vect_rand_normal, 
+		\LNK{pnl-manualse6.html}{dx8-98016}{}{606}
+  \item pnl_vect_rand_normal_d, 
+		\LNK{pnl-manualse6.html}{dx8-98018}{}{608}
+  \item pnl_vect_rand_uni, \LNK{pnl-manualse6.html}{dx8-98015}{}{605}
+  \item pnl_vect_rand_uni_d, \LNK{pnl-manualse6.html}{dx8-98017}{}{607}
+  \item pnl_vect_resize, \LNK{pnl-manualse4.html}{dx6-29001}{}{180}
+  \item pnl_vect_resize_from_ptr, 
+		\LNK{pnl-manualse4.html}{dx6-29002}{}{181}
+  \item pnl_vect_reverse, \LNK{pnl-manualse4.html}{dx6-37002}{}{236}
+  \item pnl_vect_rng_bernoulli, 
+		\LNK{pnl-manualse6.html}{dx8-97028}{}{578}
+  \item pnl_vect_rng_bernoulli_d, 
+		\LNK{pnl-manualse6.html}{dx8-97029}{}{579}
+  \item pnl_vect_rng_normal, \LNK{pnl-manualse6.html}{dx8-97033}{}{583}
+  \item pnl_vect_rng_normal_d, 
+		\LNK{pnl-manualse6.html}{dx8-97035}{}{585}
+  \item pnl_vect_rng_poisson, 
+		\LNK{pnl-manualse6.html}{dx8-97030}{}{580}
+  \item pnl_vect_rng_poisson_d, 
+		\LNK{pnl-manualse6.html}{dx8-97031}{}{581}
+  \item pnl_vect_rng_uni, \LNK{pnl-manualse6.html}{dx8-97032}{}{582}
+  \item pnl_vect_rng_uni_d, \LNK{pnl-manualse6.html}{dx8-97034}{}{584}
+  \item pnl_vect_scalar_prod, 
+		\LNK{pnl-manualse4.html}{dx6-34004}{}{221}
+  \item pnl_vect_set, \LNK{pnl-manualse4.html}{dx6-30007}{}{188}
+  \item pnl_vect_set_all, \LNK{pnl-manualse4.html}{dx6-30010}{}{191}
+  \item pnl_vect_set_zero, \LNK{pnl-manualse4.html}{dx6-30011}{}{192}
+  \item pnl_vect_sum, \LNK{pnl-manualse4.html}{dx6-33011}{}{214}
+  \item pnl_vect_swap_elements, 
+		\LNK{pnl-manualse4.html}{dx6-37001}{}{235}
+  \item pnl_vect_wrap_array, \LNK{pnl-manualse4.html}{dx6-28016}{}{176}
+  \item pnl_vect_wrap_hmat, \LNK{pnl-manualse4.html}{dx6-85005}{}{508}
+  \item pnl_vect_wrap_mat, \LNK{pnl-manualse4.html}{dx6-28019}{}{179}
+  \item pnl_vect_wrap_mat_row, 
+		\LNK{pnl-manualse4.html}{dx6-46017}{}{300}
+  \item pnl_vect_wrap_subvect, 
+		\LNK{pnl-manualse4.html}{dx6-28017}{}{177}
+  \item pnl_vect_wrap_subvect_with_last, 
+		\LNK{pnl-manualse4.html}{dx6-28018}{}{178}
+  \item PnlArray, \LNK{pnl-manualse2.html}{dx4-13001}{}{34}
+  \item PnlBandMat, \LNK{pnl-manualse4.html}{dx6-68001}{}{438}
+  \item PnlBasis, \LNK{pnl-manualse7.html}{dx9-103001}{}{621}
+  \item PnlBicgSolver, \LNK{pnl-manualse4.html}{dx6-89003}{}{514}
+  \item PnlCell, \LNK{pnl-manualse2.html}{dx4-12002}{}{18}
+  \item PnlCgSolver, \LNK{pnl-manualse4.html}{dx6-89002}{}{513}
+  \item PnlCmplxFunc, \LNK{pnl-manualse10.html}{dx12-112001}{}{685}
+  \item PnlFunc, \LNK{pnl-manualse13.html}{dx15-120001}{}{695}
+  \item PnlFunc2D, \LNK{pnl-manualse13.html}{dx15-120002}{}{696}
+  \item PnlFuncDFunc, \LNK{pnl-manualse13.html}{dx15-120003}{}{697}
+  \item PnlGmresSolver, \LNK{pnl-manualse4.html}{dx6-89004}{}{515}
+  \item PnlHmat, \LNK{pnl-manualse4.html}{dx6-82001}{}{493}
+  \item PnlHmatComplex, \LNK{pnl-manualse4.html}{dx6-82003}{}{495}
+  \item PnlHmatInt, \LNK{pnl-manualse4.html}{dx6-82002}{}{494}
+  \item PnlIterationBase, \LNK{pnl-manualse4.html}{dx6-89001}{}{512}
+  \item PnlList, \LNK{pnl-manualse2.html}{dx4-12001}{}{17}
+  \item PnlMat, \LNK{pnl-manualse4.html}{dx6-43001}{}{262}
+  \item PnlMatComplex, \LNK{pnl-manualse4.html}{dx6-43003}{}{264}
+  \item PnlMatInt, \LNK{pnl-manualse4.html}{dx6-43002}{}{263}
+  \item PnlObject, \LNK{pnl-manualse2.html}{dx4-11001}{}{1}
+  \item PnlODEFunc, \LNK{pnl-manualse11.html}{dx13-114001}{}{691}
+  \item PnlPermutation, \LNK{pnl-manualse4.html}{dx6-57001}{}{382}
+  \item PnlRnFuncR, \LNK{pnl-manualse13.html}{dx15-120004}{}{698}
+  \item PnlRnFuncRm, \LNK{pnl-manualse13.html}{dx15-120005}{}{699}
+  \item PnlRnFuncRmDFunc, \LNK{pnl-manualse13.html}{dx15-120007}{}{701}
+  \item PnlRnFuncRn, \LNK{pnl-manualse13.html}{dx15-120006}{}{700}
+  \item PnlRnFuncRnDFunc, \LNK{pnl-manualse13.html}{dx15-120008}{}{702}
+  \item PnlRng, \LNK{pnl-manualse6.html}{dx8-97001}{}{551}
+  \item PnlSpMat, \LNK{pnl-manualse4.html}{dx6-75001}{}{471}
+  \item PnlSpMatComplex, \LNK{pnl-manualse4.html}{dx6-75003}{}{473}
+  \item PnlSpMatInt, \LNK{pnl-manualse4.html}{dx6-75002}{}{472}
+  \item PnlTridiagMat, \LNK{pnl-manualse4.html}{dx6-59001}{}{395}
+  \item PnlTridiagMatLU, \LNK{pnl-manualse4.html}{dx6-59002}{}{396}
+  \item PnlVect, \LNK{pnl-manualse4.html}{dx6-25001}{}{158}
+  \item PnlVectCompact, \LNK{pnl-manualse4.html}{dx6-40001}{}{251}
+  \item PnlVectComplex, \LNK{pnl-manualse4.html}{dx6-25003}{}{160}
+  \item PnlVectInt, \LNK{pnl-manualse4.html}{dx6-25002}{}{159}
+
+  \indexspace
+
+  \item RCadd, \LNK{pnl-manualse3.html}{dx5-22005}{}{109}
+  \item RCdiv, \LNK{pnl-manualse3.html}{dx5-22014}{}{118}
+  \item RCmul, \LNK{pnl-manualse3.html}{dx5-22011}{}{115}
+  \item RCsub, \LNK{pnl-manualse3.html}{dx5-22008}{}{112}
+
+  \indexspace
+
+  \item SQR, \LNK{pnl-manualse3.html}{dx5-17008}{}{78}
+
+\end{theindex}
