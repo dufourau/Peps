@@ -8,33 +8,61 @@
     <title></title>
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div>Gestion de notre produit: </div>
-        <asp:Button ID="b" Text="test" OnClick="Compute_Price" runat="server"/> 
-        <asp:TextBox ID="prixLabel" runat="server">
-        </asp:TextBox>
-        <asp:TextBox ID="icLabel" runat="server">
-        </asp:TextBox>
-     </form>    
-    <div class="container">   
-    <table class="table table-bordered">
-        <tr>
-            <td>Actifs</td>
-            <td>Cours</td>
-            <td>Quantité à investir</td>
-        </tr>
-        <tr>
-            
-        </tr>
-        <tr>
-            
-        </tr>
-        
-        
-     
-
-    </table>
-    </div>
+    
+    <div class="container">
+        <form id="form1" runat="server">
+            <div class="row" style="margin:5px;">
+                 <div class="col-md-1">
+                    
+                </div>
+                <div class="col-md-6">
+                    <h1>Gestion de notre produit: </h1>
+                </div>
+            </div>
+            <div class="row" style="margin:5px;">
+                <div class="col-md-1">
+                    
+                </div>
+                <div class="col-md-4">
+                    <asp:Button class="btn btn-lg btn-primary btn-block" ID="b" Text="Calculez" OnClick="Compute_Price" runat="server"/> 
+                </div>
+            </div> 
+            <div class="row" style="margin:5px;">
+                 <div class="col-md-1">
+                    Prix
+                </div>
+               
+                <div class="col-md-4">
+                    <asp:TextBox class="form-control" ID="prixLabel" runat="server">
+                    </asp:TextBox>
+                </div>
+            </div>
+            <div class="row" style="margin:5px;">
+                 <div class="col-md-1">
+                    Incertitude
+                </div>
+                 <div class="col-md-4">
+                  
+                    <asp:TextBox class="form-control" ID="icLabel" runat="server">
+                    </asp:TextBox>
+                </div>
+            </div>
+        </form>  
+        <div class="row" style="margin:5px;">
+            <div class="col-md-1">
+                Delta
+            </div>     
+            <div class="col-md-4">
+                <asp:table ID="deltaTable" class="table table-bordered" runat="server">
+                    <asp:TableRow>
+                        <asp:TableCell>Quantité à investir</asp:TableCell>
+                        <asp:TableCell>Incertitude</asp:TableCell>
+                        <asp:TableCell>Actifs</asp:TableCell>
+                        <asp:TableCell>Cours</asp:TableCell>
+                        
+                    </asp:TableRow>
+                </asp:table>
+            </div>
     
  
 
