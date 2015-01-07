@@ -1,173 +1,186 @@
 ﻿#include <iostream>
-#include <cstdlib>
-#include <cstring>
-#include <math.h>  
-#include "assert.h"
+#include "bs.h"
 
 using namespace std;
 
-#include "bs.h"
-
-
-//Blacḱ&Scholes Constructor
-BS::BS(PnlVect *spot_, PnlVect *sigma_, double rho_, double r_, int size_, PnlVect *trend)
+BS::BS(double size_, double r_, double rho_, PnlVect* sigma_, PnlVect* spot_, PnlVect* trend_)
 {
-	this->spot_ = spot_;
-	this->sigma_ = sigma_;
-	this->rho_ = rho_;
-	this->trend = trend;
-	this->r_ = r_;
 	this->size_ = size_;
-	//Compute a the cholesky factorization 
-	PnlMat *chol;
-	chol = pnl_mat_create(size_, size_);
-	computeCholesky(chol, rho_);
-	this->chol = chol;
+	this->r_ = r_;
+	this->rho_ = rho_;
+	this->sigma_= pnl_vect_copy(sigma_);
+	this->spot_= pnl_vect_copy(spot_);
+	this->trend_= pnl_vect_copy(trend_);
+	if (this->size_ == 1)
+		assert(this->rho_ == 1);
+	// The cholesky factorization
+	L = pnl_mat_create_from_scalar(this->size_, this->size_, 1);
+	for (int i = 0; i < this->size_; i++)
+	{
+		for (int j = 0; j < this->size_; j++)
+		{
+			if (i != j)
+				MLET(L, i, j) = this->rho_;
+		}
+	}
+	pnl_mat_chol(L);
+
 }
-//Blacḱ&Scholes Destructor		
+
 BS::~BS()
 {
-	//Free the cholesky matrix
-	pnl_mat_free(&chol);
+#ifdef _DEBUG
+	cout << "~BS() : Ready to call pnl_vect_free on sigma, spot and trend  " << endl;
+#endif
+	pnl_vect_free(&this->sigma_);
+	pnl_vect_free(&this->spot_);
+	pnl_vect_free(&this->trend_);
+	pnl_mat_free(&L);
+#ifdef _DEBUG
+	cout << "~BS() : Successfull call of pnl_rng_free" << endl;
+#endif
 }
 
-void BS::computeCholesky(PnlMat *chol, double rho_)
+void BS::asset(PnlMat *path, double T, int N, PnlRng *rng)
 {
-	//Initial correlation matrix
-	PnlMat *covMatrix;
-	double size_ = this->size_;
-	//Fill the matrix with the correlation factor.
-	covMatrix = pnl_mat_create_from_scalar(size_, size_, rho_);
-	//Set the diagonal to 1.	
-	pnl_mat_set_diag(covMatrix, 1, 0);
-	int exitChol = pnl_mat_chol(covMatrix);
+	double step = T / N;
+	double prodScal = 0;
+	double sigma_d = 0;
 
-	if (exitChol != 0){
-		cout << "Cholesky failed" << endl;
-		throw std::exception();
-	}
-	//Clone the result
-	pnl_mat_clone(chol, covMatrix);
-	//Free the temp matrix
-	pnl_mat_free(&covMatrix);
-}
+	// The Gaussian vector
+	PnlVect *G = pnl_vect_create_from_zero(this->size_);
+	PnlVect *Ld = pnl_vect_create_from_zero(this->size_);
+	// First col of path contains spot
+	for (int d = 0; d < this->size_; d++)
+		MLET(path, 0, d) = GET(this->spot_, d);
 
-
-void BS::asset(PnlMat *path, double t, int N, double T, PnlRng *rng, const PnlMat *past){
-
-	PnlVect *vectorGaussian;
-	vectorGaussian = pnl_vect_create(this->size_);
-	double epsilon = 0.001;
-
-	// Calcul du pas de discrétisation de la matrice past.
-	double pasDiscretisation = T / N;
-
-	// Si t n'est pas un pas de dicrétisation
-	double reste = fmod(t, pasDiscretisation);
-	if (!(fabs(reste)<epsilon)){
-		t -= reste; //On ajuste t pour qu'il soit sur un pas de discrétisation.
-	}
-
-	// Calcul de l'index du pas de discrétisation dans la matrice path
-	int index = t / pasDiscretisation;
-
-	if (index == 0){
-		this->asset(path, T, N, rng);
-	}
-	else{
-
-		//On remplit la matrice path jusqu'à l'indice index via la matrice past
-		for (int i = 0; i < index; i++){
-			for (int j = 0; j < this->size_; j++){
-				if (i == 0){
-					MLET(path, i, j) = MGET(past, i, j);
-				}
-				else{
-					MLET(path, i, j) = MGET(past, (int)((double)past->m * i / (index)+0.5), j);
-				}
-			}
-		}
-
-		// On simule le reste de la trajectoire
-		for (int i = index; i < path->m; i++){
-			//Create the gaussian for each simulation
-			pnl_vect_rng_normal(vectorGaussian, this->size_, rng);
-			for (int j = 0; j < this->size_; j++){
-				MLET(path, i, j) = this->computeIteration(MGET(path, i - 1, j), pasDiscretisation, j, vectorGaussian, false);
-			}
-		}
-	}
-	pnl_vect_free(&vectorGaussian);
-}
-
-void BS::asset(PnlMat *path, double T, int N, PnlRng *rng){
-
-	//For each time t between 0 and T.
-	assert(N != 0);
-	//Initialize the first path row with the spot prices
-	for (int j = 0; j<this->size_; j++){
-		MLET(path, 0, j) = GET(this->spot_, j);
-	}
-	PnlVect *vectorGaussian;
-	vectorGaussian = pnl_vect_create(this->size_);
-	for (int i = 1; i<N + 1; i++){
-		//Create the gaussian for each simulation
-		pnl_vect_rng_normal(vectorGaussian, this->size_, rng);
-		//For each assets 
-		for (int j = 0; j<this->size_; j++){
-			MLET(path, i, j) = this->computeIteration(MGET(path, i - 1, j), T / N, j, vectorGaussian, false);
-		}
-	}
-
-	pnl_vect_free(&vectorGaussian);
-}
-
-double BS::computeIteration(double currentPrice, double h, int assetIndex, PnlVect* vectorGaussian, bool useTrend){
-	//Compute the scalar product
-	PnlVect rowChol;
-	rowChol = pnl_vect_wrap_mat_row(this->chol, assetIndex);
-	double scalarResult = pnl_vect_scalar_prod(&rowChol, vectorGaussian);
-	double sigma = GET(this->sigma_, assetIndex);
-	//Compute the exponential argument
-	double expArg;
-	double mu;
-	if (useTrend){
-		mu = GET(this->trend, assetIndex);
-		expArg = sqrt(h)*scalarResult*sigma + h*(mu - (sigma*sigma / 2));
-	}
-	else{
-		expArg = sqrt(h)*scalarResult*sigma + h*(this->r_ - (sigma*sigma / 2));
-	}
-	return currentPrice*exp(expArg);
-
-}
-
-void BS::shift_asset(PnlMat *shift_path, const PnlMat *path, int d, double h, double t, double timestep){
-	//Clone the in matrix into the out matrix
-	pnl_mat_clone(shift_path, path);
-	//Calculate the index associate to the time t
-	int index = t / timestep;
-	for (int i = index; i < path->m; ++i)
+	// Generation from 2 to N+1(th) column
+	for (int ti = 1; ti < N + 1; ti++)
 	{
-		MLET(shift_path, i, d) *= (1 + h);
+		// Gaussian Dimension size_ generation
+		pnl_vect_rng_normal(G, this->size_, rng);
+		for (int d = 0; d < this->size_; d++)
+		{
+			pnl_mat_get_row(Ld, L, d);
+			prodScal = pnl_vect_scalar_prod(Ld, G);
+			sigma_d = GET(this->sigma_, d);
+			MLET(path, ti, d) = MGET(path, ti - 1, d)*exp((this->r_ - pow(sigma_d, 2) / 2)*step + sigma_d*sqrt(step)*prodScal);
+		}
+	}
+
+	// Memory free
+	pnl_vect_free(&G);
+	pnl_vect_free(&Ld);
+}
+
+void BS::asset(PnlMat *path, double t, int N, double T, PnlRng *rng, const PnlMat *past)
+{
+	if (t == 0.0)
+	{
+		this->asset(path, T, N, rng);
+		return;
+	}
+	double step = T / N;
+	double dt = t / step;
+	double Error = abs(dt - round(dt)) / (dt);
+	bool copySt = false;
+	int lastIndexOfPast = 0;
+	if (Error <= 0.05)
+	{
+		lastIndexOfPast = round(dt);
+		copySt = true;
+	}
+	else{
+		lastIndexOfPast = floor(dt);
+		copySt = false;
+	}
+	double prodScal = 0;
+	double sigma_d = 0;
+	// Copy of the past on the generated path
+	for (int ti = 0; ti <= lastIndexOfPast; ti++)
+	{
+		for (int d = 0; d < this->size_; d++)
+		{
+			MLET(path, ti, d) = MGET(past, ti, d);
+		}
+	}
+	// The vector St
+	PnlVect *St = pnl_vect_create_from_zero(this->size_);
+	if (!copySt)
+	{
+		for (int d = 0; d < this->size_; d++)
+			pnl_vect_set(St, d, MGET(past, lastIndexOfPast + 1, d));
+		//pnl_vect_set(St,d,MGET(past,past->m-1,d));
+	}
+	// The Gaussian vector
+	PnlVect *G = pnl_vect_create_from_zero(this->size_);
+	PnlVect *Ld = pnl_vect_create_from_zero(this->size_);
+	// Generation from 2 to N+1(th) column
+	for (int ti = lastIndexOfPast + 1; ti < N + 1; ti++)
+	{
+		// Gaussian Dimension size_ generation
+		pnl_vect_rng_normal(G, this->size_, rng);
+		for (int d = 0; d < this->size_; d++)
+		{
+			pnl_mat_get_row(Ld, L, d);
+			prodScal = pnl_vect_scalar_prod(Ld, G);
+			sigma_d = GET(this->sigma_, d);
+			if ((ti == lastIndexOfPast + 1) && (!copySt))
+				MLET(path, ti, d) = GET(St, d)*exp((this->r_ - pow(sigma_d, 2) / 2)*(ti*step - t) + sigma_d*sqrt(ti*step - t)*prodScal);
+			else
+				MLET(path, ti, d) = MGET(path, ti - 1, d)*exp((this->r_ - pow(sigma_d, 2) / 2)*step + sigma_d*sqrt(step)*prodScal);
+		}
+	}
+	// Memory free
+	pnl_vect_free(&G);
+	pnl_vect_free(&Ld);
+	pnl_vect_free(&St);
+}
+
+void BS::shift_asset(PnlMat *shift_path, const PnlMat *path, int d, double h, double t, double T, double timestep)
+{
+	int pastSize = floor((timestep / T)*t);
+	for (int ti = 0; ti < timestep + 1; ti++)
+	{
+		for (int j = 0; j < this->size_; j++)
+		{
+			if ((ti > pastSize) && (j == d))
+				MLET(shift_path, ti, j) = (1 + h)*MGET(path, ti, j);
+			else
+				MLET(shift_path, ti, j) = MGET(path, ti, j);
+		}
 	}
 }
 
-void BS::simul_market(PnlMat *path, double T, int H, PnlRng *rng){
+void BS::simul_market(PnlMat *path, double T, int H, PnlRng *rng)
+{
+	double step = T / H;
+	double prodScal = 0;
+	double sigma_d = 0;
+	double mu_d = 0;
 
-	assert(H != 0);
-	//Initialize the first path row with the spot prices
-	for (int j = 0; j<this->size_; j++){
-		MLET(path, 0, j) = GET(this->spot_, j);
-	}
-	PnlVect *vectorGaussian;
-	vectorGaussian = pnl_vect_create(this->size_);
-	for (int i = 1; i<H + 1; i++){
-		pnl_vect_rng_normal(vectorGaussian, this->size_, rng);
-		//For each assets 
-		for (int j = 0; j<this->size_; j++){
-			MLET(path, i, j) = this->computeIteration(MGET(path, i - 1, j), T / H, j, vectorGaussian, true);
+	// The Gaussian vector
+	PnlVect *G = pnl_vect_create_from_zero(this->size_);
+	PnlVect *Ld = pnl_vect_create_from_zero(this->size_);
+	// First col of path contains spot
+	for (int d = 0; d < this->size_; d++)
+		MLET(path, 0, d) = GET(this->spot_, d);
+
+	// Generation from 2 to H+1(th) column
+	for (int ti = 1; ti < H + 1; ti++)
+	{
+		// Gaussian Dimension size_ generation
+		pnl_vect_rng_normal(G, this->size_, rng);
+		for (int d = 0; d < this->size_; d++)
+		{
+			pnl_mat_get_row(Ld, L, d);
+			prodScal = pnl_vect_scalar_prod(Ld, G);
+			sigma_d = GET(this->sigma_, d);
+			mu_d = GET(this->trend_, d);
+			MLET(path, ti, d) = MGET(path, ti - 1, d)*exp((mu_d - pow(sigma_d, 2) / 2)*step + sigma_d*sqrt(step)*prodScal);
 		}
 	}
-	pnl_vect_free(&vectorGaussian);
+	// Memory free
+	pnl_vect_free(&G);
+	pnl_vect_free(&Ld);
 }

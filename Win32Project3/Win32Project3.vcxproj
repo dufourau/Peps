@@ -82,20 +82,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="OptionBasket.h" />
+    <ClInclude Include="moduleis.h" />
     <ClInclude Include="bs.h" />
     <ClInclude Include="Computations.h" />
     <ClInclude Include="mc.h" />
     <ClInclude Include="option.h" />
-    <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OptionBasket.cpp" />
+    <ClCompile Include="moduleis.cpp" />
     <ClCompile Include="bs.cpp" />
     <ClCompile Include="Computations.cpp" />
     <ClCompile Include="mc.cpp" />
-    <ClCompile Include="option.cpp" />
-    <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,203 +1,236 @@
+#include <iostream>
 #include "mc.h"
-#include "bs.h"
-#include "OptionBasket.h"
 
-MonteCarlo::MonteCarlo(int option_size, double *spot, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double strike, double* payoffCoeff, int samples)
+using namespace std;
+
+MonteCarlo::MonteCarlo(double T_, int TimeSteps_, int size_, int optionType_, double r_, double rho_, double* sigma_, double* spot_, double* trend_, int samples_)
 {
-
-	PnlVect* spotVect = pnl_vect_new();
-	PnlVect* sigmaVect= pnl_vect_new();
-	PnlVect* trendVect = pnl_vect_new();
-	PnlVect* payoffCoeffVect = pnl_vect_new();
-	spotVect= pnl_vect_create(option_size);
-	sigmaVect = pnl_vect_create(option_size);
-	trendVect = pnl_vect_create(option_size);
-	payoffCoeffVect = pnl_vect_create(option_size);
-	for (int i = 0; i < option_size; i++){
-		LET(spotVect, i) = spot[i];
-		LET(sigmaVect, i) = sigma[i];
-		LET(trendVect, i) = trend[i];
-		LET(payoffCoeffVect, i) = payoffCoeff[i];
-	}
-	
-	this->H_ = H;
-	this->h_ = h;
-	this->mod_ = new BS(spotVect, sigmaVect, rho, r, option_size, trendVect);
-
-	this->opt_ = new OptionBasket(maturity, timeSteps,option_size, strike, payoffCoeffVect);
-
-
-	this->samples_= samples;
-
-	//RNG
-	this->rng = pnl_rng_create(PNL_RNG_MERSENNE);
-	pnl_rng_sseed(this->rng, 0);
-
+	PnlVect* sigma= pnl_vect_create_from_ptr(size_,sigma_);
+	PnlVect* spot= pnl_vect_create_from_ptr(size_, spot_);
+	PnlVect* trend= pnl_vect_create_from_ptr(size_, trend_);
+	// Construction de BS
+	this->mod_ = new BS(size_, r_, rho_, sigma, spot, trend);
+	this->opt_ = new Moduleis(T_, TimeSteps_,size_, optionType_);
+	// Initialisation du generateur a MERSENNE : type 7 page 63
+	rng = pnl_rng_create(PNL_RNG_MERSENNE);
+	pnl_rng_sseed(rng, time(NULL));
+	// Sample number et pas de difference finie
+	this->samples_ = samples_;
+	this->h_ = 0.1;
 }
 
-
-MonteCarlo::~MonteCarlo(){
-	delete (this->mod_)->spot_;
-	delete (this->mod_)->sigma_;
+MonteCarlo::~MonteCarlo()
+{
+#ifdef _DEBUG
+	cout << "~MonteCarlo() : Ready to call pnl_rng_free " << endl;
+#endif
+	pnl_rng_free(&rng);
 	delete this->mod_;
-	pnl_rng_free(&(this->rng));
 	delete this->opt_;
+#ifdef _DEBUG
+	cout << "~MonteCarlo() : Successfull call of pnl_rng_free" << endl;
+#endif
 }
 
-Option* MonteCarlo::createOption(){
-	return NULL;
+void MonteCarlo::price(double &prix, double &ic)
+{
+	PnlMat *generatedPath = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
+	double payoff = 0;
+	double sumPayoff = 0;
+	double sumPayoffSquare = 0;
+	prix = 0;
+	ic = 0;
+	for (int i = 0; i < this->samples_; i++)
+	{
+		this->mod_->asset(generatedPath, this->opt_->T_, this->opt_->TimeSteps_, this->rng);
+		payoff = this->opt_->payoff(generatedPath);
+		sumPayoff += payoff;
+		sumPayoffSquare += payoff*payoff;
+	}
+	prix = exp(-this->mod_->r_*this->opt_->T_)*(sumPayoff / this->samples_);
+	double x = exp(-2 * this->mod_->r_*this->opt_->T_)*((sumPayoffSquare / this->samples_) - (sumPayoff / this->samples_)*(sumPayoff / this->samples_));
+	ic = 2 * 1.96*sqrt(x) / sqrt(this->samples_);
+	pnl_mat_free(&generatedPath);
 }
 
+void MonteCarlo::price(const PnlMat *past, double t, double &prix, double &ic)
+{
+	PnlMat *generatedPath = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
+	double payoff = 0;
+	double sumPayoff = 0;
+	double sumPayoffSquare = 0;
+	double precision = this->samples_*(1.0e-16);
+	prix = 0;
+	ic = 0;
+	for (int i = 0; i < this->samples_; i++)
+	{
+		this->mod_->asset(generatedPath, t, this->opt_->TimeSteps_, this->opt_->T_, this->rng, past);
+		//pnl_mat_print(generatedPath);
+		payoff = this->opt_->payoff(generatedPath);
+		sumPayoff += payoff;
+		sumPayoffSquare += payoff*payoff;
+	}
+	prix = exp(-this->mod_->r_*(this->opt_->T_ - t))*(sumPayoff / this->samples_);
+	double x = exp(-2 * this->mod_->r_*(this->opt_->T_ - t))*(sumPayoffSquare / this->samples_) - prix*prix;
+	if (abs(x) < precision)
+		x = 0;
+	ic = 2 * 1.96*sqrt(x) / sqrt(this->samples_);
+	pnl_mat_free(&generatedPath);
+}
 
-/**
-* Calcul le prix de l'option en t=0 et la largeur de son intervalle de confinace
-*/
-void MonteCarlo::price(double &prix, double &ic){
-	double coeffActu = exp(-(mod_->r_ * opt_->T_));
-	//Matrix of assets
+void MonteCarlo::delta_(const PnlMat *past, double t, PnlVect *delta)
+{
+	pnl_vect_set_all(delta, 0);
+	double T = opt_->T_;
+	int size = mod_->size_;
+	int N = opt_->TimeSteps_;
 
-	//Initialize with spot
-	PnlMat* path;
-	path = pnl_mat_create(opt_->TimeSteps_ + 1, (this->mod_)->size_);
+	PnlMat *path = pnl_mat_create(N + 1, size);
 
-	//Calcul du payOff   
-	double payOffOption = 0;
-	double mean_payOffSquare = 0;
-	double tmp;
+	for (int i = 0; i < samples_; i++)
+	{
+		mod_->asset(path, t, N, T, rng, past);
+		for (int d = 0; d < size; d++)
+		{
+			for (int k = int(N*t / T); k < N + 1; k++)
+			{
+				pnl_mat_set(path, k, d, (1 + h_) * pnl_mat_get(path, k, d));
+			}
 
-	for (int m = 1; m <= this->samples_; m++){
-		mod_->asset(path, opt_->T_, opt_->TimeSteps_, this->rng);
-		tmp = opt_->payoff(path);
-		payOffOption += tmp;
-		mean_payOffSquare += tmp*tmp;
+			pnl_vect_set(delta, d, opt_->payoff(path) + pnl_vect_get(delta, d));
+
+			for (int k = int(N*t / T); k < N + 1; k++)
+			{
+				pnl_mat_set(path, k, d, (1 - h_) / (1 + h_) * pnl_mat_get(path, k, d));
+			}
+
+			pnl_vect_set(delta, d, pnl_vect_get(delta, d) - opt_->payoff(path));
+
+			for (int k = int(N*t / T); k < N + 1; k++)
+			{
+				pnl_mat_set(path, k, d, pnl_mat_get(path, k, d) / (1 - h_));
+			}
+		}
+
 	}
 
-	payOffOption = payOffOption / this->samples_;
-	mean_payOffSquare = mean_payOffSquare / this->samples_;
+	for (int d = 0; d < size; d++)
+	{
+		pnl_vect_set(delta, d, exp((-mod_->r_)*(opt_->T_ - t)) / (samples_ * 2 * h_ * pnl_mat_get(past, int(N*t / T), d)));
 
-	//Calcul du prix de l'option en t=0
-	prix = coeffActu * payOffOption;
+	}
 
-	//Free path
 	pnl_mat_free(&path);
-
-	//Calcul de la largeur de l'intervalle de confinace
-	double cst = exp(-2 * (mod_->r_ * opt_->T_));
-
-	double varEstimator = cst * (mean_payOffSquare - (payOffOption*payOffOption));
-
-
-	//ic = (prix + 1.96*sqrt(varEstimator) / sqrt(this->samples_)) - (prix - 1.96*sqrt(varEstimator) / sqrt(this->samples_));
 }
 
-
-
-void MonteCarlo::freeRiskInvestedPart(PnlVect *V, double T, double &profitLoss){
-	//V = pnl_vect_create(this->H_);
-	PnlMat *simulMarketResult, *tempMarketResult;
-	simulMarketResult = pnl_mat_create(this->H_ + 1, this->mod_->size_);
-
-	//Simulate H+1 values from 0 to T (market values)
-	mod_->simul_market(simulMarketResult, T, this->H_, this->rng);
-
-	PnlVect* precDelta, *ecartDelta, *copydelta_i;
-
-	//Current Time of iteration
-	double tho = 0.0;
-
-	/* Compute V_0 */
-	//Compute Price
-	double refprice, refic;
-
-	this->price(refprice, refic);
-	//Compute delta_0
-	PnlVect* delta, *ic;
-	delta = pnl_vect_create(this->mod_->size_);
-	ic = pnl_vect_create(this->mod_->size_);
-	this->delta(simulMarketResult, tho, delta, ic);
-	pnl_vect_print(delta);
-
-	//On récupère S_0
-	PnlVect *s;
-	s = pnl_vect_create(this->mod_->size_);
-	pnl_mat_get_row(s, simulMarketResult, 0);
-
-	//On calcul V_0
-	LET(V, 0) = refprice - pnl_vect_scalar_prod(delta, s);
-	precDelta = pnl_vect_copy(delta); //on sauvergarde le delta qu'on vient de calculer
-
-
-	/* Compute V_i */
-	for (int i = 1; i<V->size; i++){
-		//On incrémente tho du pas de discrétisation de la simulation de marché à savoir T/H
-		tho += T / ((double) this->H_);
-
-
-		//Extract the row from 0 to tho "time"
-		tempMarketResult = pnl_mat_create(i + 1, this->mod_->size_);
-		pnl_mat_extract_subblock(tempMarketResult, simulMarketResult, 0, i + 1, 0, this->mod_->size_);
-
-		//Compute delta_i
-		this->delta(tempMarketResult, tho, delta, ic);
-
-		pnl_vect_print(delta);
-
-		copydelta_i = pnl_vect_copy(delta);
-		pnl_vect_minus_vect(copydelta_i, precDelta);
-		pnl_mat_get_row(s, simulMarketResult, i);
-		LET(V, i) = GET(V, i - 1)*exp(mod_->r_ * T / ((double) this->H_)) - pnl_vect_scalar_prod(copydelta_i, s);
-		precDelta = pnl_vect_copy(delta);
-
-		pnl_mat_free(&tempMarketResult);
+void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta)
+{
+	pnl_vect_set_all(delta, 0);
+	PnlMat *generatedPath = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
+	PnlMat *shiftPath_Right = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
+	PnlMat *shiftPath_Left = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
+	double tmp = 0;
+	// The vector St
+	PnlVect *St = pnl_vect_create_from_zero(this->opt_->size_);
+	int lastIndexOfPast = 0;
+	if (t == 0.0)
+		pnl_vect_clone(St, this->mod_->spot_);
+	else
+	{
+		double step = this->opt_->T_ / this->opt_->TimeSteps_;
+		double dt = t / step;
+		double Error = abs(dt - round(dt)) / (dt);
+		if (Error <= 0.05)
+			lastIndexOfPast = round(dt);
+		else
+			lastIndexOfPast = floor(dt) + 1;
 	}
 
-	profitLoss = GET(V, V->size - 1) + pnl_vect_scalar_prod(precDelta, s) - this->opt_->payoff(simulMarketResult);
-	pnl_vect_free(&s);
-	pnl_vect_free(&delta);
-	pnl_vect_free(&ic);
-	pnl_vect_free(&precDelta);
-
-	pnl_mat_free(&simulMarketResult);
+	for (int j = 0; j<this->samples_; j++)
+	{
+		//Generation d'une trajectoire
+		this->mod_->asset(generatedPath, t, this->opt_->TimeSteps_, this->opt_->T_, this->rng, past);
+		for (int d = 0; d<this->mod_->size_; d++)
+		{
+			// Shift à droite
+			this->mod_->shift_asset(shiftPath_Right, generatedPath, d, this->h_, t, this->opt_->T_, this->opt_->TimeSteps_);
+			// Shift à droite
+			this->mod_->shift_asset(shiftPath_Left, generatedPath, d, -this->h_, t, this->opt_->T_, this->opt_->TimeSteps_);
+			// Delta payoff Right Left
+			tmp = this->opt_->payoff(shiftPath_Right) - this->opt_->payoff(shiftPath_Left);
+			pnl_vect_set(delta, d, GET(delta, d) + tmp);
+		}
+	}
+	for (int d = 0; d<this->opt_->size_; d++)
+	{
+		pnl_vect_set(St, d, MGET(past, lastIndexOfPast, d));
+		pnl_vect_set(delta, d, GET(delta, d)*exp(-this->mod_->r_*(this->opt_->T_ - t)) / (this->samples_*this->h_ * 2 * GET(St, d)));
+	}
+	pnl_mat_free(&generatedPath);
+	pnl_mat_free(&shiftPath_Right);
+	pnl_mat_free(&shiftPath_Left);
+	pnl_vect_free(&St);
 }
 
-void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *ic){
-	int nbAsset = this->opt_->size_;
-	PnlMat* path_shift_up = pnl_mat_create(this->opt_->TimeSteps_ + 1, nbAsset);
-	PnlMat* path_shift_down = pnl_mat_create(this->opt_->TimeSteps_ + 1, nbAsset);
-	PnlMat* path = pnl_mat_create(this->opt_->TimeSteps_ + 1, nbAsset);
-	PnlVect* sum = pnl_vect_create(nbAsset);
-	double tstep = this->opt_->T_ / this->opt_->TimeSteps_;
+void MonteCarlo::hedge(PnlVect *V, double &PL, int H, const PnlMat *marketPath)
+{
+	PnlVect *delta_cour = pnl_vect_create_from_zero(this->opt_->size_);
+	PnlVect *delta_prec = pnl_vect_create_from_zero(this->opt_->size_);
+	PnlVect *St = pnl_vect_copy(this->mod_->spot_);
+	PnlMat *past = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
 
-	for (int j = 0; j < this->samples_; ++j){
-		//Select the right asset method to call  
-		if (t == 0){
-			this->mod_->asset(path, this->opt_->T_, this->opt_->TimeSteps_, this->rng);
-		}
-		else{
+	pnl_mat_set_row(past, St, 0);
 
-			this->mod_->asset(path, t, this->opt_->TimeSteps_, this->opt_->T_, this->rng, past);
+	int M = (H / this->opt_->TimeSteps_);
+	int ti = 1;
+	double p = 0;
+	double ic = 0;
+	double value = 0;
 
-		}
-
-		for (int i = 0; i < nbAsset; ++i){
-			this->mod_->shift_asset(path_shift_up, path, i, this->h_, t, tstep);
-			this->mod_->shift_asset(path_shift_down, path, i, -this->h_, t, tstep);
-			LET(sum, i) = GET(sum, i) + this->opt_->payoff(path_shift_up) - this->opt_->payoff(path_shift_down);
-
-		}
+	// Affichage des valeurs du portefeuille	
+	cout << " ---- \t Date n° \t PortFolio Value " << endl;
+	// Initialisation du portefeuille
+	this->price(p, ic);
+	this->delta(past, 0, delta_cour);
+	value = p - pnl_vect_scalar_prod(delta_cour, St);
+	pnl_vect_set(V, 0, value);
+	cout << " ---- \t " << 0 << " \t \t" << GET(V, 0) << endl;
+	// Calcul des Vi
+	for (int i = 1; i<H; i++)
+	{
+		pnl_mat_get_row(St, marketPath, i);
+		pnl_mat_set_row(past, St, ti);
+		if ((i % M) == 0)
+			ti++;
+		pnl_vect_clone(delta_prec, delta_cour);
+		this->delta(past, i*this->opt_->T_ / H, delta_cour);
+		pnl_vect_minus_vect(delta_prec, delta_cour);
+		value = GET(V, i - 1)*exp(this->mod_->r_*this->opt_->T_ / H) + pnl_vect_scalar_prod(delta_prec, St);
+		pnl_vect_set(V, i, value);
+		cout << " ---- \t " << i << " \t \t" << GET(V, i) << endl;
 	}
+	// Calcul de VH
+	pnl_mat_get_row(St, marketPath, H);
+	value = GET(V, H - 1)*exp(this->mod_->r_*this->opt_->T_ / H);
+	pnl_vect_set(V, H, value);
+	cout << " ---- \t " << H << " \t \t" << GET(V, H) << "\t Valeur avant livraison" << endl;
+	// calcul P&L
+	double payoff = this->opt_->payoff(past);
+	PL = GET(V, H) + pnl_vect_scalar_prod(delta_cour, St) - payoff;
+	cout << " " << endl;
+	cout << "  ---- Prix de l'option en 0 = " << p << endl;
+	cout << "  ---- Erreur de couverture relative en % = " << (PL / p) * 100 << endl;
+	// memory free
+	pnl_vect_free(&St);
+	pnl_vect_free(&delta_cour);
+	pnl_vect_free(&delta_prec);
+	pnl_mat_free(&past);
+}
 
-	for (int i = 0; i < nbAsset; i++){
-		if (t == 0){
-			LET(delta, i) = GET(sum, i) * exp(-this->mod_->r_ * (this->opt_->T_ - t)) / (2.0 * this->samples_ * MGET(path, 0, i) * this->h_);
-		}
-		else{
-			LET(delta, i) = GET(sum, i) * exp(-this->mod_->r_ * (this->opt_->T_ - t)) / (2.0 * this->samples_ * MGET(past, past->m - 1, i) * this->h_);
-		}
-	}
-
-	pnl_vect_free(&sum);
-	pnl_mat_free(&path);
-	pnl_mat_free(&path_shift_up);
-	pnl_mat_free(&path_shift_down);
+void MonteCarlo::hedge(PnlVect *V, double &PL, int H)
+{
+	PnlMat *marketPath = pnl_mat_create_from_zero(H + 1, this->opt_->size_);
+	this->mod_->asset(marketPath, this->opt_->T_, H, this->rng);
+	this->hedge(V, PL, H, marketPath);
+	pnl_mat_free(&marketPath);
 }

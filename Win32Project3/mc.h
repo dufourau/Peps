@@ -2,8 +2,14 @@
 #define _MC_H
 
 #include "option.h"
+#include "moduleis.h"
 #include "bs.h"
+#include <cmath>
+#include <cassert>
+#include <ctime>
+#include <iomanip> 
 #include "pnl/pnl_random.h"
+#include <cassert>
 
 class MonteCarlo
 {
@@ -12,11 +18,9 @@ public:
 	Option *opt_; /*! pointeur sur l'option */
 	PnlRng *rng; /*! pointeur sur le générateur */
 	double h_; /*! pas de différence finie */
-	int H_; /* nombre de période de rebalancement*/
 	int samples_; /*! nombre de tirages Monte Carlo */
 
-	MonteCarlo(int option_size, double *spot, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double strike, double* payoffCoeff, int samples);
-
+	MonteCarlo(double T_, int TimeSteps_, int size_, int optionType_, double r_, double rho_, double* sigma_, double* spot_, double* trend_, int samples_);
 	~MonteCarlo();
 
 	/**
@@ -26,6 +30,10 @@ public:
 	* @param[out] ic largeur de l'intervalle de confiance
 	*/
 	void price(double &prix, double &ic);
+
+	void price_master(double &prix, double &ic);
+
+	void price_slave(double &prix, double &ic);
 
 	/**
 	* Calcule le prix de l'option à la date t
@@ -39,6 +47,7 @@ public:
 	*/
 	void price(const PnlMat *past, double t, double &prix, double &ic);
 
+
 	/**
 	* Calcule le delta de l'option à la date t
 	*
@@ -46,24 +55,40 @@ public:
 	* jusqu'à l'instant t
 	* @param[in] t date à laquelle le calcul est fait
 	* @param[out] delta contient le vecteur de delta
-	* @param[out] ic contient la largeur de l'intervalle
-	* de confiance sur le calcul du delta
 	*/
-	void delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *ic);
+	void delta_(const PnlMat *past, double t, PnlVect *delta);
 
 	/**
-	* Cette méthode créée et retourne la bonne instance d'option
-	* en fonction de la key passée en paramètre.
+	* Calcule le delta de l'option à la date t
 	*
-	* @param[in] key contient le type de l'option
-	* @param[in] P contient les données nécessaire pour
-	* la création de l'option
-	* @param[out] retourne la bonne instance d'option
+	* @param[in] past contient la trajectoire du sous-jacent
+	* jusqu'à l'instant t
+	* @param[in] t date à laquelle le calcul est fait
+	* @param[out] delta contient le vecteur de delta
 	*/
-	Option* createOption();
+	void delta(const PnlMat *past, double t, PnlVect *delta);
 
-	void freeRiskInvestedPart(PnlVect *V, double T, double &profitLoss);
+	/**
+	* Construit le portefeuille de couverture et calcule le P&L
+	*
+	* @param[in]  H nombre de date de constatation
+	* @param[in]  marketPath matrice de taille d x (H+1) qui contient
+	* une simulation du marché
+	* @param[out] V vecteur des valeurs de portefeuille de couverture
+	* de dimension H+1
+	* @param[out] PL Profit and Loss
+	*/
+	void hedge(PnlVect *V, double &PL, int H, const PnlMat *marketPath);
 
+	/**
+	* Construit le portefeuille de couverture et calcule le P&L
+	*
+	* @param[in]  H nombre de date de constatation
+	* @param[out] V vecteur des valeurs de portefeuille de couverture
+	* de dimension H+1
+	* @param[out] PL Profit and Loss
+	*/
+	void hedge(PnlVect *V, double &PL, int H);
 };
 
 #endif /* _MC_H */

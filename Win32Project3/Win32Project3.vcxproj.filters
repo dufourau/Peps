@@ -27,10 +27,7 @@
     <ClInclude Include="Computations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OptionBasket.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="utils.h">
+    <ClInclude Include="moduleis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,13 +41,7 @@
     <ClCompile Include="Computations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="option.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OptionBasket.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="utils.cpp">
+    <ClCompile Include="moduleis.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
