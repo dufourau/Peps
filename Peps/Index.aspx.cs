@@ -23,9 +23,12 @@ namespace Peps
                 //WrapperClass wc = new ();
 
                 wrapper.computePrice();
-                wrapper.computeDelta(); 
+                wrapper.computeDelta();
+                wrapper.computeHedge();
+
                 prixLabel.Text = wrapper.getPrice().ToString();
                 icLabel.Text = wrapper.getIC().ToString();
+                plLabel.Text = wrapper.getPL().ToString();
                 double[] delta = wrapper.getDelta();
                 double[] deltaIC = wrapper.getDeltaIC();
                 
@@ -34,10 +37,10 @@ namespace Peps
                     TableRow tr = new TableRow();
                     TableCell tc1 = new TableCell();
                     tc1.Text = delta[i].ToString();
-                    TableCell tc2 = new TableCell();
-                    tc2.Text = deltaIC[i].ToString();
+                    //TableCell tc2 = new TableCell();
+                    //tc2.Text = deltaIC[i].ToString();
                     tr.Cells.Add(tc1);
-                    tr.Cells.Add(tc2);
+                    //tr.Cells.Add(tc2);
                     deltaTable.Rows.Add(tr);
                     
                 }

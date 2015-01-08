@@ -23,8 +23,15 @@
                 <div class="col-md-1">
                     
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <asp:Button class="btn btn-lg btn-primary btn-block" ID="b" Text="Calculez" OnClick="Compute_Price" runat="server"/> 
+                </div>
+                <div class="col-md-1">
+                    H
+                </div>
+                <div class="col-md-1">
+                    <asp:TextBox class="form-control" ID="HLabel" runat="server">
+                    </asp:TextBox>
                 </div>
             </div> 
             <div class="row" style="margin:5px;">
@@ -44,6 +51,17 @@
                  <div class="col-md-4">
                   
                     <asp:TextBox class="form-control" ID="icLabel" runat="server">
+                    </asp:TextBox>
+                </div>
+            </div>
+
+             <div class="row" style="margin:5px;">
+                 <div class="col-md-1">
+                    Profit & Loss
+                </div>
+                 <div class="col-md-4">
+                  
+                    <asp:TextBox class="form-control" ID="plLabel" runat="server">
                     </asp:TextBox>
                 </div>
             </div>

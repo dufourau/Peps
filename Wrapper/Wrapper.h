@@ -10,6 +10,7 @@ namespace Wrapper {
 		private:
 			double confidenceInterval;
 			double prix;
+			double PL;
 			array<double> ^delta;
 			array<double> ^ic;	
 			int option_size;
@@ -29,6 +30,7 @@ namespace Wrapper {
 			//Temp constructor for a basket option
 			WrapperClass() { 
 				confidenceInterval = prix = 0; 
+				PL = 0;
 				option_size = 20;
 				strike = 100;
 				maturity = 10;
@@ -36,8 +38,8 @@ namespace Wrapper {
 				rho = 0;
 				timeSteps = 10;
 				h = 0.1;
-				H = 25;
-				samples = 100000; 
+				H = timeSteps*20;
+				samples = 10000; 
 				spot = gcnew array<double>(option_size);
 				for (int i = 0; i < option_size; i++){
 					spot[i] = 100;
@@ -61,8 +63,11 @@ namespace Wrapper {
 			};
 			void computePrice();
 			void computeDelta();
+			void computeHedge();
 			double getPrice() { return prix; };
 			double getIC() { return confidenceInterval; };
+			double getPL() { return PL; };
+			double setH(double inputH) { H = inputH; };
 			array<double> ^getDelta(){ return delta; };
 			array<double> ^getDeltaIC(){ return ic; };
 	};
