@@ -5,23 +5,24 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Wrapper;
+
 namespace Peps
 {
     public partial class Index : System.Web.UI.Page
     {
         static WrapperClass wrapper;
+        //use to store data from file
+        static String delta;
+        static String prix;
+        static String spot;
         protected void Page_Load(object sender, EventArgs e)
         {
             wrapper = new WrapperClass();
-            //b.Click += new EventHandler(this.Compute_Price);
+            
         }
         protected void Compute_Price(Object sender, EventArgs e)
         {
-            //try
-            //{
-                // Retrieve the values of the parameters in the TextBoxes
-                //WrapperClass wc = new ();
-
+           
                 wrapper.computePrice();
                 wrapper.computeDelta();
                 wrapper.computeHedge();
@@ -45,14 +46,15 @@ namespace Peps
                     
                 }
 
-            /*    
-            }
-            catch (Exception ex)
-            {
-                
-                Console.WriteLine("Message: "+ ex.Message);
-            } 
-             */
+        
+        }
+
+        public void Compute_Simu1(Object sender, EventArgs e)
+        {
+            prix= Properties.Resources.Prix1.ToString();
+
+            prix = System.IO.File.ReadAllLines("~/Prix1.txt");
+            prixLabel.Text = prix[0]; 
         }
     }
 }

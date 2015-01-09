@@ -12,28 +12,52 @@
     <div class="container">
         <form id="form1" runat="server">
             <div class="row" style="margin:5px;">
-                 <div class="col-md-1">
-                    
-                </div>
+                 
                 <div class="col-md-6">
                     <h1>Gestion de notre produit: </h1>
                 </div>
             </div>
+
             <div class="row" style="margin:5px;">
-                <div class="col-md-1">
-                    
+            
+                
+                <div class="col-md-4">
+                    <asp:Button class="btn btn-lg btn-primary btn-block" ID="b" Text="Forcez la simulation" OnClick="Compute_Price" runat="server"/> 
                 </div>
                 <div class="col-md-2">
-                    <asp:Button class="btn btn-lg btn-primary btn-block" ID="b" Text="Calculez" OnClick="Compute_Price" runat="server"/> 
+
                 </div>
-                <div class="col-md-1">
-                    H
-                </div>
-                <div class="col-md-1">
-                    <asp:TextBox class="form-control" ID="HLabel" runat="server">
-                    </asp:TextBox>
-                </div>
+                
             </div> 
+            <div class="row" style="margin:5px;">
+            
+                
+                <div class="col-md-2">
+                    <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button2" Text="Simulation 1" OnClick="Compute_Simu1" runat="server"/> 
+                </div>
+                <div class="col-md-2">
+                      <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button3" Text="Simulation 2" OnClick="Compute_Price" runat="server"/> 
+                </div>
+                 <div class="col-md-2">
+                       <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button4" Text="Simulation 3" OnClick="Compute_Price" runat="server"/> 
+                </div>
+                
+            </div> 
+
+            <div class="row" style="margin:5px;">
+                <div class="col-md-4">
+                    <h1>Date courante</h1>
+                </div>
+                <div class="col-md-2">
+                </div>
+                 <div class="col-md-4">
+                    <h1>Date suivante</h1>
+                </div>
+                <div class="col-md-2">
+                    <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button1" Text="Mise à jour" OnClick="Compute_Price" runat="server"/> 
+                </div>
+
+            </div>
             <div class="row" style="margin:5px;">
                  <div class="col-md-1">
                     Prix
@@ -68,19 +92,32 @@
         </form>  
         <div class="row" style="margin:5px;">
             <div class="col-md-1">
-                Delta
+                Portefeuille
             </div>     
             <div class="col-md-4">
-                <asp:table ID="deltaTable" class="table table-bordered" runat="server">
+                <asp:table ID="assetTable" class="table table-bordered" runat="server">
                     <asp:TableRow>
-                        <asp:TableCell>Quantité à investir</asp:TableCell>
-                        <asp:TableCell>Incertitude</asp:TableCell>
+                        <asp:TableCell>Quantité d'actif</asp:TableCell>
                         <asp:TableCell>Actifs</asp:TableCell>
                         <asp:TableCell>Cours</asp:TableCell>
                         
                     </asp:TableRow>
                 </asp:table>
             </div>
+            <div class="col-md-2">
+                Delta
+            </div>
+            <div class="col-md-4">
+                <asp:table ID="deltaTable" class="table table-bordered" runat="server">
+                    <asp:TableRow>
+                        <asp:TableCell>Quantité à investir</asp:TableCell>          
+                        <asp:TableCell>Actifs</asp:TableCell>
+                        <asp:TableCell>Cours</asp:TableCell>
+                        
+                    </asp:TableRow>
+                </asp:table>
+            </div>
+        </div>
     
  
 
