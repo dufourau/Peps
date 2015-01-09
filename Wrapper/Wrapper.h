@@ -31,7 +31,7 @@ namespace Wrapper {
 			WrapperClass() { 
 				confidenceInterval = prix = 0; 
 				PL = 0;
-				option_size = 20;
+				option_size = 5;
 				strike = 100;
 				maturity = 10;
 				r = 0.04879;
@@ -67,6 +67,7 @@ namespace Wrapper {
 			double getPrice() { return prix; };
 			double getIC() { return confidenceInterval; };
 			double getPL() { return PL; };
+			int getSize(){ return option_size; };
 			array<double> ^getDelta(){ return delta; };
 			array<double> ^getDeltaIC(){ return ic; };
 	};

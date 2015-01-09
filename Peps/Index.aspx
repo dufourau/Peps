@@ -36,10 +36,10 @@
                     <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button2" Text="Simulation 1" OnClick="Compute_Simu1" runat="server"/> 
                 </div>
                 <div class="col-md-2">
-                      <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button3" Text="Simulation 2" OnClick="Compute_Price" runat="server"/> 
+                      <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button3" Text="Simulation 2" OnClick="Compute_Simu2" runat="server"/> 
                 </div>
                  <div class="col-md-2">
-                       <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button4" Text="Simulation 3" OnClick="Compute_Price" runat="server"/> 
+                       <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button4" Text="Simulation 3" OnClick="Compute_Simu3" runat="server"/> 
                 </div>
                 
             </div> 
@@ -54,25 +54,25 @@
                     <h1>Date suivante</h1>
                 </div>
                 <div class="col-md-2">
-                    <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button1" Text="Mise à jour" OnClick="Compute_Price" runat="server"/> 
+                    <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button1" Text="Mise à jour" OnClick="Continue_Simu" runat="server"/> 
                 </div>
 
             </div>
             <div class="row" style="margin:5px;">
-                 <div class="col-md-1">
+                 <div class="col-md-2">
                     Prix
                 </div>
                
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <asp:TextBox class="form-control" ID="prixLabel" runat="server">
                     </asp:TextBox>
                 </div>
             </div>
             <div class="row" style="margin:5px;">
-                 <div class="col-md-1">
+                 <div class="col-md-2">
                     Incertitude
                 </div>
-                 <div class="col-md-4">
+                 <div class="col-md-2">
                   
                     <asp:TextBox class="form-control" ID="icLabel" runat="server">
                     </asp:TextBox>
@@ -80,12 +80,32 @@
             </div>
 
              <div class="row" style="margin:5px;">
-                 <div class="col-md-1">
+                 <div class="col-md-2">
                     Profit & Loss
                 </div>
-                 <div class="col-md-4">
+                 <div class="col-md-2">
                   
                     <asp:TextBox class="form-control" ID="plLabel" runat="server">
+                    </asp:TextBox>
+                </div>
+            </div>
+            <div class="row" style="margin:5px;">
+                 <div class="col-md-2">
+                    Cash
+                </div>
+                 <div class="col-md-2">
+                  
+                    <asp:TextBox class="form-control" ID="cashLabel" runat="server">
+                    </asp:TextBox>
+                </div>
+            </div>
+            <div class="row" style="margin:5px;">
+                 <div class="col-md-2">
+                    Valeur du portefeuille
+                </div>
+                 <div class="col-md-2">
+                  
+                    <asp:TextBox class="form-control" ID="vpLabel" runat="server">
                     </asp:TextBox>
                 </div>
             </div>
@@ -98,7 +118,7 @@
                 <asp:table ID="assetTable" class="table table-bordered" runat="server">
                     <asp:TableRow>
                         <asp:TableCell>Quantité d'actif</asp:TableCell>
-                        <asp:TableCell>Actifs</asp:TableCell>
+                    
                         <asp:TableCell>Cours</asp:TableCell>
                         
                     </asp:TableRow>
@@ -111,7 +131,7 @@
                 <asp:table ID="deltaTable" class="table table-bordered" runat="server">
                     <asp:TableRow>
                         <asp:TableCell>Quantité à investir</asp:TableCell>          
-                        <asp:TableCell>Actifs</asp:TableCell>
+                
                         <asp:TableCell>Cours</asp:TableCell>
                         
                     </asp:TableRow>
