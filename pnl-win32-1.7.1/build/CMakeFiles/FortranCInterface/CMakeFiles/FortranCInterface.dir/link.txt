@@ -1,3 +1,0 @@
-/usr/local/Cellar/cmake/3.0.0/bin/cmake -E remove -f CMakeFiles/FortranCInterface.dir/objects.a
-/usr/local/mingw32/i686-pc-mingw32/bin/ar cr CMakeFiles/FortranCInterface.dir/objects.a @CMakeFiles/FortranCInterface.dir/objects1.rsp
-/usr/local/mingw32/bin/gfortran      -Wl,--whole-archive CMakeFiles/FortranCInterface.dir/objects.a -Wl,--no-whole-archive  -o FortranCInterface.exe -Wl,--out-implib,libFortranCInterface.dll.a -Wl,--major-image-version,0,--minor-image-version,0  libsymbols.a libmyfort.a 

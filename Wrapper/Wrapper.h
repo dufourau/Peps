@@ -67,7 +67,7 @@ namespace Wrapper {
 			double getPrice() { return prix; };
 			double getIC() { return confidenceInterval; };
 			double getPL() { return PL; };
-			double setH(double inputH) { H = inputH; };
+			double setH(double inputH) {return H = inputH;};
 			array<double> ^getDelta(){ return delta; };
 			array<double> ^getDeltaIC(){ return ic; };
 	};
