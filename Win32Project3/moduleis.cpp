@@ -122,7 +122,7 @@ double Moduleis::payoff(const PnlMat *path)
 	}
 
 	pnl_vect_free(&Performances);
-	return payoff;
+	return payoff+100 ;
 }
 
 void Moduleis::print()
