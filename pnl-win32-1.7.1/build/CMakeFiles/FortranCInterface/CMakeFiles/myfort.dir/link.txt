@@ -1,2 +1,0 @@
-/usr/local/mingw32/i686-pc-mingw32/bin/ar cr libmyfort.a  CMakeFiles/myfort.dir/mysub.f.obj CMakeFiles/myfort.dir/my_sub.f.obj CMakeFiles/myfort.dir/mymodule.f90.obj CMakeFiles/myfort.dir/my_module.f90.obj
-/usr/local/mingw32/i686-pc-mingw32/bin/ranlib libmyfort.a
