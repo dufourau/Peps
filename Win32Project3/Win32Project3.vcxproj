@@ -14,6 +14,7 @@
     <ProjectGuid>{9D05176E-1428-4AC0-96FD-4664AC89E73C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Win32Project3</RootNamespace>
+    <ProjectName>Pricer</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
