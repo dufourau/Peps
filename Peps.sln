@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Peps", "Peps\Peps.csproj", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Wrapper", "Wrapper\Wrapper.vcxproj", "{B675E74A-E16D-403A-915B-C9A88F98B477}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Win32Project3", "Win32Project3\Win32Project3.vcxproj", "{9D05176E-1428-4AC0-96FD-4664AC89E73C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Pricer", "Pricer\Pricer.vcxproj", "{9D05176E-1428-4AC0-96FD-4664AC89E73C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
