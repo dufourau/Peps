@@ -53,14 +53,14 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Win32Project3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Pricer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>true</BrowseInformation>
       <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies />
-      <DelayLoadDLLs>Win32Project3.dll</DelayLoadDLLs>
+      <DelayLoadDLLs>Pricer.dll</DelayLoadDLLs>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -105,7 +105,7 @@
     <Image Include="app.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Win32Project3\Win32Project3.vcxproj">
+    <ProjectReference Include="..\Pricer\Pricer.vcxproj">
       <Project>{9d05176e-1428-4ac0-96fd-4664ac89e73c}</Project>
     </ProjectReference>
   </ItemGroup>
