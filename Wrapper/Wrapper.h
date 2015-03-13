@@ -70,5 +70,13 @@ namespace Wrapper {
 			int getSize(){ return option_size; };
 			array<double> ^getDelta(){ return delta; };
 			array<double> ^getDeltaIC(){ return ic; };
+
+			int getOption_size(){ return option_size; };
+			double getR(){ return r; };
+			double getRho(){ return rho; };
+			double geth(){ return h; };
+			int getH(){ return H; };
+			double getMaturity(){ return maturity; };
+			double getStrike(){ return strike; };
 	};
 }

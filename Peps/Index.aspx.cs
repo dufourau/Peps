@@ -12,13 +12,10 @@ namespace Peps
     {
         static WrapperClass wrapper;
         //use to store data from file
-        static String[] delta;
-        static String[] prix;
-        static String[] market;
-        static String[] deltaPrec;
-        static int indexPrix = 0;
-        static int indexDelta = 0;
-        static int indexMarket = 0;
+        static double[][] delta;
+        static double[] prix;
+        static double[][] market;
+        static int index = 0;
         static double Cash = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -49,199 +46,151 @@ namespace Peps
                     tr.Cells.Add(tc1);
                     //tr.Cells.Add(tc2);
                     deltaTable.Rows.Add(tr);
-                    
                 }
 
         
         }
 
-        public void Compute_Simu1(Object sender, EventArgs e)
+        private double[][] parseFileToMatrix(String file)
         {
-            indexDelta = 0;
-            indexPrix = 0;
-            indexMarket = 0;
+            String[] lines = file.Split('\n').Where(x => x != "" && x != null).ToArray();
+            double[][] parsed = new double[lines.Length][];
+            for (int i = 0; i < lines.Length; i++)
+            {
+                String[] items = lines[i].Trim().Split(' ');
+                parsed[i] = new double[items.Length];
+                for (int j = 0; j < items.Length; j++)
+                {
+                    parsed[i][j] = double.Parse(items[j], System.Globalization.CultureInfo.InvariantCulture);
+                }
+            }
+            return parsed;
+        }
+
+        private double[] parseFileToArray(String file)
+        {
+            String[] lines = file.Split('\n').Where(x => x != "" && x != null).ToArray();
+            double[] parsed = new double[lines.Length];
+            for (int i = 0; i < lines.Length; i++)
+            {
+                parsed[i] = double.Parse(lines[i], System.Globalization.CultureInfo.InvariantCulture);
+            }
+            return parsed;
+        }
+
+        public void ComputeSimulation(int idSimulation)
+        {
+            index = 0;
             deltaTable.Rows.Clear();
             assetTable.Rows.Clear();
-            String prix1= Properties.Resources.Prix1.ToString();
-            String delta1= Properties.Resources.Deltas1.ToString();
-            String market1 = Properties.Resources.Market1.ToString();
-            prix= prix1.Split('\n');
-            delta = delta1.Split('\n');
-            market = market1.Split('\n');
-            prixLabel.Text = prix[indexPrix++];
-            String[] deltaLine = delta[indexDelta++].Split(' ');
-            String[] marketLine = market[indexMarket++].Split(' ');
-
-            Cash= double.Parse(prix[indexPrix-1], System.Globalization.CultureInfo.InvariantCulture);
-            for (int i = 0; i < deltaLine.Length-1; i++)
+            String prixSimu, deltaSimu, marketSimu;
+            switch (idSimulation)
             {
-                TableRow tr1 = new TableRow();
-                TableCell tc1 = new TableCell();
-                tc1.Text = deltaLine[i];
-                tr1.Cells.Add(tc1);
-                TableCell tc2 = new TableCell();
-                tc2.Text = marketLine[i];
-                tr1.Cells.Add(tc2);
-                deltaTable.Rows.Add(tr1);
+                case 1:
+                    prixSimu = Properties.Resources.Prix1;
+                    deltaSimu = Properties.Resources.Deltas1;
+                    marketSimu = Properties.Resources.Market1;
+                    break;
+                case 2:
+                    prixSimu = Properties.Resources.Prix2;
+                    deltaSimu = Properties.Resources.Deltas2;
+                    marketSimu = Properties.Resources.Market2;
+                    break;
+                case 3:
+                    prixSimu = Properties.Resources.Prix3;
+                    deltaSimu = Properties.Resources.Deltas3;
+                    marketSimu = Properties.Resources.Market3;
+                    break;
+                default:
+                    return;
+            }
 
-                TableRow tr2 = new TableRow();
-                TableCell tc3 = new TableCell();
-                tc3.Text = "0";
-                tr2.Cells.Add(tc3);
-                TableCell tc4 = new TableCell();
-                tc4.Text = marketLine[i];
-                tr2.Cells.Add(tc4);
+            delta = parseFileToMatrix(deltaSimu);
+            prix = parseFileToArray(prixSimu);
+            market = parseFileToMatrix(marketSimu);
 
-                assetTable.Rows.Add(tr2);
+            prixLabel.Text = prix[index].ToString();
 
-                Cash -= double.Parse(deltaLine[i], System.Globalization.CultureInfo.InvariantCulture) * double.Parse(marketLine[i], System.Globalization.CultureInfo.InvariantCulture);
+            Cash = prix[index];
 
+            for (int i = 0; i < delta[index].Length - 1; i++)
+            {
+                TableRow deltaRow = new TableRow();
+                TableCell quantityToBuy = new TableCell();
+                quantityToBuy.Text = delta[index][i].ToString();
+                deltaRow.Cells.Add(quantityToBuy);
+                TableCell firstColumnPortfolio = new TableCell();
+                firstColumnPortfolio.Text = market[index][i].ToString();
+                deltaRow.Cells.Add(firstColumnPortfolio);
+                deltaTable.Rows.Add(deltaRow);
+
+                TableRow portfolioRow = new TableRow();
+                TableCell quantityAlreadyBought = new TableCell();
+                quantityAlreadyBought.Text = "0";
+                portfolioRow.Cells.Add(quantityAlreadyBought);
+                TableCell secondColumnPortfolio = new TableCell();
+                secondColumnPortfolio.Text = market[index][i].ToString();
+                portfolioRow.Cells.Add(secondColumnPortfolio);
+
+                assetTable.Rows.Add(portfolioRow);
+
+                Cash -=delta[index][i] * market[index][i];
             }
             cashLabel.Text = Cash.ToString();
-            vpLabel.Text = prix[indexPrix-1];
+            vpLabel.Text = prix[index].ToString();
             plLabel.Text = "0";
-     
-          
+            index++;
+        }
+
+        public void Compute_Simu1(Object sender, EventArgs e)
+        {
+            ComputeSimulation(1);
         }
 
         public void Compute_Simu2(Object sender, EventArgs e)
         {
-            indexDelta = 0;
-            indexPrix = 0;
-            indexMarket = 0;
-            deltaTable.Rows.Clear();
-            assetTable.Rows.Clear();
-            String prix1 = Properties.Resources.Prix2.ToString();
-            String delta1 = Properties.Resources.Deltas2.ToString();
-            String market1 = Properties.Resources.Market2.ToString();
-            prix = prix1.Split('\n');
-            delta = delta1.Split('\n');
-            market = market1.Split('\n');
-            prixLabel.Text = prix[indexPrix++];
-            String[] deltaLine = delta[indexDelta++].Split(' ');
-            String[] marketLine = market[indexMarket++].Split(' ');
-
-            Cash = double.Parse(prix[indexPrix - 1], System.Globalization.CultureInfo.InvariantCulture);
-            for (int i = 0; i < deltaLine.Length - 1; i++)
-            {
-                TableRow tr1 = new TableRow();
-                TableCell tc1 = new TableCell();
-                tc1.Text = deltaLine[i];
-                tr1.Cells.Add(tc1);
-                TableCell tc2 = new TableCell();
-                tc2.Text = marketLine[i];
-                tr1.Cells.Add(tc2);
-                deltaTable.Rows.Add(tr1);
-
-                TableRow tr2 = new TableRow();
-                TableCell tc3 = new TableCell();
-                tc3.Text = "0";
-                tr2.Cells.Add(tc3);
-                TableCell tc4 = new TableCell();
-                tc4.Text = marketLine[i];
-                tr2.Cells.Add(tc4);
-
-                assetTable.Rows.Add(tr2);
-
-                Cash -= double.Parse(deltaLine[i], System.Globalization.CultureInfo.InvariantCulture) * double.Parse(marketLine[i], System.Globalization.CultureInfo.InvariantCulture);
-
-            }
-            cashLabel.Text = Cash.ToString();
-            vpLabel.Text = prix[indexPrix - 1];
-            plLabel.Text = "0";
-
-
+            ComputeSimulation(2);
         }
 
         public void Compute_Simu3(Object sender, EventArgs e)
         {
-            indexDelta = 0;
-            indexPrix = 0;
-            indexMarket = 0;
-            deltaTable.Rows.Clear();
-            assetTable.Rows.Clear();
-            String prix1 = Properties.Resources.Prix3.ToString();
-            String delta1 = Properties.Resources.Deltas3.ToString();
-            String market1 = Properties.Resources.Market3.ToString();
-            prix = prix1.Split('\n');
-            delta = delta1.Split('\n');
-            market = market1.Split('\n');
-            prixLabel.Text = prix[indexPrix++];
-            String[] deltaLine = delta[indexDelta++].Split(' ');
-            String[] marketLine = market[indexMarket++].Split(' ');
-
-            Cash = double.Parse(prix[indexPrix - 1], System.Globalization.CultureInfo.InvariantCulture);
-            for (int i = 0; i < deltaLine.Length - 1; i++)
-            {
-                TableRow tr1 = new TableRow();
-                TableCell tc1 = new TableCell();
-                tc1.Text = deltaLine[i];
-                tr1.Cells.Add(tc1);
-                TableCell tc2 = new TableCell();
-                tc2.Text = marketLine[i];
-                tr1.Cells.Add(tc2);
-                deltaTable.Rows.Add(tr1);
-
-                TableRow tr2 = new TableRow();
-                TableCell tc3 = new TableCell();
-                tc3.Text = "0";
-                tr2.Cells.Add(tc3);
-                TableCell tc4 = new TableCell();
-                tc4.Text = marketLine[i];
-                tr2.Cells.Add(tc4);
-
-                assetTable.Rows.Add(tr2);
-
-                Cash -= double.Parse(deltaLine[i], System.Globalization.CultureInfo.InvariantCulture) * double.Parse(marketLine[i], System.Globalization.CultureInfo.InvariantCulture);
-
-            }
-            cashLabel.Text = Cash.ToString();
-            vpLabel.Text = prix[indexPrix - 1];
-            plLabel.Text = "0";
-
-
+            ComputeSimulation(3);
         }
 
         public void Continue_Simu(Object sender, EventArgs e)
         {
             deltaTable.Rows.Clear();
             assetTable.Rows.Clear();
-            prixLabel.Text = prix[indexPrix++];
-            String[] deltaLine = delta[indexDelta++].Split(' ');
-            String[] deltaPrecLine = delta[indexDelta-2].Split(' ');
-            String[] marketLine = market[indexMarket++].Split(' ');
+            prixLabel.Text = prix[index].ToString();
             double vp = 0;
-            Cash *= Math.Exp(0.05*(1/250));
-            for (int i = 0; i < deltaLine.Length - 1; i++)
+            Cash *= Math.Exp(wrapper.getR()*(1/250));
+            for (int i = 0; i < delta[index].Length - 1; i++)
             {
                 TableRow tr1 = new TableRow();
                 TableCell tc1 = new TableCell();
-                tc1.Text = deltaLine[i];
+                tc1.Text = delta[index][i].ToString();
                 tr1.Cells.Add(tc1);
                 TableCell tc2 = new TableCell();
-                tc2.Text = marketLine[i];
+                tc2.Text = market[index][i].ToString();
                 tr1.Cells.Add(tc2);
                 deltaTable.Rows.Add(tr1);
 
                 TableRow tr2 = new TableRow();
                 TableCell tc3 = new TableCell();
-                tc3.Text = deltaPrecLine[i];
+                tc3.Text = delta[index - 1][i].ToString();
                 tr2.Cells.Add(tc3);
                 TableCell tc4 = new TableCell();
-                tc4.Text = marketLine[i];
+                tc4.Text = market[index][i].ToString();
                 tr2.Cells.Add(tc4);
-                Cash -= (double.Parse(deltaLine[i], System.Globalization.CultureInfo.InvariantCulture) - double.Parse(deltaPrecLine[i], System.Globalization.CultureInfo.InvariantCulture)) * double.Parse(marketLine[i], System.Globalization.CultureInfo.InvariantCulture);
+                Cash -= (delta[index][i] - delta[index-1][i]) * market[index][i];
                 assetTable.Rows.Add(tr2);
-                vp += double.Parse(deltaLine[i], System.Globalization.CultureInfo.InvariantCulture) * double.Parse(marketLine[i], System.Globalization.CultureInfo.InvariantCulture);
-
+                vp += delta[index][i] * market[index][i];
             }
             vp += Cash;
             cashLabel.Text = Cash.ToString();
             vpLabel.Text = vp.ToString();
-            plLabel.Text = (double.Parse(prix[indexPrix - 1], System.Globalization.CultureInfo.InvariantCulture) - vp).ToString(); ;
-            
-            
+            plLabel.Text = (prix[index] - vp).ToString(); ;
+            index++;            
         }
-
     }
 }
