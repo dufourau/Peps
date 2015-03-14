@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -17,6 +18,7 @@ namespace Peps
         static double[][] market;
         static int index = 0;
         static double Cash = 0;
+        static double InitialCash;
         protected void Page_Load(object sender, EventArgs e)
         {
             wrapper = new WrapperClass();
@@ -32,7 +34,7 @@ namespace Peps
 
                 prixLabel.Text = wrapper.getPrice().ToString();
                 icLabel.Text = wrapper.getIC().ToString();
-                plLabel.Text = wrapper.getPL().ToString();
+                teLabel.Text = wrapper.getPL().ToString();
                 double[] delta = wrapper.getDelta();
                 double[] deltaIC = wrapper.getDeltaIC();
                 
@@ -53,21 +55,63 @@ namespace Peps
 
         private double[][] parseFileToMatrix(String file)
         {
-            String[] lines = file.Split('\n').Where(x => x != "" && x != null).ToArray();
-            double[][] parsed = new double[lines.Length][];
-            for (int i = 0; i < lines.Length; i++)
-            {
+             String[] lines = file.Split('\n').Where(x => x != "" && x != null).ToArray();
+             double[][] parsed = new double[lines.Length][];
+             for (int i = 0; i < lines.Length; i++)
+             {
                 String[] items = lines[i].Trim().Split(' ');
                 parsed[i] = new double[items.Length];
                 for (int j = 0; j < items.Length; j++)
                 {
                     parsed[i][j] = double.Parse(items[j], System.Globalization.CultureInfo.InvariantCulture);
                 }
-            }
-            return parsed;
+             }
+             return parsed;
+
         }
 
-        private double[] parseFileToArray(String file)
+
+        /*
+            String[] lines = file.Split('\n').Where(x => x != "" && x != null).ToArray();
+            double[][] parsed = new double[lines.Length][];
+            for (int i = 0; i < lines.Length; i++)
+            {
+                TableRow tr1 = new TableRow();
+                TableCell tc1 = new TableCell();
+                tc1.Text = deltaSuivLine[i];
+                tr1.Cells.Add(tc1);
+                TableCell tc2 = new TableCell();
+                tc2.Text = marketLine[i];
+                tr1.Cells.Add(tc2);
+                deltaTable.Rows.Add(tr1);
+
+                TableRow tr2 = new TableRow();
+                TableCell tc3 = new TableCell();
+                tc3.Text = deltaLine[i];
+                tr2.Cells.Add(tc3);
+                TableCell tc4 = new TableCell();
+                tc4.Text = marketLine[i];
+                tr2.Cells.Add(tc4);
+
+                assetTable.Rows.Add(tr2);
+                //Buy action
+                Cash -= double.Parse(deltaLine[i], System.Globalization.CultureInfo.InvariantCulture) * double.Parse(marketLine[i], System.Globalization.CultureInfo.InvariantCulture);
+
+            }
+
+
+
+            cashLabel.Text = Cash.ToString();
+            vpLabel.Text = prix[indexPrix-1];
+            //Compute the tracking error
+            teLabel.Text = "0";
+            //Compute the profit and Loss
+            double pL = InitialCash;
+            plLabel.Text= pL.ToString();
+
+         
+       */
+       private double[] parseFileToArray(String file)
         {
             String[] lines = file.Split('\n').Where(x => x != "" && x != null).ToArray();
             double[] parsed = new double[lines.Length];
@@ -77,7 +121,6 @@ namespace Peps
             }
             return parsed;
         }
-
         public void ComputeSimulation(int idSimulation)
         {
             index = 0;
@@ -110,36 +153,69 @@ namespace Peps
             market = parseFileToMatrix(marketSimu);
 
             prixLabel.Text = prix[index].ToString();
-
+            //Initial benefit made from the sell of our product
+            InitialCash = 100 - prix[index];
+            //We use the price of our product for hedging
             Cash = prix[index];
-
             for (int i = 0; i < delta[index].Length - 1; i++)
             {
                 TableRow deltaRow = new TableRow();
                 TableCell quantityToBuy = new TableCell();
-                quantityToBuy.Text = delta[index][i].ToString();
+                quantityToBuy.Text = delta[index+1][i].ToString();
                 deltaRow.Cells.Add(quantityToBuy);
                 TableCell firstColumnPortfolio = new TableCell();
                 firstColumnPortfolio.Text = market[index][i].ToString();
                 deltaRow.Cells.Add(firstColumnPortfolio);
                 deltaTable.Rows.Add(deltaRow);
-
                 TableRow portfolioRow = new TableRow();
                 TableCell quantityAlreadyBought = new TableCell();
-                quantityAlreadyBought.Text = "0";
+                quantityAlreadyBought.Text = delta[index][i].ToString();
                 portfolioRow.Cells.Add(quantityAlreadyBought);
                 TableCell secondColumnPortfolio = new TableCell();
                 secondColumnPortfolio.Text = market[index][i].ToString();
                 portfolioRow.Cells.Add(secondColumnPortfolio);
 
                 assetTable.Rows.Add(portfolioRow);
-
+                //We buy a certain quantity of action using delta hedging
                 Cash -=delta[index][i] * market[index][i];
             }
             cashLabel.Text = Cash.ToString();
             vpLabel.Text = prix[index].ToString();
-            plLabel.Text = "0";
+            //Compute the tracking error
+            teLabel.Text = "0";
+            //Compute the profit and Loss
+            double pL = InitialCash;
+            plLabel.Text = pL.ToString();
             index++;
+
+            //Temporary variable to save the cash value
+            double CashTemp = Cash;
+            //Plot product price and portfolio value
+            //number of Step
+            int nbStep= prix.Length;
+            for (int j = 1; j < nbStep ; j++)
+            {
+                
+                //Color and scale of the chart
+                Chart1.Series.FindByName("ProductPrice").Color = Color.DarkBlue;
+                Chart1.Series.FindByName("PortfolioPrice").Color = Color.DarkRed;
+                Chart1.ChartAreas[0].AxisY.Maximum = 104;
+                Chart1.ChartAreas[0].AxisY.Minimum = 88;
+                Chart1.Series.FindByName("ProductPrice").Points.Add(prix[j]);
+
+                double vp = 0;
+                //The Cash was hold at a constant rate r
+                CashTemp *= Math.Exp(wrapper.getR() * (1 / nbStep));
+                for (int i = 0; i < delta[j].Length - 1; i++)
+                {
+                    //We buy a certain quantity of action required for hedging
+                    CashTemp -= (delta[j][i] - delta[j - 1][i]) * market[j][i];
+                    vp += delta[j][i] * market[j][i];
+                }
+                //Vp= asset value + cash
+                vp += CashTemp;
+                Chart1.Series.FindByName("PortfolioPrice").Points.Add(vp);
+            }
         }
 
         public void Compute_Simu1(Object sender, EventArgs e)
@@ -151,19 +227,22 @@ namespace Peps
         {
             ComputeSimulation(2);
         }
+            
 
         public void Compute_Simu3(Object sender, EventArgs e)
         {
             ComputeSimulation(3);
         }
 
-        public void Continue_Simu(Object sender, EventArgs e)
+    
+     public void Continue_Simu(Object sender, EventArgs e)
         {
             deltaTable.Rows.Clear();
             assetTable.Rows.Clear();
             prixLabel.Text = prix[index].ToString();
             double vp = 0;
             Cash *= Math.Exp(wrapper.getR()*(1/250));
+            InitialCash *= Math.Exp(wrapper.getR() * (1 / 250));
             for (int i = 0; i < delta[index].Length - 1; i++)
             {
                 TableRow tr1 = new TableRow();
@@ -171,13 +250,13 @@ namespace Peps
                 tc1.Text = delta[index][i].ToString();
                 tr1.Cells.Add(tc1);
                 TableCell tc2 = new TableCell();
-                tc2.Text = market[index][i].ToString();
+                tc2.Text = market[index-1][i].ToString();
                 tr1.Cells.Add(tc2);
                 deltaTable.Rows.Add(tr1);
 
                 TableRow tr2 = new TableRow();
                 TableCell tc3 = new TableCell();
-                tc3.Text = delta[index - 1][i].ToString();
+                tc3.Text = delta[index][i].ToString();
                 tr2.Cells.Add(tc3);
                 TableCell tc4 = new TableCell();
                 tc4.Text = market[index][i].ToString();
@@ -189,7 +268,8 @@ namespace Peps
             vp += Cash;
             cashLabel.Text = Cash.ToString();
             vpLabel.Text = vp.ToString();
-            plLabel.Text = (prix[index] - vp).ToString(); ;
+            teLabel.Text = (vp - prix[index]).ToString();
+            plLabel.Text = (vp - prix[index]+InitialCash).ToString();
             index++;            
         }
     }

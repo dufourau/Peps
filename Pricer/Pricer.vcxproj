@@ -65,11 +65,8 @@
       <AdditionalLibraryDirectories>$(SolutionDir)\pnl-win32-1.7.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)Debub\Pricer.dll $(SolutionDir)Peps\bin\Pricer.dll
-copy $(SolutionDir)pnl-win32-1.7.1\lib\libblas.dll $(SolutionDir)Peps\bin\libblas.dll
-copy $(SolutionDir)pnl-win32-1.7.1\lib\liblapack.dll $(SolutionDir)Peps\bin\liblapack.dll
-copy $(SolutionDir)pnl-win32-1.7.1\lib\libpnl.dll $(SolutionDir)Peps\bin\libpnl.dll
-copy $(SolutionDir)pnl-win32-1.7.1\lib\libpnl.lib $(SolutionDir)Peps\bin\libpnl.lib
+      <Command>copy "$(SolutionDir)Debug\Pricer.dll" "$(SolutionDir)Peps\bin\Pricer.dll"
+
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

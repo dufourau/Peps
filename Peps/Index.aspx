@@ -1,5 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="Peps.Index" %>
 
+<%@ Register assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" namespace="System.Web.UI.DataVisualization.Charting" tagprefix="asp" %>
+
 <!DOCTYPE html>
 <link type="text/css" rel="stylesheet" href="css/bootstrap.css" /> 
 <link type="text/css" rel="stylesheet" href="css/normalize.css" />
@@ -78,6 +80,17 @@
                     </asp:TextBox>
                 </div>
             </div>
+            
+            <div class="row" style="margin:5px;">
+                 <div class="col-md-2">
+                    Tracking Error
+                </div>
+                 <div class="col-md-2">
+                  
+                    <asp:TextBox class="form-control" ID="teLabel" runat="server">
+                    </asp:TextBox>
+                </div>
+            </div>
 
              <div class="row" style="margin:5px;">
                  <div class="col-md-2">
@@ -143,5 +156,18 @@
 
 <script src="js/jquery-2.1.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script> 
+    </div>
+    <asp:Chart ID="Chart1" runat="server" Width="1283px">
+        <series>
+            <asp:Series ChartType="Line" Name="PortfolioPrice">
+            </asp:Series>
+            <asp:Series ChartArea="ChartArea1" ChartType="Line" Name="ProductPrice">
+            </asp:Series>
+        </series>
+        <chartareas>
+            <asp:ChartArea Name="ChartArea1">
+            </asp:ChartArea>
+        </chartareas>
+    </asp:Chart>
 </body>
 </html>
