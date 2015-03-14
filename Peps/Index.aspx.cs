@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -20,6 +21,7 @@ namespace Peps
         static int indexDelta = 0;
         static int indexMarket = 0;
         static double Cash = 0;
+        static double InitialCash;
         protected void Page_Load(object sender, EventArgs e)
         {
             wrapper = new WrapperClass();
@@ -35,7 +37,7 @@ namespace Peps
 
                 prixLabel.Text = wrapper.getPrice().ToString();
                 icLabel.Text = wrapper.getIC().ToString();
-                plLabel.Text = wrapper.getPL().ToString();
+                teLabel.Text = wrapper.getPL().ToString();
                 double[] delta = wrapper.getDelta();
                 double[] deltaIC = wrapper.getDeltaIC();
                 
@@ -71,13 +73,14 @@ namespace Peps
             prixLabel.Text = prix[indexPrix++];
             String[] deltaLine = delta[indexDelta++].Split(' ');
             String[] marketLine = market[indexMarket++].Split(' ');
-
-            Cash= double.Parse(prix[indexPrix-1], System.Globalization.CultureInfo.InvariantCulture);
+            String[] deltaSuivLine = delta[indexDelta].Split(' ');
+            InitialCash = 100 - double.Parse(prix[0], System.Globalization.CultureInfo.InvariantCulture);
+            Cash = double.Parse(prix[0], System.Globalization.CultureInfo.InvariantCulture);
             for (int i = 0; i < deltaLine.Length-1; i++)
             {
                 TableRow tr1 = new TableRow();
                 TableCell tc1 = new TableCell();
-                tc1.Text = deltaLine[i];
+                tc1.Text = deltaSuivLine[i];
                 tr1.Cells.Add(tc1);
                 TableCell tc2 = new TableCell();
                 tc2.Text = marketLine[i];
@@ -86,22 +89,56 @@ namespace Peps
 
                 TableRow tr2 = new TableRow();
                 TableCell tc3 = new TableCell();
-                tc3.Text = "0";
+                tc3.Text = deltaLine[i];
                 tr2.Cells.Add(tc3);
                 TableCell tc4 = new TableCell();
                 tc4.Text = marketLine[i];
                 tr2.Cells.Add(tc4);
 
                 assetTable.Rows.Add(tr2);
-
+                //Buy action
                 Cash -= double.Parse(deltaLine[i], System.Globalization.CultureInfo.InvariantCulture) * double.Parse(marketLine[i], System.Globalization.CultureInfo.InvariantCulture);
 
             }
+
+
+
             cashLabel.Text = Cash.ToString();
             vpLabel.Text = prix[indexPrix-1];
-            plLabel.Text = "0";
+            //Compute the tracking error
+            teLabel.Text = "0";
+            //Compute the profit and Loss
+            double pL = InitialCash;
+            plLabel.Text= pL.ToString();
+
+            //Init the chart
+            double CashTemp = Cash;
      
-          
+            //TO DO: remove 250
+            for (int j = 1; j < 250; j++ )
+            {
+                deltaLine = delta[j].Split(' ');
+                marketLine = market[j].Split(' ');
+                String[] deltaPrecLine = delta[j- 1].Split(' ');
+                //Color and scale of the chart
+                Chart1.Series.FindByName("ProductPrice").Color = Color.DarkBlue;
+                Chart1.Series.FindByName("PortfolioPrice").Color = Color.DarkRed;
+                Chart1.ChartAreas[0].AxisY.Maximum= 120;
+                Chart1.ChartAreas[0].AxisY.Minimum = 80;
+                Chart1.Series.FindByName("ProductPrice").Points.Add(double.Parse(prix[j], System.Globalization.CultureInfo.InvariantCulture));
+              
+                double vp = 0;
+                CashTemp *= Math.Exp(0.05 * (1 / 250));
+                for (int i = 0; i < deltaLine.Length-1; i++){
+                    
+                    CashTemp -= (double.Parse(deltaLine[i], System.Globalization.CultureInfo.InvariantCulture) - double.Parse(deltaPrecLine[i], System.Globalization.CultureInfo.InvariantCulture)) * double.Parse(marketLine[i], System.Globalization.CultureInfo.InvariantCulture);
+                    vp += double.Parse(deltaLine[i], System.Globalization.CultureInfo.InvariantCulture) * double.Parse(marketLine[i], System.Globalization.CultureInfo.InvariantCulture);
+                 
+                }
+
+                vp += CashTemp;
+                Chart1.Series.FindByName("PortfolioPrice").Points.Add(vp);
+            }
         }
 
         public void Compute_Simu2(Object sender, EventArgs e)
@@ -148,7 +185,7 @@ namespace Peps
             }
             cashLabel.Text = Cash.ToString();
             vpLabel.Text = prix[indexPrix - 1];
-            plLabel.Text = "0";
+            teLabel.Text = "0";
 
 
         }
@@ -197,7 +234,7 @@ namespace Peps
             }
             cashLabel.Text = Cash.ToString();
             vpLabel.Text = prix[indexPrix - 1];
-            plLabel.Text = "0";
+            teLabel.Text = "0";
 
 
         }
@@ -212,6 +249,7 @@ namespace Peps
             String[] marketLine = market[indexMarket++].Split(' ');
             double vp = 0;
             Cash *= Math.Exp(0.05*(1/250));
+            InitialCash *= Math.Exp(0.05 * (1 / 250));
             for (int i = 0; i < deltaLine.Length - 1; i++)
             {
                 TableRow tr1 = new TableRow();
@@ -238,8 +276,11 @@ namespace Peps
             vp += Cash;
             cashLabel.Text = Cash.ToString();
             vpLabel.Text = vp.ToString();
-            plLabel.Text = (double.Parse(prix[indexPrix - 1], System.Globalization.CultureInfo.InvariantCulture) - vp).ToString(); ;
-            
+            teLabel.Text = (vp-double.Parse(prix[indexPrix - 1], System.Globalization.CultureInfo.InvariantCulture)).ToString(); ;
+
+            //Compute the profit and Loss
+            double pL = InitialCash + vp - double.Parse(prix[indexPrix - 1], System.Globalization.CultureInfo.InvariantCulture);
+            plLabel.Text = pL.ToString();
             
         }
 
