@@ -13,10 +13,13 @@ public:
 	double T_; /// maturité
 	int TimeSteps_; /// nombre de pas de temps de discrétisation
 	int size_; /// dimension du modèle, redondant avec BS::size_
+	int sizeAsset_; /// nombre d'actifs risqués
+	PnlVect *curr_; /// indice de la devise etrangere 
 	char *optionType_; /// Type de l'option
 
 	virtual ~Option()
 	{
+
 	}
 	/**
 	* Calcule la valeur du payoff sur la trajectoire

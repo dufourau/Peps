@@ -43,10 +43,7 @@ namespace Peps
                     TableRow tr = new TableRow();
                     TableCell tc1 = new TableCell();
                     tc1.Text = delta[i].ToString();
-                    //TableCell tc2 = new TableCell();
-                    //tc2.Text = deltaIC[i].ToString();
-                    tr.Cells.Add(tc1);
-                    //tr.Cells.Add(tc2);
+                    tr.Cells.Add(tc1);                 
                     deltaTable.Rows.Add(tr);
                 }
 
@@ -70,47 +67,6 @@ namespace Peps
 
         }
 
-
-        /*
-            String[] lines = file.Split('\n').Where(x => x != "" && x != null).ToArray();
-            double[][] parsed = new double[lines.Length][];
-            for (int i = 0; i < lines.Length; i++)
-            {
-                TableRow tr1 = new TableRow();
-                TableCell tc1 = new TableCell();
-                tc1.Text = deltaSuivLine[i];
-                tr1.Cells.Add(tc1);
-                TableCell tc2 = new TableCell();
-                tc2.Text = marketLine[i];
-                tr1.Cells.Add(tc2);
-                deltaTable.Rows.Add(tr1);
-
-                TableRow tr2 = new TableRow();
-                TableCell tc3 = new TableCell();
-                tc3.Text = deltaLine[i];
-                tr2.Cells.Add(tc3);
-                TableCell tc4 = new TableCell();
-                tc4.Text = marketLine[i];
-                tr2.Cells.Add(tc4);
-
-                assetTable.Rows.Add(tr2);
-                //Buy action
-                Cash -= double.Parse(deltaLine[i], System.Globalization.CultureInfo.InvariantCulture) * double.Parse(marketLine[i], System.Globalization.CultureInfo.InvariantCulture);
-
-            }
-
-
-
-            cashLabel.Text = Cash.ToString();
-            vpLabel.Text = prix[indexPrix-1];
-            //Compute the tracking error
-            teLabel.Text = "0";
-            //Compute the profit and Loss
-            double pL = InitialCash;
-            plLabel.Text= pL.ToString();
-
-         
-       */
        private double[] parseFileToArray(String file)
         {
             String[] lines = file.Split('\n').Where(x => x != "" && x != null).ToArray();
@@ -163,9 +119,6 @@ namespace Peps
                 TableCell quantityToBuy = new TableCell();
                 quantityToBuy.Text = delta[index+1][i].ToString();
                 deltaRow.Cells.Add(quantityToBuy);
-                TableCell firstColumnPortfolio = new TableCell();
-                firstColumnPortfolio.Text = market[index][i].ToString();
-                deltaRow.Cells.Add(firstColumnPortfolio);
                 deltaTable.Rows.Add(deltaRow);
                 TableRow portfolioRow = new TableRow();
                 TableCell quantityAlreadyBought = new TableCell();
@@ -249,9 +202,6 @@ namespace Peps
                 TableCell tc1 = new TableCell();
                 tc1.Text = delta[index][i].ToString();
                 tr1.Cells.Add(tc1);
-                TableCell tc2 = new TableCell();
-                tc2.Text = market[index-1][i].ToString();
-                tr1.Cells.Add(tc2);
                 deltaTable.Rows.Add(tr1);
 
                 TableRow tr2 = new TableRow();

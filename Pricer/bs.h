@@ -17,10 +17,11 @@ public:
 	double rho_; /// paramètre de corrélation
 	PnlVect *sigma_; /// vecteur de volatilités
 	PnlVect *spot_; /// valeurs initiales du sous-jacent
+	PnlVect *dividend_; /// valeurs des dividendes versées
 	PnlVect *trend_; /// vecteur des tendances des sous-jacent
 	PnlMat *L; /// Cholesky factorization of the correlation matrix
 
-	BS(double size_, double r_, double rho_, PnlVect* sigma_, PnlVect* spot_, PnlVect* trend_);
+	BS(double size_, double r_, double rho_, PnlVect* dividend_, PnlVect* sigma_, PnlVect* spot_, PnlVect* trend_);
 	~BS();
 
 	/**

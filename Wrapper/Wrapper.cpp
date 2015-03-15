@@ -10,7 +10,9 @@ using namespace Computations;
 			pin_ptr<double> pSigma = &sigma[0];
 			pin_ptr<double> pTrend = &trend[0];
 			pin_ptr<double> pCoeff = &coeff[0];
-			compute_price(ic, px,option_size, pSpot, pSigma, pTrend, r, rho ,h , H, maturity,timeSteps,strike, pCoeff,samples);
+			pin_ptr<double> pDividend = &dividend[0];
+			pin_ptr<double> pCurr = &curr[0];
+			compute_price(ic, px,option_size,pDividend,pCurr, pSpot, pSigma, pTrend, r, rho ,h , H, maturity,timeSteps,strike, pCoeff,samples);
 			this->confidenceInterval = ic;
 			this->prix = px;
 			
@@ -22,7 +24,9 @@ using namespace Computations;
 			pin_ptr<double> pSigma = &sigma[0];
 			pin_ptr<double> pTrend = &trend[0];
 			pin_ptr<double> pCoeff = &coeff[0];
-			compute_delta(pDelta, pDeltaIc, option_size, pSpot, pSigma, pTrend, r, rho, h, H, maturity, timeSteps, strike, pCoeff, samples);
+			pin_ptr<double> pDividend = &dividend[0];
+			pin_ptr<double> pCurr = &curr[0];
+			compute_delta(pDelta, pDeltaIc, option_size, pDividend, pCurr, pSpot, pSigma, pTrend, r, rho, h, H, maturity, timeSteps, strike, pCoeff, samples);
 		}
 
 		void WrapperClass::computeHedge(){
@@ -31,7 +35,9 @@ using namespace Computations;
 			pin_ptr<double> pSigma = &sigma[0];
 			pin_ptr<double> pTrend = &trend[0];
 			pin_ptr<double> pCoeff = &coeff[0];
-			compute_hedge(Pl, option_size, pSpot, pSigma, pTrend, r, rho, h, H, maturity, timeSteps, strike, pCoeff, samples);
+			pin_ptr<double> pDividend = &dividend[0];
+			pin_ptr<double> pCurr = &curr[0];
+			compute_hedge(Pl, option_size, pDividend, pCurr, pSpot, pSigma, pTrend, r, rho, h, H, maturity, timeSteps, strike, pCoeff, samples);
 			this->PL = Pl;
 		}
 }

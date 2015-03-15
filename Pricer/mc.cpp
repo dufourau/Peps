@@ -1,16 +1,18 @@
-#include <iostream>
+﻿#include <iostream>
 #include "mc.h"
 
 using namespace std;
 
-MonteCarlo::MonteCarlo(double T_, int TimeSteps_, int size_, int optionType_, double r_, double rho_, double* sigma_, double* spot_, double* trend_, int samples_)
+MonteCarlo::MonteCarlo(double T_, int TimeSteps_, int size_, int optionType_, double r_, double rho_, double* curr_, double* dividend_, double* sigma_, double* spot_, double* trend_, int samples_)
 {
 	PnlVect* sigma= pnl_vect_create_from_ptr(size_,sigma_);
 	PnlVect* spot= pnl_vect_create_from_ptr(size_, spot_);
 	PnlVect* trend= pnl_vect_create_from_ptr(size_, trend_);
+	PnlVect* dividend = pnl_vect_create_from_ptr(size_, dividend_);
+	PnlVect* curr = pnl_vect_create_from_ptr(size_, curr_);
 	// Construction de BS
-	this->mod_ = new BS(size_, r_, rho_, sigma, spot, trend);
-	this->opt_ = new Moduleis(T_, TimeSteps_,size_, optionType_);
+	this->mod_ = new BS(size_, r_, rho_, dividend, sigma, spot, trend);
+	this->opt_ = new Moduleis(curr, T_, TimeSteps_,size_, optionType_);
 	// Initialisation du generateur a MERSENNE : type 7 page 63
 	rng = pnl_rng_create(PNL_RNG_MERSENNE);
 	pnl_rng_sseed(rng, time(NULL));
@@ -152,9 +154,9 @@ void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta)
 		this->mod_->asset(generatedPath, t, this->opt_->TimeSteps_, this->opt_->T_, this->rng, past);
 		for (int d = 0; d<this->mod_->size_; d++)
 		{
-			// Shift � droite
+			// Shift à droite
 			this->mod_->shift_asset(shiftPath_Right, generatedPath, d, this->h_, t, this->opt_->T_, this->opt_->TimeSteps_);
-			// Shift � droite
+			// Shift à droite
 			this->mod_->shift_asset(shiftPath_Left, generatedPath, d, -this->h_, t, this->opt_->T_, this->opt_->TimeSteps_);
 			// Delta payoff Right Left
 			tmp = this->opt_->payoff(shiftPath_Right) - this->opt_->payoff(shiftPath_Left);
@@ -176,6 +178,7 @@ void MonteCarlo::hedge(PnlVect *V, double &PL, int H, const PnlMat *marketPath)
 {
 	PnlVect *delta_cour = pnl_vect_create_from_zero(this->opt_->size_);
 	PnlVect *delta_prec = pnl_vect_create_from_zero(this->opt_->size_);
+	PnlVect *divi = pnl_vect_create_from_zero(this->opt_->size_);
 	PnlVect *St = pnl_vect_copy(this->mod_->spot_);
 	PnlMat *past = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
 
@@ -187,11 +190,27 @@ void MonteCarlo::hedge(PnlVect *V, double &PL, int H, const PnlMat *marketPath)
 	double ic = 0;
 	double value = 0;
 
+	//void pnl_vect_fprint (FILE ∗fic, const PnlVect ∗V)
+
+	//void pnl_mat_fprint (FILE ∗fic, const PnlMat ∗M)
+
+	PnlVect *Prix = pnl_vect_create(H);
+	PnlMat *Deltas = pnl_mat_create(H, this->opt_->size_);
+
 	// Affichage des valeurs du portefeuille	
-	cout << " ---- \t Date n� \t PortFolio Value " << endl;
+	cout << " ---- \t Date n° \t PortFolio Value " << endl;
 	// Initialisation du portefeuille
 	this->price(p, ic);
 	this->delta(past, 0, delta_cour);
+	LET(Prix, 0) = p;
+	pnl_mat_set_row(Deltas, delta_cour, 0);
+
+
+	for (int d = 0; d < opt_->size_; d++)
+	{
+		LET(divi, d) = exp(GET(this->mod_->dividend_, d)*this->opt_->T_ / H);
+	}
+
 	value = p - pnl_vect_scalar_prod(delta_cour, St);
 	pnl_vect_set(V, 0, value);
 	cout << " ---- \t " << 0 << " \t \t" << GET(V, 0) << endl;
@@ -203,9 +222,16 @@ void MonteCarlo::hedge(PnlVect *V, double &PL, int H, const PnlMat *marketPath)
 		if ((i % M) == 0)
 			ti++;
 		pnl_vect_clone(delta_prec, delta_cour);
+		this->price(past, i*this->opt_->T_ / H, p, ic);
 		this->delta(past, i*this->opt_->T_ / H, delta_cour);
+		LET(Prix, i) = p;
+		pnl_mat_set_row(Deltas, delta_cour, i);
 		pnl_vect_minus_vect(delta_prec, delta_cour);
+
 		value = GET(V, i - 1)*exp(this->mod_->r_*this->opt_->T_ / H) + pnl_vect_scalar_prod(delta_prec, St);
+		pnl_vect_mult_vect_term(St, delta_cour);
+		pnl_vect_mult_scalar(St, opt_->T_ / H);
+		value += pnl_vect_sum(St);
 		pnl_vect_set(V, i, value);
 		cout << " ---- \t " << i << " \t \t" << GET(V, i) << endl;
 	}
@@ -218,12 +244,25 @@ void MonteCarlo::hedge(PnlVect *V, double &PL, int H, const PnlMat *marketPath)
 	double payoff = this->opt_->payoff(past);
 	PL = GET(V, H) + pnl_vect_scalar_prod(delta_cour, St) - payoff;
 	cout << " " << endl;
-	cout << "  ---- Prix de l'option en 0 = " << p << endl;
+	cout << "  ---- Prix de l'option en 0 = " << GET(Prix, 0) << endl;
 	cout << "  ---- Erreur de couverture relative en % = " << (PL / p) * 100 << endl;
+
+	FILE * pFile, *dFile, *mFile;
+	pFile = fopen("../past/Prix.txt", "w");
+	dFile = fopen("../past/Deltas.txt", "w");
+	mFile = fopen("../past/Market.txt", "w");
+	pnl_vect_fprint(pFile, Prix);
+	pnl_mat_fprint(dFile, Deltas);
+	pnl_mat_fprint(mFile, marketPath);
+	fclose(pFile);
+	fclose(dFile);
+	fclose(mFile);
 	// memory free
+	pnl_vect_free(&Prix);
 	pnl_vect_free(&St);
 	pnl_vect_free(&delta_cour);
 	pnl_vect_free(&delta_prec);
+	pnl_mat_free(&Deltas);
 	pnl_mat_free(&past);
 }
 

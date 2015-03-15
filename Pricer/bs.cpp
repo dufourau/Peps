@@ -3,7 +3,7 @@
 
 using namespace std;
 
-BS::BS(double size_, double r_, double rho_, PnlVect* sigma_, PnlVect* spot_, PnlVect* trend_)
+BS::BS(double size_, double r_, double rho_,PnlVect* dividend_, PnlVect* sigma_, PnlVect* spot_, PnlVect* trend_)
 {
 	this->size_ = size_;
 	this->r_ = r_;
@@ -11,6 +11,7 @@ BS::BS(double size_, double r_, double rho_, PnlVect* sigma_, PnlVect* spot_, Pn
 	this->sigma_= pnl_vect_copy(sigma_);
 	this->spot_= pnl_vect_copy(spot_);
 	this->trend_= pnl_vect_copy(trend_);
+	this->dividend_ = pnl_vect_copy(dividend_);
 	if (this->size_ == 1)
 		assert(this->rho_ == 1);
 	// The cholesky factorization
@@ -46,6 +47,7 @@ void BS::asset(PnlMat *path, double T, int N, PnlRng *rng)
 	double step = T / N;
 	double prodScal = 0;
 	double sigma_d = 0;
+	double dividend_d = 0;
 
 	// The Gaussian vector
 	PnlVect *G = pnl_vect_create_from_zero(this->size_);
@@ -63,8 +65,9 @@ void BS::asset(PnlMat *path, double T, int N, PnlRng *rng)
 		{
 			pnl_mat_get_row(Ld, L, d);
 			prodScal = pnl_vect_scalar_prod(Ld, G);
-			sigma_d = GET(this->sigma_, d);
-			MLET(path, ti, d) = MGET(path, ti - 1, d)*exp((this->r_ - pow(sigma_d, 2) / 2)*step + sigma_d*sqrt(step)*prodScal);
+			sigma_d = GET(sigma_, d);
+			dividend_d = GET(dividend_, d);
+			MLET(path, ti, d) = MGET(path, ti - 1, d)*exp((r_ - dividend_d - pow(sigma_d, 2) / 2)*step + sigma_d*sqrt(step)*prodScal);
 		}
 	}
 
@@ -96,6 +99,7 @@ void BS::asset(PnlMat *path, double t, int N, double T, PnlRng *rng, const PnlMa
 	}
 	double prodScal = 0;
 	double sigma_d = 0;
+	double dividend_d = 0;
 	// Copy of the past on the generated path
 	for (int ti = 0; ti <= lastIndexOfPast; ti++)
 	{
@@ -124,11 +128,12 @@ void BS::asset(PnlMat *path, double t, int N, double T, PnlRng *rng, const PnlMa
 		{
 			pnl_mat_get_row(Ld, L, d);
 			prodScal = pnl_vect_scalar_prod(Ld, G);
-			sigma_d = GET(this->sigma_, d);
+			sigma_d = GET(sigma_, d);
+			dividend_d = GET(dividend_, d);
 			if ((ti == lastIndexOfPast + 1) && (!copySt))
-				MLET(path, ti, d) = GET(St, d)*exp((this->r_ - pow(sigma_d, 2) / 2)*(ti*step - t) + sigma_d*sqrt(ti*step - t)*prodScal);
+				MLET(path, ti, d) = GET(St, d)*exp((this->r_ - dividend_d - pow(sigma_d, 2) / 2)*(ti*step - t) + sigma_d*sqrt(ti*step - t)*prodScal);
 			else
-				MLET(path, ti, d) = MGET(path, ti - 1, d)*exp((this->r_ - pow(sigma_d, 2) / 2)*step + sigma_d*sqrt(step)*prodScal);
+				MLET(path, ti, d) = MGET(path, ti - 1, d)*exp((r_ - dividend_d - pow(sigma_d, 2) / 2)*step + sigma_d*sqrt(step)*prodScal);
 		}
 	}
 	// Memory free
@@ -158,6 +163,7 @@ void BS::simul_market(PnlMat *path, double T, int H, PnlRng *rng)
 	double prodScal = 0;
 	double sigma_d = 0;
 	double mu_d = 0;
+	double dividend_d = 0;
 
 	// The Gaussian vector
 	PnlVect *G = pnl_vect_create_from_zero(this->size_);
@@ -177,7 +183,8 @@ void BS::simul_market(PnlMat *path, double T, int H, PnlRng *rng)
 			prodScal = pnl_vect_scalar_prod(Ld, G);
 			sigma_d = GET(this->sigma_, d);
 			mu_d = GET(this->trend_, d);
-			MLET(path, ti, d) = MGET(path, ti - 1, d)*exp((mu_d - pow(sigma_d, 2) / 2)*step + sigma_d*sqrt(step)*prodScal);
+			dividend_d = GET(dividend_, d);
+			MLET(path, ti, d) = MGET(path, ti - 1, d)*exp((mu_d - dividend_d - pow(sigma_d, 2) / 2)*step + sigma_d*sqrt(step)*prodScal);
 		}
 	}
 	// Memory free

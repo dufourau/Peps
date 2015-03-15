@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Moduleis::Moduleis(double T_, int TimeSteps_, int size_, int optionType_)
+Moduleis::Moduleis(PnlVect* curr_, double T_, int TimeSteps_, int size_, int optionType_)
 {
 	this->T_ = T_;
 	this->TimeSteps_ = TimeSteps_;
@@ -12,6 +12,7 @@ Moduleis::Moduleis(double T_, int TimeSteps_, int size_, int optionType_)
 	this->LevelStep_ = 25;
 	this->nbRecDates = 9;
 	this->borneInf = -15;
+	this->curr_= pnl_vect_copy(curr_);
 
 }
 
@@ -23,8 +24,11 @@ Moduleis::~Moduleis()
 }
 
 double Moduleis::computeYield(const PnlMat *path, int date, int numAsset){
+	int curr = int(GET(curr_, numAsset));
 	double S0 = MGET(path, 0, numAsset);
-	return (MGET(path, date, numAsset) - S0) / S0;
+	if (curr<0) return (MGET(path, date, numAsset) - S0) / S0;
+	S0 = S0 / MGET(path, 0, curr);
+	return (MGET(path, date, numAsset) / MGET(path, date, GET(curr_, numAsset)) - S0) / S0;
 }
 
 double Moduleis::computeLevel(double yield){

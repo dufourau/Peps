@@ -130,9 +130,9 @@
             <div class="col-md-4">
                 <asp:table ID="assetTable" class="table table-bordered" runat="server">
                     <asp:TableRow>
-                        <asp:TableCell>Quantité d'actif</asp:TableCell>
+                        <asp:TableCell>Quantité d'actif présente dans le portefeuille</asp:TableCell>
                     
-                        <asp:TableCell>Cours</asp:TableCell>
+                        <asp:TableCell>Cours de l'actif</asp:TableCell>
                         
                     </asp:TableRow>
                 </asp:table>
@@ -143,9 +143,8 @@
             <div class="col-md-4">
                 <asp:table ID="deltaTable" class="table table-bordered" runat="server">
                     <asp:TableRow>
-                        <asp:TableCell>Quantité à investir</asp:TableCell>          
+                        <asp:TableCell>Quantité à investir dans l'actif à possèder à la date suivante</asp:TableCell>          
                 
-                        <asp:TableCell>Cours</asp:TableCell>
                         
                     </asp:TableRow>
                 </asp:table>

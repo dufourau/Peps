@@ -20,7 +20,7 @@ public:
 	double h_; /*! pas de différence finie */
 	int samples_; /*! nombre de tirages Monte Carlo */
 
-	MonteCarlo(double T_, int TimeSteps_, int size_, int optionType_, double r_, double rho_, double* sigma_, double* spot_, double* trend_, int samples_);
+	MonteCarlo(double T_, int TimeSteps_, int size_, int optionType_, double r_, double rho_,double* curr_, double* dividend_, double* sigma_, double* spot_, double* trend_, int samples_);
 	~MonteCarlo();
 
 	/**

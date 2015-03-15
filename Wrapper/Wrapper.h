@@ -22,6 +22,8 @@ namespace Wrapper {
 			int timeSteps; 
 			double strike; 
 			int samples;
+			array<double> ^dividend;
+			array<double> ^curr;
 			array<double> ^spot;
 			array<double> ^sigma;
 			array<double> ^trend;
@@ -56,6 +58,15 @@ namespace Wrapper {
 				for (int i = 0; i < option_size; i++){
 					coeff[i] = 0.025;
 				}
+				dividend = gcnew array<double>(option_size);
+				for (int i = 0; i < option_size; i++){
+					coeff[i] = 0;
+				}
+				curr = gcnew array<double>(option_size);
+				for (int i = 0; i < option_size; i++){
+					coeff[i] = 19;
+				}
+
 				delta = gcnew array<double>(option_size);
 				ic = gcnew array<double>(option_size);
 			
