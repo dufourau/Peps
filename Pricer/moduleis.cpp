@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Moduleis::Moduleis(PnlVect* curr_, double T_, int TimeSteps_, int size_, int optionType_)
+Moduleis::Moduleis(PnlVect* curr_, double T_, int TimeSteps_, int size_, int optionType_, int sizeAsset_)
 {
 	this->T_ = T_;
 	this->TimeSteps_ = TimeSteps_;
@@ -12,11 +12,12 @@ Moduleis::Moduleis(PnlVect* curr_, double T_, int TimeSteps_, int size_, int opt
 	this->LevelStep_ = 25;
 	this->nbRecDates = 9;
 	this->borneInf = -15;
+	this->sizeAsset_ = sizeAsset_;
 	this->curr_= pnl_vect_copy(curr_);
 
 }
 
-Moduleis::~Moduleis()
+Moduleis::~Moduleis() 
 {
 #ifdef _DEBUG
 	cout << "~Moduleis()" << endl;
@@ -50,22 +51,22 @@ void Moduleis::computePerformance(PnlVect *Performance, const PnlMat *path, PnlM
 		for (int j = 0; j < path->n; ++j)
 		{
 			// pour le deuxieme MGET on pourrait passer la matrice path en parametre 
-			// a partir de 1 et en choisissant bien les date de consttation
+			// a partir de 1 et en choisissant bien les date de constatation
 			MLET(performances, i, j) = computeLevel(MGET(performances, i, j) / MGET(path, 0, j) - 1);
 		}
 	}
 	pnl_mat_max(Performance, path, 'r');
 }
 
-
+	
 double Moduleis::payoff(const PnlMat *path)
 {
-	PnlVect *Performances = pnl_vect_create(this->size_);
+	PnlVect *Performances = pnl_vect_create(this->sizeAsset_);
 	int indexPath;
 
 	int ti = 0;
 	indexPath = (ti + 1)*TimeSteps_ / nbRecDates;
-	for (int d = 0; d< this->size_; d++)
+	for (int d = 0; d< this->sizeAsset_; d++)
 	{
 		LET(Performances, d) = computeLevel(computeYield(path, indexPath, d));
 	}
@@ -73,7 +74,7 @@ double Moduleis::payoff(const PnlMat *path)
 	for (int ti = 1; ti < nbRecDates - 1; ti++)
 	{
 		indexPath = (ti + 1)*TimeSteps_ / nbRecDates;
-		for (int d = 0; d< this->size_; d++)
+		for (int d = 0; d< this->sizeAsset_; d++)
 		{
 			//TODO replace with max
 			if (GET(Performances, d)>computeLevel(computeYield(path, indexPath, d))){
@@ -87,7 +88,7 @@ double Moduleis::payoff(const PnlMat *path)
 
 	//pnl_mat_get_row(ST,path,ti);
 	indexPath = TimeSteps_;
-	for (int d = 0; d< this->size_; d++)
+	for (int d = 0; d< this->sizeAsset_; d++)
 	{
 		
 
@@ -113,13 +114,13 @@ double Moduleis::payoff(const PnlMat *path)
 	pnl_vect_qsort(Performances, 'i');
 	// multiplier la plus petites moitie 
 	double payoff = 0.;
-	for (int d = 0; d < size_ / 2; d++)
+	for (int d = 0; d < this->sizeAsset_ / 2; d++)
 	{
 		payoff += GET(Performances, d);
 	}
 	
-	if ((payoff*2.0 / (double)size_) > borneInf){
-		 payoff = payoff*2.0 / (double)size_;
+	if ((payoff*2.0 / (double)this->sizeAsset_) > borneInf){
+		payoff = payoff*2.0 / (double)this->sizeAsset_;
 	}
 	else{
 		payoff = borneInf;

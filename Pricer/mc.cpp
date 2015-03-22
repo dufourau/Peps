@@ -3,16 +3,16 @@
 
 using namespace std;
 
-MonteCarlo::MonteCarlo(double T_, int TimeSteps_, int size_, int optionType_, double r_, double rho_, double* curr_, double* dividend_, double* sigma_, double* spot_, double* trend_, int samples_)
+MonteCarlo::MonteCarlo(double T_, int TimeSteps_, int size_, int optionType_, double r_, double rho_, double* curr_, double* dividend_, double* sigma_, double* spot_, double* trend_, int samples_, int sizeAsset)
 {
 	PnlVect* sigma= pnl_vect_create_from_ptr(size_,sigma_);
 	PnlVect* spot= pnl_vect_create_from_ptr(size_, spot_);
 	PnlVect* trend= pnl_vect_create_from_ptr(size_, trend_);
 	PnlVect* dividend = pnl_vect_create_from_ptr(size_, dividend_);
-	PnlVect* curr = pnl_vect_create_from_ptr(size_, curr_);
+	PnlVect* curr = pnl_vect_create_from_ptr(sizeAsset, curr_);
 	// Construction de BS
 	this->mod_ = new BS(size_, r_, rho_, dividend, sigma, spot, trend);
-	this->opt_ = new Moduleis(curr, T_, TimeSteps_,size_, optionType_);
+	this->opt_ = new Moduleis(curr, T_, TimeSteps_, size_, optionType_, sizeAsset);
 	// Initialisation du generateur a MERSENNE : type 7 page 63
 	rng = pnl_rng_create(PNL_RNG_MERSENNE);
 	pnl_rng_sseed(rng, time(NULL));
@@ -32,6 +32,23 @@ MonteCarlo::~MonteCarlo()
 #ifdef _DEBUG
 	cout << "~MonteCarlo() : Successfull call of pnl_rng_free" << endl;
 #endif
+}
+
+void MonteCarlo::estimVolHistMethod(const PnlMat* historicalStockPrices, PnlVect* estimatedVol, double timeStep) {
+	// Nb of columns == Nb cof underlyings && nb of rows == nb of historical data
+	int nbAssets = historicalStockPrices->n, nbData = historicalStockPrices->m;
+
+	for (int j = 0; j < nbAssets; j++) {
+		double logSj = MGET(historicalStockPrices, 1, j) / MGET(historicalStockPrices, 0, j);
+		double u = log(logSj), v = 0;
+		for (int i = 2; i < nbData; i++) {
+			logSj = MGET(historicalStockPrices, i, j) / MGET(historicalStockPrices, i - 1, j);
+			v += (i - 1) * (logSj - u) * (logSj - u) / i;
+			u += (logSj - u) / i;
+		}
+		LET(estimatedVol, j) = sqrt(v / (nbData - 1) / timeStep);
+	}
+
 }
 
 void MonteCarlo::price(double &prix, double &ic)

@@ -30,6 +30,12 @@
     <ClInclude Include="moduleis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="irate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vasicek.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mc.cpp">
@@ -42,6 +48,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="moduleis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vasicek.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

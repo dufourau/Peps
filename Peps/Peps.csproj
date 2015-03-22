@@ -163,6 +163,9 @@
     <None Include="Resources\Prix2.txt" />
     <None Include="Resources\Deltas2.txt" />
     <None Include="Resources\Market2.txt" />
+    <Content Include="Resources\MarketValues.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.0.js" />
@@ -171,6 +174,10 @@
     <Content Include="Scripts\jquery-1.9.0.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MarketData.cs" />
+    <Compile Include="Portfolio.cs" />
+    <Compile Include="YahooFinance.cs" />
+    <Compile Include="Price.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

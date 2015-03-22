@@ -14,10 +14,12 @@ namespace Wrapper {
 			array<double> ^delta;
 			array<double> ^ic;	
 			int option_size;
+			int nb_curr;
 			double r;
 			double rho; 
 			double h; 
 			int H; 
+			int pastIndex;
 			double maturity; 
 			int timeSteps; 
 			double strike; 
@@ -28,51 +30,74 @@ namespace Wrapper {
 			array<double> ^sigma;
 			array<double> ^trend;
 			array<double> ^coeff;
+			array<double> ^past;
 		public:
 			//Temp constructor for a basket option
 			WrapperClass() { 
 				confidenceInterval = prix = 0; 
 				PL = 0;
-				option_size = 5;
+				option_size = 8;
+				nb_curr = 3;
 				strike = 100;
 				maturity = 10;
-				r = 0.04879;
+				//Euribor 3 months
+				r = 0.05;
 				rho = 0;
 				timeSteps = 10;
 				h = 0.1;
 				H = timeSteps*2;
 				samples = 1000; 
-				spot = gcnew array<double>(option_size);
+				spot = gcnew array<double>(option_size+nb_curr);
 				for (int i = 0; i < option_size; i++){
 					spot[i] = 100;
 				}
-				sigma = gcnew array<double>(option_size);
-				for (int i = 0; i < option_size; i++){
+				spot[8] = 1.4;
+				spot[9] = 0.95;
+				spot[10] = 0.9;
+				sigma = gcnew array<double>(option_size+nb_curr);
+				for (int i = 0; i < option_size+nb_curr; i++){
 					sigma[i] = 0.3;
 				}
-				trend = gcnew array<double>(option_size);
-				for (int i = 0; i < option_size; i++){
-					trend[i] = 0.06;
+				trend = gcnew array<double>(option_size+nb_curr);
+				for (int i = 0; i < option_size + nb_curr; i++){
+					trend[i] = 0.1;
 				}
-				coeff = gcnew array<double>(option_size);
-				for (int i = 0; i < option_size; i++){
+				coeff = gcnew array<double>(option_size+nb_curr);
+				for (int i = 0; i < option_size + nb_curr; i++){
 					coeff[i] = 0.025;
 				}
-				dividend = gcnew array<double>(option_size);
+				dividend = gcnew array<double>(option_size+nb_curr);
 				for (int i = 0; i < option_size; i++){
-					coeff[i] = 0;
+					dividend[i] = 0;
 				}
+				
+
+				//Livre
+				dividend[option_size] = 0.04;
+				//Dollars
+				dividend[option_size+1] = 0.035;
+				//CHF
+				dividend[option_size + 2] = 0.045;
 				curr = gcnew array<double>(option_size);
 				for (int i = 0; i < option_size; i++){
-					coeff[i] = 19;
+					curr[i] = -1;
 				}
+				
+				curr[2] = 8;
+				curr[3] = 8;
+				curr[4] = 8;
+				curr[5] = 9;
+				curr[6] = 9;
+				curr[7] = 10;
 
-				delta = gcnew array<double>(option_size);
-				ic = gcnew array<double>(option_size);
+
+				delta = gcnew array<double>(option_size+nb_curr);
+				ic = gcnew array<double>(option_size+nb_curr);
 			
 			
 			};
 			void computePrice();
+			void computePrice(double t);
 			void computeDelta();
 			void computeHedge();
 			double getPrice() { return prix; };
@@ -82,12 +107,21 @@ namespace Wrapper {
 			array<double> ^getDelta(){ return delta; };
 			array<double> ^getDeltaIC(){ return ic; };
 
+			void initPast(int nbCol){
+				pastIndex = 0;
+				past = gcnew array<double>((option_size + nb_curr)*nbCol);
+			}
 			int getOption_size(){ return option_size; };
+			int getCurr_size(){ return nb_curr; };
 			double getR(){ return r; };
 			double getRho(){ return rho; };
 			double geth(){ return h; };
 			int getH(){ return H; };
 			double getMaturity(){ return maturity; };
 			double getStrike(){ return strike; };
+			//row i col j
+			void set(double val){ 
+				past[pastIndex] = val; pastIndex++; 
+			};
 	};
 }

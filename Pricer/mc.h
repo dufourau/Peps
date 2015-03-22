@@ -20,7 +20,7 @@ public:
 	double h_; /*! pas de différence finie */
 	int samples_; /*! nombre de tirages Monte Carlo */
 
-	MonteCarlo(double T_, int TimeSteps_, int size_, int optionType_, double r_, double rho_,double* curr_, double* dividend_, double* sigma_, double* spot_, double* trend_, int samples_);
+	MonteCarlo(double T_, int TimeSteps_, int size_, int optionType_, double r_, double rho_, double* curr_, double* dividend_, double* sigma_, double* spot_, double* trend_, int samples_, int sizeAsset);
 	~MonteCarlo();
 
 	/**
@@ -89,6 +89,9 @@ public:
 	* @param[out] PL Profit and Loss
 	*/
 	void hedge(PnlVect *V, double &PL, int H);
+
+	//suppose estimatedVol is already allocated with the right nb of elts
+	void estimVolHistMethod(const PnlMat* historicalStockPrices, PnlVect* estimatedVol, double timeStep);
 };
 
 #endif /* _MC_H */

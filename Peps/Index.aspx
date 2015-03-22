@@ -7,7 +7,23 @@
 <link type="text/css" rel="stylesheet" href="css/normalize.css" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    
     <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+    <script type="text/javascript">
+        $(function () {
+            var date= new Date(2005,10,30);
+            $("[id$=DisplayCalendar]").datepicker({
+                showOn: 'focus',
+                defaultDate: date,
+                changeYear: true,
+                minDate: date,
+                maxDate: new Date(2015,1,30)
+            });
+        });
+    </script>
 </head>
 <body>
     
@@ -19,7 +35,22 @@
                     <h1>Gestion de notre produit: </h1>
                 </div>
             </div>
+            <div class="row" style="margin:5px;">
+                <div class="col-md-4">
+                    <h2>Choisir une date </h2>
+                </div>
+            </div>
+            <div class="row" style="margin:5px;">
 
+                <div class="col-md-2">
+
+                    <asp:TextBox ID="DisplayCalendar" placeholder="11/30/2015" runat="server" ReadOnly = "true"></asp:TextBox>
+                </div>
+               <div class="col-md-2">         
+                    <asp:Button class="btn btn-lg btn-primary btn-block" ID="SaveDate" runat="server" Text="Sauvegarder" onclick="updateDate" />
+                </div>
+                   
+            </div> 
             <div class="row" style="margin:5px;">
             
                 
@@ -27,7 +58,7 @@
                     <asp:Button class="btn btn-lg btn-primary btn-block" ID="b" Text="Forcez la simulation" OnClick="Compute_Price" runat="server"/> 
                 </div>
                 <div class="col-md-2">
-
+                     <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button5" Text="GetData" OnClick="Get_Data" runat="server"/> 
                 </div>
                 
             </div> 
