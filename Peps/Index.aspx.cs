@@ -63,107 +63,159 @@ namespace Peps
             
         }
         
-
+        //Cette fonction calcule le prix à la date spécifié par l'utilisateur
+        //Après ça on calcule le portefeuille en rebalançant tous les jours 
         protected void Compute_Price(Object sender, EventArgs e)
         {
                 deltaTable.Rows.Clear();
                 assetTable.Rows.Clear();
                 List<String> dates = new List<String>();
                 double[][] marketdata = parseFileToMatrix(Properties.Resources.Market3, dates);
-                
-                
-                //Price in 0
-                if (CurrentPortfolio.getM() == 11 && CurrentPortfolio.getD() == 30 && CurrentPortfolio.getY() == 2005)
-                {
-                    wrapper.computePrice();
-                    wrapper.computeDelta();
-                    icLabel.Text = wrapper.getIC().ToString();
+                index = 0;
+                CurrentPortfolio.profitAndLoss = new double[wrapper.getH()];
+                CurrentPortfolio.pfvalue = new double[wrapper.getH()];
+                CurrentPortfolio.prix = new double[wrapper.getH()];
+                CurrentPortfolio.delta = new double[wrapper.getH()][];
+                CurrentPortfolio.market = new double[wrapper.getH()][];
+                CurrentPortfolio.data = marketdata;
+                CurrentPortfolio.delta[index] = wrapper.getDelta();
+                int[] currentDate;
+                dates.Reverse();
+                List<String>.Enumerator enumerator= dates.GetEnumerator();
+                enumerator.MoveNext();
+                String s = enumerator.Current;
+                String[] temp = s.Split('-');
+                currentDate = convertToInt(temp);
 
-                    index = 0;
-                    CurrentPortfolio.profitAndLoss = new double[wrapper.getH()];
-                    CurrentPortfolio.pfvalue = new double[wrapper.getH()];
-                    CurrentPortfolio.prix = new double[wrapper.getH()];
-                    CurrentPortfolio.delta = new double[wrapper.getH()][];
-                    CurrentPortfolio.market = new double[wrapper.getH()][];
-                    CurrentPortfolio.data = marketdata;
-                    CurrentPortfolio.delta[index] = wrapper.getDelta();
+                //Price in 0
+                wrapper.computePrice();
+                wrapper.computeDelta();
+                icLabel.Text = wrapper.getIC().ToString();
+                String str = CurrentPortfolio.getD().ToString() + "-" + CurrentPortfolio.getM().ToString() + "-" + CurrentPortfolio.getY().ToString();
+                int indexCurrentDate = dates.IndexOf(str);
+                if (indexCurrentDate == -1)
+                {
+                    indexCurrentDate = dates.Count - 1;
+                }
+                CurrentPortfolio.market[index] = marketdata[indexCurrentDate];
+                InitSimu(wrapper.getDelta(), wrapper.getPrice(), marketdata[indexCurrentDate]);
+                
+                
+                int nbitr = 0;
+                //Loop unti we have reached the correct date 
+                while (enumerator.MoveNext() && !(CurrentPortfolio.getM() == currentDate[1] && CurrentPortfolio.getD() == currentDate[2] && CurrentPortfolio.getY() == currentDate[0]))
+                {
+                    //Change to the date
+                    s = enumerator.Current;
+                    temp = s.Split('-');
+                    currentDate = convertToInt(temp);
+                    //Compute the price and the delta here
                     
-                    
-                    String str = CurrentPortfolio.getD().ToString() + "-" + CurrentPortfolio.getM().ToString() + "-" + CurrentPortfolio.getY().ToString();
-                    int indexCurrentDate = dates.IndexOf(str);
+                    //Compute the past matrice
+                    computePast(dates);
+                    //Compute the date t in years
+                    int[] previousDate;
+                    previousDate = CurrentPortfolio.previousDate();
+                    double t = previousDate[0] - 2005;
+                    if (previousDate[0] == CurrentPortfolio.getY())
+                    {
+                        t += ((double)previousDate[2]) / 365.0;
+                    }
+                    else
+                    {
+                        t += ((double)(((CurrentPortfolio.getM() - previousDate[1]) + 11) * 30 + previousDate[2])) / 365.0;
+                    }
+
+                    wrapper.computePrice(t);
+
+
+                    nbitr++;
+                    //Update the portfolio
+                    CurrentPortfolio.prix[nbitr] = wrapper.getPrice();
+                    CurrentPortfolio.delta[nbitr] = wrapper.getDelta();
+                    indexCurrentDate = dates.IndexOf(s);
                     if (indexCurrentDate == -1)
                     {
                         indexCurrentDate = dates.Count - 1;
                     }
-                    CurrentPortfolio.market[index] = marketdata[indexCurrentDate];
-                    InitSimu(wrapper.getDelta(), wrapper.getPrice(), marketdata[indexCurrentDate]);
-                    displayData();
-                    
+                    CurrentPortfolio.market[nbitr] = marketdata[indexCurrentDate];
+
+
                 }
-                else
-                {
-                    //Compute the past matrice
-                    int[] previousDate;
-                    previousDate = CurrentPortfolio.previousDate();
-                    //
-                    if (CurrentPortfolio.getM() == 11 && CurrentPortfolio.getD() == 30)
-                    {
 
-                        wrapper.initPast(previousDate[0] - 2005 + 1);
-                    }
-                    else
-                    {
-                        wrapper.initPast(previousDate[0] - 2005 + 2);
-                    }
-                    
-                    //Include the previous constation date
-                    String str = "30-11-";
-                    for (int year = 2005; year <= previousDate[0]; year++)
-                    {
-                        String temp = str + year.ToString();
-                        int index = dates.IndexOf(temp);
-                        if(index==-1){
-                            index = dates.Count - 1;
-                        }
-                        for (int i = 0; i < (wrapper.getOption_size() + 3); i++)
-                        {
-                            double[] d1 = marketdata[index];
-                            double d = marketdata[index][i];
-                            wrapper.set(marketdata[index][i]);
-                        }
 
-                    }
-                    //Include one more date if t isn't a constation date
 
-                    if (CurrentPortfolio.getM() != 11 && CurrentPortfolio.getD() != 30)
-                    {
-                        str = CurrentPortfolio.getD().ToString() + "-" + CurrentPortfolio.getM().ToString() + "-" + CurrentPortfolio.getY().ToString();
-                        int indexLastDate = dates.IndexOf(str);
-                        if (indexLastDate == -1)
-                        {
-                            indexLastDate = dates.Count - 1;
-                        }
-                        for (int i = 0; i < (wrapper.getOption_size() + 3); i++)
-                        {
-                            wrapper.set(marketdata[indexLastDate][i]);
-                        }
-                    }
+
+
+
+                ComputeSimulation(nbitr);    
+                displayData();
                     
-                    //t: date in years
-                    double t = previousDate[0] - 2005 ;
-                    if(previousDate[0]==CurrentPortfolio.getY()){
-                        t += ((double)previousDate[2]) / 365.0;
-                    }
-                    else {
-                        t += ((double)(((CurrentPortfolio.getM() - previousDate[1]) + 11) * 30 + previousDate[2])) / 365.0;
-                    }
-                   
-                    wrapper.computePrice(t);
+               
                     
-                }
+                    
+                
         
         }
-      
+
+        public int[] convertToInt(String [] stringArray)
+        {
+            int[] intArray = new int[stringArray.Length];
+            for (int i = 0; i < stringArray.Length; i++ )
+            {
+                intArray[i] = int.Parse(stringArray[i], System.Globalization.CultureInfo.InvariantCulture);
+            }
+            return intArray;
+        
+        }
+        //A optimiser
+        //Compute the past matrix in wrapper
+        public void computePast(List<String> dates)
+        {
+
+            int[] previousDate = CurrentPortfolio.previousDate();
+            if (CurrentPortfolio.getM() == 11 && CurrentPortfolio.getD() == 30)
+            {
+                wrapper.initPast(previousDate[0] - 2005 + 1);
+            }
+            else
+            {
+                wrapper.initPast(previousDate[0] - 2005 + 2);
+            }
+
+            //Include the previous constation date
+            String str = "30-11-";
+            for (int year = 2005; year <= previousDate[0]; year++)
+            {
+                String temp = str + year.ToString();
+                int index = dates.IndexOf(temp);
+                if (index == -1)
+                {
+                    index = dates.Count - 1;
+                }
+                for (int i = 0; i < (wrapper.getOption_size() + 3); i++)
+                {
+                
+                    wrapper.set(CurrentPortfolio.data[index][i]);
+                }
+
+            }
+            //Include one more date if t isn't a constation date
+
+            if (CurrentPortfolio.getM() != 11 && CurrentPortfolio.getD() != 30)
+            {
+                str = CurrentPortfolio.getD().ToString() + "-" + CurrentPortfolio.getM().ToString() + "-" + CurrentPortfolio.getY().ToString();
+                int indexLastDate = dates.IndexOf(str);
+                if (indexLastDate == -1)
+                {
+                    indexLastDate = dates.Count - 1;
+                }
+                for (int i = 0; i < (wrapper.getOption_size() + 3); i++)
+                {
+                    wrapper.set(CurrentPortfolio.data[indexLastDate][i]);
+                }
+            }
+        }
         private double[][] parseFileToMatrix(String file,List<String> dates)
         {
              String[] lines = file.Split('\n').Where(x => x != "" && x != null).ToArray();

@@ -99,6 +99,7 @@ namespace Wrapper {
 			void computePrice();
 			void computePrice(double t);
 			void computeDelta();
+			void computeDelta(double t);
 			void computeHedge();
 			double getPrice() { return prix; };
 			double getIC() { return confidenceInterval; };

@@ -9,5 +9,7 @@ namespace Computations{
 
 	DLLEXP void compute_delta(double *deltaVect, double *icVect, int option_size, double *spot, double* dividend, double* curr, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double strike, double* payoffCoeff, int samples, int sizeAsset);
 	
+	DLLEXP void compute_delta(double *deltaVect, double *icVect, double t, double* past, int option_size, double *spot, double* dividend, double* curr, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double strike, double* payoffCoeff, int samples, int sizeAsset);
+
 	DLLEXP void compute_hedge(double &PL, int option_size, double* dividend, double* curr, double *spot, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double strike, double* payoffCoeff, int samples, int sizeAsset);
 }
