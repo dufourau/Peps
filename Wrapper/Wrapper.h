@@ -45,7 +45,7 @@ namespace Wrapper {
 				rho = 0;
 				timeSteps = 10;
 				h = 0.1;
-				H = timeSteps*2;
+				H = 250*maturity;
 				samples = 1000; 
 				spot = gcnew array<double>(option_size+nb_curr);
 				for (int i = 0; i < option_size; i++){

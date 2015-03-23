@@ -47,8 +47,9 @@ using namespace Computations;
 			pin_ptr<double> pCoeff = &coeff[0];
 			pin_ptr<double> pDividend = &dividend[0];
 			pin_ptr<double> pCurr = &curr[0];
-			compute_delta(pDelta, pDeltaIc, option_size + nb_curr, pDividend, pCurr, pSpot, pSigma, pTrend, r, rho, h, H, maturity, timeSteps, strike, pCoeff, samples, option_size );
+			compute_delta(pDelta, pDeltaIc, 11, pDividend, pCurr, pSpot, pSigma, pTrend, r, rho, h, H, maturity, timeSteps, strike, pCoeff, samples, option_size );
 		}
+
 
 		void WrapperClass::computeHedge(){
 			double Pl;

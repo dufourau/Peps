@@ -10,7 +10,7 @@ void Computations::compute_price(double &ic, double &prix, int option_size, doub
 {
 
 	int optionType_;
-	MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, option_size, optionType_, r, rho, dividend, curr, sigma, spot, trend, samples, sizeAsset);
+	MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, option_size, optionType_, r, rho, curr, dividend, sigma, spot, trend, samples, sizeAsset);
 	mc->price(prix,ic);
 	delete mc;
 }
@@ -19,7 +19,7 @@ void Computations::compute_price(double &ic, double &prix,double t,double *past,
 {
 
 	int optionType_;
-	MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, option_size, optionType_, r, rho, dividend, curr, sigma, spot, trend, samples, sizeAsset);
+	MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, option_size, optionType_, r, rho, curr, dividend, sigma, spot, trend, samples, sizeAsset);
 	//m rows and n columns
 	double step = maturity / timeSteps;
 	//double dt = t / step;
@@ -43,7 +43,7 @@ void Computations::compute_price(double &ic, double &prix,double t,double *past,
 void Computations::compute_delta(double *delta, double *ic, int option_size, double* dividend, double* curr, double *spot, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double strike, double* payoffCoeff, int samples, int sizeAsset)
 {
 	int optionType_;
-	MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, option_size, optionType_, r, rho, dividend, curr, sigma, spot, trend, samples, sizeAsset);
+	MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, option_size, optionType_, r, rho, curr, dividend, sigma, spot, trend, samples, sizeAsset);
 	PnlVect* deltaVect = pnl_vect_new();
 	deltaVect = pnl_vect_create(option_size);
 	//PnlVect* icVect = pnl_vect_new();
@@ -64,7 +64,7 @@ void Computations::compute_delta(double *delta, double *ic, int option_size, dou
 
 void Computations::compute_hedge(double &PL, int option_size, double* dividend, double* curr, double *spot, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double strike, double* payoffCoeff, int samples, int sizeAsset){
 	int optionType_;
-	MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, option_size, optionType_, r, rho, dividend, curr, sigma, spot, trend, samples, sizeAsset);
+	MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, option_size, optionType_, r, rho, curr, dividend , sigma, spot, trend, samples, sizeAsset);
 	PnlVect *V = pnl_vect_create_from_zero(H + 1);
 	PL = 0;
 	//temps = MPI_Wtime();

@@ -12,15 +12,28 @@ namespace Peps
         private double Cash;
         //We can change the current Date
         private int y, m, d;
+        //Historical data
+        public double[][] delta;
+        public double[][] market;
+        public double[] prix;
+        public double[] pfvalue;
+        public double[] profitAndLoss;
+        public double trackingError;
+        
+        //All market values
         public double[][] data;
         public List<String> symbols;
         public Dictionary<String, String> currSymbol;
         public Dictionary<String, double> currCash;
         //Quantity of each asset in the portfolio
         public double[] quantity;
+        public int numberOfStock;
         
-        public Portfolio(int size)
+        public Portfolio(int size, int nbDate)
         {
+            
+          
+            numberOfStock = size;
             //Benefit from the selling of the product at t=0
             InitialCash = 0;
             //Cash in EUR
@@ -98,6 +111,10 @@ namespace Peps
 
         }
         public double getCash()
+        {
+            return Cash;
+        }
+        public double getInitialCash()
         {
             return Cash;
         }
