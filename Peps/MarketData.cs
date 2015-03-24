@@ -10,7 +10,6 @@ namespace Peps
 {
     public class MarketData
     {
-        
         public Hashtable table;
         public Hashtable currSymbol;
         public List<String> Symbols;
@@ -23,7 +22,6 @@ namespace Peps
             CurrSymbols = new List<String>();
             sizeList = 2371;
         }
-
 
         public void storeData(){
             String[][] temp= new String[table.Keys.Count+1][];
@@ -51,23 +49,17 @@ namespace Peps
             }
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Dufourau\Desktop\market.txt"))
             
-                for (int z = 0; z < temp[0].Length; z++ )
+            for (int z = 0; z < temp[0].Length; z++ )
+            {
+                String tempStr = "";
+                for (int k = 0; k < temp.Length; k++)
                 {
-                    String tempStr = "";
-                    for (int k = 0; k < temp.Length; k++)
-                    {
-                        
-                        if(z<temp[k].Length){
-                            tempStr += temp[k][z] + " ";
-                        }
-                        
-                    }
-                     file.WriteLine(tempStr);
+                    if(z<temp[k].Length){
+                        tempStr += temp[k][z] + " ";
+                    }   
                 }
-                
-            
-          
-           
+                    file.WriteLine(tempStr);
+            }
         }
         public void fixeDataSize()
         {
@@ -76,12 +68,9 @@ namespace Peps
                 int diff= ((List <Price>) table[sym]).Count -sizeList;
                 if(diff<0){
                     List<Price> temp = ((List<Price>)table[sym]).GetRange(((List<Price>)table[sym]).Count+diff, -diff);
-                    ((List<Price>)table[sym]).AddRange(temp);
-
-                    
+                    ((List<Price>)table[sym]).AddRange(temp); 
                 }
             }
-
         }
 
         /*
@@ -120,7 +109,6 @@ namespace Peps
             CurrSymbols.Add("USDEUR");
             CurrSymbols.Add("CHFEUR");
             
-
             //Retrieve stock prices
             foreach(String sym in Symbols){
                 String csvData;
@@ -131,12 +119,9 @@ namespace Peps
                     //TO DO 
                     //automatiser la recherche url en fction de la date et de l'action
                     String url = "http://ichart.finance.yahoo.com/table.csv?s=" + sym + "&d=" + d + "&e=" + e + "&f=" + f + "&g=d&a=" + a + "&b=" + b + "&c=" + c + "&ignore=.csv";
-                    
+
                     csvData = web.DownloadString(url);
-                    
-                    
                 }
-            
                 YahooFinance.HistoricalParse(csvData, table, sym,false);
             }
             //Retrieve
@@ -151,8 +136,6 @@ namespace Peps
                 }
                 YahooFinance.HistoricalParse(csvData, table, sym,true);
             }
-            
-            
         }
     }
 }
