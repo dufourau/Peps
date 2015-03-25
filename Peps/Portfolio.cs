@@ -19,7 +19,7 @@ namespace Peps
         public double[] pfvalue;
         public double[] profitAndLoss;
         public double trackingError;
-        
+        public List<String> dates;
         //All market values
         public double[][] data;
         public List<String> symbols;
@@ -42,6 +42,7 @@ namespace Peps
             currSymbol = new Dictionary<string, string>();
             //Cach in each foreign currency
             currCash = new Dictionary<string, double>();
+            dates = new List<String>();
             symbols = new List<String>();
             quantity = new double[size];
             for (int i = 0; i < size;i++ )

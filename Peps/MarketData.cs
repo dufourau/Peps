@@ -32,7 +32,7 @@ namespace Peps
             int i = 1;
             foreach (String sym in Symbols)
             {
-                if(i==1){
+                if(i==7){
                     temp[0]= new String[((List <Price>) table[sym]).Count+1];
                 }
                 
@@ -41,7 +41,7 @@ namespace Peps
                 int j = 1;
                 foreach (Price price in ((List<Price>)table[sym]))
                 {
-                    if(i==1){
+                    if(i==7){
                          temp[0][j]= price.d.ToString()+"-"+price.m.ToString()+"-"+price.y.ToString();
                     }
                     temp[i][j] = ((price.High + price.Low) / 2).ToString();
@@ -51,7 +51,7 @@ namespace Peps
             }
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Dufourau\Desktop\market.txt"))
             
-                for (int z = 0; z < temp[0].Length; z++ )
+                for (int z = 0; z < 2371; z++ )
                 {
                     String tempStr = "";
                     for (int k = 0; k < temp.Length; k++)
@@ -69,15 +69,22 @@ namespace Peps
           
            
         }
+        //
         public void fixeDataSize()
         {
             foreach (String sym in Symbols)
             {
                 int diff= ((List <Price>) table[sym]).Count -sizeList;
-                if(diff<0){
-                    List<Price> temp = ((List<Price>)table[sym]).GetRange(((List<Price>)table[sym]).Count+diff, -diff);
+                while(diff<0){
+                    List<Price> temp ;
+                    if(-diff >= ((List<Price>)table[sym]).Count){
+                        temp= ((List<Price>)table[sym]).ToList();
+                    }else{
+                        temp= ((List<Price>)table[sym]).GetRange(((List<Price>)table[sym]).Count + diff, -diff);
+                    }
+                    temp.Reverse();
                     ((List<Price>)table[sym]).AddRange(temp);
-
+                    diff = ((List<Price>)table[sym]).Count - sizeList;
                     
                 }
             }
@@ -113,13 +120,35 @@ namespace Peps
             Symbols.Add("PEP");
             //CHF
             currSymbol.Add("NVS", "CHFEUR");
-            Symbols.Add("NVS");      
+            Symbols.Add("NVS");
+            Symbols.Add("DTE.DE"); 
+            Symbols.Add("GPDNF");
+            currSymbol.Add("BP","GBPEUR");
+            Symbols.Add("BP");
+            currSymbol.Add("RBS","GBPEUR");
+            Symbols.Add("RBS");
+            currSymbol.Add("PG", "USDEUR");
+            Symbols.Add("PG");
+            currSymbol.Add("JNJ", "USDEUR");
+            Symbols.Add("JNJ");
+            currSymbol.Add("GE", "USDEUR");
+            Symbols.Add("GE");
+            currSymbol.Add("C", "USDEUR");
+            Symbols.Add("C");
+            currSymbol.Add("VZ", "USDEUR");
+            Symbols.Add("VZ");
+            currSymbol.Add("NTT", "EURJPY");
+            Symbols.Add("NTT");   
+            Symbols.Add("EOAN.DE");          
+            Symbols.Add("OR.PA");          
+           
+
             //Add the currency
           
             CurrSymbols.Add("GBPEUR");           
             CurrSymbols.Add("USDEUR");
             CurrSymbols.Add("CHFEUR");
-            
+            CurrSymbols.Add("EURJPY");
 
             //Retrieve stock prices
             foreach(String sym in Symbols){

@@ -35,7 +35,10 @@ namespace Peps
             wrapper = new WrapperClass();
             data = new MarketData();
             if(CurrentPortfolio == null){
+                double[][] marketdata = parseFileToMatrix(Properties.Resources.Market3, CurrentPortfolio.dates);
+                
                 CurrentPortfolio = new Portfolio(wrapper.getOption_size()+wrapper.getCurr_size(),wrapper.getH());
+                CurrentPortfolio.data = marketdata;
             }
            
         }
@@ -69,50 +72,47 @@ namespace Peps
         {
                 deltaTable.Rows.Clear();
                 assetTable.Rows.Clear();
-                List<String> dates = new List<String>();
-                double[][] marketdata = parseFileToMatrix(Properties.Resources.Market3, dates);
+
+
                 index = 0;
                 CurrentPortfolio.profitAndLoss = new double[wrapper.getH()];
                 CurrentPortfolio.pfvalue = new double[wrapper.getH()];
                 CurrentPortfolio.prix = new double[wrapper.getH()];
                 CurrentPortfolio.delta = new double[wrapper.getH()][];
                 CurrentPortfolio.market = new double[wrapper.getH()][];
-                CurrentPortfolio.data = marketdata;
-                CurrentPortfolio.delta[index] = wrapper.getDelta();
-                int[] currentDate;
-                dates.Reverse();
-                List<String>.Enumerator enumerator= dates.GetEnumerator();
-                enumerator.MoveNext();
-                String s = enumerator.Current;
-                String[] temp = s.Split('-');
-                currentDate = convertToInt(temp);
-
-                //Price in 0
-                wrapper.computePrice();
-                wrapper.computeDelta();
-                icLabel.Text = wrapper.getIC().ToString();
+                
+                //Copy the market value at the current date
                 String str = CurrentPortfolio.getD().ToString() + "-" + CurrentPortfolio.getM().ToString() + "-" + CurrentPortfolio.getY().ToString();
-                int indexCurrentDate = dates.IndexOf(str);
+                int indexCurrentDate = CurrentPortfolio.dates.IndexOf(str);
                 if (indexCurrentDate == -1)
                 {
-                    indexCurrentDate = dates.Count - 1;
+                    indexCurrentDate = CurrentPortfolio.dates.Count - 1;
                 }
-                CurrentPortfolio.market[index] = marketdata[indexCurrentDate];
-                InitSimu(wrapper.getDelta(), wrapper.getPrice(), marketdata[indexCurrentDate]);
                 
                 
-                int nbitr = 0;
-                //Loop unti we have reached the correct date 
-                while (enumerator.MoveNext() && !(CurrentPortfolio.getM() == currentDate[1] && CurrentPortfolio.getD() == currentDate[2] && CurrentPortfolio.getY() == currentDate[0]))
+
+                //Price in 0
+                if (CurrentPortfolio.getM() == 11 && CurrentPortfolio.getD() == 30 && CurrentPortfolio.getY() == 2005)
                 {
-                    //Change to the date
-                    s = enumerator.Current;
-                    temp = s.Split('-');
-                    currentDate = convertToInt(temp);
-                    //Compute the price and the delta here
+
+                    //Initialize the spot vector
+                    for (int i = 0; i < CurrentPortfolio.market[index].Length; i++ )
+                    {
+                        wrapper.setSpot(CurrentPortfolio.market[index][i], i);
+                    }
                     
-                    //Compute the past matrice
-                    computePast(dates);
+                    wrapper.computePrice();
+                    wrapper.computeDelta();
+                    icLabel.Text = wrapper.getIC().ToString();
+                    CurrentPortfolio.market[index] = CurrentPortfolio.data[indexCurrentDate];
+                    CurrentPortfolio.delta[index] = wrapper.getDelta();
+                    InitSimu(wrapper.getDelta(), wrapper.getPrice());
+                }
+                else
+                {
+                    int indexFirstDate = CurrentPortfolio.dates.IndexOf("30-11-2005");
+                    //TODO load previous delta from FILE + incrémenter index 
+
                     //Compute the date t in years
                     int[] previousDate;
                     previousDate = CurrentPortfolio.previousDate();
@@ -125,37 +125,65 @@ namespace Peps
                     {
                         t += ((double)(((CurrentPortfolio.getM() - previousDate[1]) + 11) * 30 + previousDate[2])) / 365.0;
                     }
-
+                    //Compute the past matrice
+                    computePast(CurrentPortfolio.dates);
+                    //Compute delta and price for the date t
                     wrapper.computePrice(t);
-
-
-                    nbitr++;
-                    //Update the portfolio
-                    CurrentPortfolio.prix[nbitr] = wrapper.getPrice();
-                    CurrentPortfolio.delta[nbitr] = wrapper.getDelta();
-                    indexCurrentDate = dates.IndexOf(s);
-                    if (indexCurrentDate == -1)
-                    {
-                        indexCurrentDate = dates.Count - 1;
-                    }
-                    CurrentPortfolio.market[nbitr] = marketdata[indexCurrentDate];
-
+                    wrapper.computeDelta(t);
+                    //TO DO A appeler avec le premier delta et premier prix
+                    //InitSimu(wrapper.getDelta(), wrapper.getPrice());
+                    //Copy the current delta and market value in the portfolio
+                    CurrentPortfolio.market[indexFirstDate-indexCurrentDate] = CurrentPortfolio.data[indexCurrentDate];
+                    CurrentPortfolio.delta[indexFirstDate - indexCurrentDate] = wrapper.getDelta();
+                    CurrentPortfolio.prix[indexFirstDate - indexCurrentDate] = wrapper.getPrice();
+                    //We move forward in the simulation
+                    ComputeSimulation(indexFirstDate - indexCurrentDate);
+                    
 
                 }
+                initDisplay();
+                displayData();   
+        }
 
+        protected void Update(Object sender, EventArgs e)
+        {
+            
+            String str = CurrentPortfolio.getD().ToString() + "-" + CurrentPortfolio.getM().ToString() + "-" + CurrentPortfolio.getY().ToString();
+            int indexCurrentDate = CurrentPortfolio.dates.IndexOf(str);
+            if (indexCurrentDate == -1)
+            {
+                indexCurrentDate = CurrentPortfolio.dates.Count - 1;
+            }
+            indexCurrentDate--;
+            str= CurrentPortfolio.dates[indexCurrentDate];
+            int[] dates = convertToInt(str.Split('-'));
+            CurrentPortfolio.setDate(dates[0],dates[1],dates[2]);
 
+            //TO DO factorise
+            //Compute the date t in years
+            int[] previousDate;
+            previousDate = CurrentPortfolio.previousDate();
+            double t = previousDate[0] - 2005;
+            if (previousDate[0] == CurrentPortfolio.getY())
+            {
+                t += ((double)previousDate[2]) / 365.0;
+            }
+            else
+            {
+                t += ((double)(((CurrentPortfolio.getM() - previousDate[1]) + 11) * 30 + previousDate[2])) / 365.0;
+            }
+            //Compute the past matrice
+            computePast(CurrentPortfolio.dates);
+            //Compute delta and price for the date t
+            wrapper.computePrice(t);
+            wrapper.computeDelta(t);
+            //Copy the current delta and market value in the portfolio
+            CurrentPortfolio.market[index+1] = CurrentPortfolio.data[indexCurrentDate];
+            CurrentPortfolio.delta[index+1] = wrapper.getDelta();
+            CurrentPortfolio.prix[index+1] = wrapper.getPrice();
+            ComputeSimulation();
+            displayData();
 
-
-
-
-                ComputeSimulation(nbitr);    
-                displayData();
-                    
-               
-                    
-                    
-                
-        
         }
 
         public int[] convertToInt(String [] stringArray)
@@ -276,7 +304,7 @@ namespace Peps
             CurrentPortfolio.pfvalue= new double[CurrentPortfolio.prix.Length];
             CurrentPortfolio.profitAndLoss = new double[CurrentPortfolio.prix.Length];
             index= 0;
-            InitSimu(CurrentPortfolio.delta[index], CurrentPortfolio.prix[index], CurrentPortfolio.market[index]);
+            InitSimu(CurrentPortfolio.delta[index], CurrentPortfolio.prix[index]);
 
             
         }
@@ -379,7 +407,7 @@ namespace Peps
 
         //Init the simulation for t=0
         //Receive the product price, the market prices and the delta as parameters
-        public void InitSimu(double[] delta, double prix, double[] market)
+        public void InitSimu(double[] delta, double prix)
         {
             index= 0;
             

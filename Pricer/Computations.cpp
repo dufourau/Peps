@@ -96,6 +96,11 @@ void Computations::compute_delta(double *delta, double *ic, double t, double *pa
 	pnl_vect_free(&spot_);
 }
 
+void compute_vol(double *vol, int option_size, double* dividend, double* curr, double *spot, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double strike, double* payoffCoeff, int samples, int sizeAsset){
+	int optionType_;
+	MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, option_size, optionType_, r, rho, curr, dividend, sigma, spot, trend, samples, sizeAsset);
+}
+
 
 void Computations::compute_hedge(double &PL, int option_size, double* dividend, double* curr, double *spot, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double strike, double* payoffCoeff, int samples, int sizeAsset){
 	int optionType_;
