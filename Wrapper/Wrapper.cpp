@@ -63,6 +63,18 @@ using namespace Computations;
 			compute_delta(pDelta, pDeltaIc, t, pPast, option_size + nb_curr, pDividend, pCurr, pSpot, pSigma, pTrend, r, rho, h, H, maturity, timeSteps, strike, pCoeff, samples, option_size);
 		}
 
+		void WrapperClass::computeVol(){
+			pin_ptr<double> pSpot = &spot[0];
+			pin_ptr<double> pSigma = &sigma[0];
+			pin_ptr<double> pTrend = &trend[0];
+			pin_ptr<double> pCoeff = &coeff[0];
+			pin_ptr<double> pDividend = &dividend[0];
+			pin_ptr<double> pCurr = &curr[0];
+			pin_ptr<double> pHist = &historicalStockPrices[0];
+			compute_vol(pHist, option_size + nb_curr, pDividend, pCurr, pSpot, pSigma, pTrend, r, rho, h, H, maturity, timeSteps, strike, pCoeff, samples, option_size);
+
+		}
+
 
 		void WrapperClass::computeHedge(){
 			double Pl;

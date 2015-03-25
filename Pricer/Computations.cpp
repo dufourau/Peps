@@ -96,9 +96,20 @@ void Computations::compute_delta(double *delta, double *ic, double t, double *pa
 	pnl_vect_free(&spot_);
 }
 
-void compute_vol(double *vol, int option_size, double* dividend, double* curr, double *spot, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double strike, double* payoffCoeff, int samples, int sizeAsset){
+void Computations::compute_vol(double*historicalPrice, int option_size, double* dividend, double* curr, double *spot, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double strike, double* payoffCoeff, int samples, int sizeAsset){
 	int optionType_;
+
 	MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, option_size, optionType_, r, rho, curr, dividend, sigma, spot, trend, samples, sizeAsset);
+	PnlVect* volVect = pnl_vect_new();
+	volVect = pnl_vect_create(option_size);
+	PnlMat* histMat = pnl_mat_create_from_ptr(63, option_size, historicalPrice);
+	mc->estimVolHistMethod(histMat, volVect, 1 );
+	for (int i = 0; i < option_size; i++){
+		sigma[i] = GET(volVect, i);
+		//ic[i]= GET(icVect,i);
+	}
+	delete mc;
+	pnl_vect_free(&volVect);
 }
 
 

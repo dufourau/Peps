@@ -62,5 +62,17 @@ namespace Peps
             }
             return intArray;
         }
+
+        public static List<string> parseDates(String file)
+        {
+            List<String> dates = new List<String>();
+            String[] lines = file.Split('\n').Where(x => x != "" && x != null).ToArray();
+            for (int i = 1; i < lines.Length; i++)
+            {
+                String[] items = lines[i].Trim().Split(' ');
+                dates.Add(items[0]);
+            }
+            return dates;
+        }
     }
 }

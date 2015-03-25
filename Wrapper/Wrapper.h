@@ -20,6 +20,7 @@ namespace Wrapper {
 			double h; 
 			int H; 
 			int pastIndex;
+			int histIndex;
 			double maturity; 
 			int timeSteps; 
 			double strike; 
@@ -31,6 +32,7 @@ namespace Wrapper {
 			array<double> ^trend;
 			array<double> ^coeff;
 			array<double> ^past;
+			array<double> ^historicalStockPrices;
 		public:
 			//Temp constructor for a basket option
 			WrapperClass() { 
@@ -107,6 +109,7 @@ namespace Wrapper {
 			void computeDelta();
 			void computeDelta(double t);
 			void computeHedge();
+			void computeVol();
 			double getPrice() { return prix; };
 			double getIC() { return confidenceInterval; };
 			double getPL() { return PL; };
@@ -134,8 +137,13 @@ namespace Wrapper {
 			void setSpot(double val, int index){
 				spot[index] = val;
 			}
-			void setSigma(double val, int index){
-				sigma[index] = val;
+			//Init matrix to calibrate the vol
+			void initHistPrice(int nbCol){
+				histIndex = 0;
+				historicalStockPrices = gcnew array<double>((option_size + nb_curr)*nbCol);
+			}
+			void setHistPrice(double val){
+				historicalStockPrices[histIndex] = val; histIndex++;
 			}
 	};
 }

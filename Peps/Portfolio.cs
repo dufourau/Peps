@@ -258,28 +258,42 @@ namespace Peps
             this.prix = new double[wrapper.getH()];
             this.delta = new double[wrapper.getH()][];
             this.market = new double[wrapper.getH()][];
-
-            //Copy the market value at the current date
+            this.dates = new List<String>(); 
+            this.data = Utils.parseFileToMatrix(Properties.Resources.Market3, dates);
+            //Compute the current index in the data 
             String currentDateString = this.getD().ToString() + "-" + this.getM().ToString() + "-" + this.getY().ToString();
             int indexCurrentDate = this.dates.IndexOf(currentDateString);
             if (indexCurrentDate == -1)
             {
                 indexCurrentDate = this.dates.Count - 1;
             }
+            //TO DO: load all previous delta + market value + prix 
+          
+            //TO DO 
+            //Calibration de la volatilité
+            wrapper.initHistPrice(64);
+            for (int i = indexCurrentDate; i < indexCurrentDate + 64; i++ )
+            {
+                for (int j = 0; j < wrapper.getOption_size() + wrapper.getCurr_size(); j++ )
+                {
+                    wrapper.setHistPrice(this.data[i][j]);
+                }
+            }
+            //wrapper.computeVol();
 
             //Price in 0
             if (this.getM() == 11 && this.getD() == 30 && this.getY() == 2005)
             {
+                this.market[index] = this.data[indexCurrentDate];
                 //Initialize the spot vector
                 for (int i = 0; i < this.market[index].Length; i++)
                 {
                     wrapper.setSpot(this.market[index][i], i);
                 }
-
                 wrapper.computePrice();
-                wrapper.computeDelta();
-                this.market[index] = this.data[indexCurrentDate];
+                wrapper.computeDelta();         
                 this.delta[index] = wrapper.getDelta();
+                this.prix[index] = wrapper.getPrice();
                 this.InitSimu();
             }
             else
