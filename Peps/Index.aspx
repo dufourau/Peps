@@ -78,7 +78,7 @@
                         </div>
                     
                          <div class="row" style="margin: 5px;">
-                            <label for="Rebalancement" class="col-sm-2 control-label">Charger une simulation</label>
+                            <label for="Rebalancement" class="col-md-3 control-label">Charger une simulation</label>
                             <div class="col-md-2">
                                 <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button2" Text="Simulation 1" OnClick="Compute_Simu1" runat="server" />
                             </div>
@@ -92,16 +92,16 @@
                         </div>
                         <div class="row" style="margin: 5px;">
                            
-                            <label for="Rebalancement" class="col-sm-2 control-label">Intervalle de rebalancement en jour</label>
+                            <label for="Rebalancement" class="col-md-3 control-label">Intervalle de rebalancement en jour</label>
                             <div class="col-md-2">
-                                <asp:TextBox class="form-control" ID="Rebalancement" runat="server">
+                                <asp:TextBox class="form-control" ID="Rebalancement" runat="server" Text="1">
                                 </asp:TextBox>
                             </div>
                         </div>
                        <div class="row" style="margin: 5px;">
-                           <label for="Frais" class="col-sm-2 control-label">Frais de transaction</label>
+                           <label for="Frais" class="col-md-3 control-label">Frais de transaction en %</label>
                             <div class="col-md-2">
-                                <asp:TextBox class="form-control" ID="Frais" runat="server">
+                                <asp:TextBox class="form-control" ID="Frais" runat="server" Text="0.5">
                                 </asp:TextBox>
                             </div>
                         </div>

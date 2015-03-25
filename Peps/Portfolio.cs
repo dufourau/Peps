@@ -384,13 +384,13 @@ namespace Peps
             {
                 this.incrementIndex();
                 double vp = 0;
-                this.setCash(this.getCash() * Math.Exp(wrapper.getR() * (1 / 250)));
-                this.setInitialCash(this.getInitialCash() * Math.Exp(wrapper.getR() * (1 / 250)));
+                this.setCash(this.getCash() * Math.Exp(wrapper.getR() * (1 / (wrapper.getH()/wrapper.getMaturity()))));
+                this.setInitialCash(this.getInitialCash() * Math.Exp(wrapper.getR() * (1 / (wrapper.getH() / wrapper.getMaturity()))));
                 for (int i = 0; i < this.delta[index].Length; i++)
                 {
                     this.setCash(this.getCash() - (this.delta[index - 1][i] - this.quantity[i]) * this.market[index - 1][i]);
                     this.quantity[i] = this.delta[index - 1][i];
-                    vp += this.delta[index][i] * this.market[index][i];
+                    vp += this.delta[index-1][i] * this.market[index-1][i];
                 }
                 vp += this.getCash();
                 this.pfvalue[index] = vp;
