@@ -54,6 +54,7 @@ namespace Peps
         //Après ça on calcule le portefeuille en rebalançant tous les jours 
         protected void Compute_Price(Object sender, EventArgs e)
         {
+            initDisplay();
             CurrentPortfolio.loadFromComputations();
             displayData();
         }
@@ -128,7 +129,7 @@ namespace Peps
             //number of Step
             int nbStep = CurrentPortfolio.prix.Length;
             initDisplay();
-            for (int j = 1; j < CurrentPortfolio.index; j++)
+            for (int j = 0; j < CurrentPortfolio.index; j++)
             {
                 Chart1.Series.FindByName("ProductPrice").Points.Add(CurrentPortfolio.prix[j]);
                 Chart1.Series.FindByName("PortfolioPrice").Points.Add(CurrentPortfolio.pfvalue[j]);
@@ -138,8 +139,21 @@ namespace Peps
         public void Continue_Simu(Object sender, EventArgs e)
         {
             if (CurrentPortfolio.prix == null) Compute_Simu3(sender, e);
-            CurrentPortfolio.ComputeSimulation(1);
+            CurrentPortfolio.ComputeSimulation(10);
             displayData();
         }
+
+
+        public void LoadPage1(Object sender, EventArgs e){
+            MultiView1.SetActiveView(View1);
+        }
+        
+        public void LoadPage2(Object sender, EventArgs e){
+            MultiView1.SetActiveView(View2);
+        }
+
+
+
+
     }
 }
