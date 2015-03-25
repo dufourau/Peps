@@ -33,10 +33,10 @@ namespace Peps
             for (int i = 1; i < lines.Length; i++)
             {
                 String[] items = lines[i].Trim().Split(' ');
-                parsed[i - 1] = new double[items.Length - 1];
-                for (int j = 1; j < items.Length; j++)
+                parsed[i - 1] = new double[items.Length];
+                for (int j = 0; j < items.Length; j++)
                 {
-                    parsed[i - 1][j - 1] = double.Parse(items[j], System.Globalization.CultureInfo.InvariantCulture);
+                    parsed[i - 1][j] = double.Parse(items[j], System.Globalization.CultureInfo.InvariantCulture);
                 }
             }
             return parsed;

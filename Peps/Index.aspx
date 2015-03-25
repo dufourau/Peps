@@ -37,20 +37,15 @@
             <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0"  >
                 <asp:View ID="View1" runat="server">
                    <div class="container">
-                    <!--TODO put this in a file and import it-->
-                    <div class="row" style="margin: 5px;">
-
+                        <!--TODO put this in a file and import it-->
+                        <div class="row" style="margin: 5px;">
                             <div class="col-md-6">
                                 <h1>Gestion de notre produit: </h1>
                             </div>
                         </div>
+                       
                         <div class="row" style="margin: 5px;">
-                            <div class="col-md-4">
-                                <h2>Choisir une date </h2>
-                            </div>
-                        </div>
-                        <div class="row" style="margin: 5px;">
-
+                           <label for="DisplayCalendar" class="col-sm-2 control-label">Changer la date</label>
                             <div class="col-md-2">
 
                                 <asp:TextBox ID="DisplayCalendar" placeholder="11/30/2015" runat="server" ReadOnly="true"></asp:TextBox>
@@ -62,7 +57,6 @@
                         </div>
                         <div class="row" style="margin: 5px;">
 
-
                             <div class="col-md-4">
                                 <asp:Button class="btn btn-lg btn-primary btn-block" ID="b" Text="Forcez la simulation" OnClick="Compute_Price" runat="server" />
                             </div>
@@ -70,10 +64,21 @@
                                 <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button5" Text="GetData" OnClick="Get_Data" runat="server" />
                             </div>
 
-                        </div>
+                        </div>                       
+
+                    </div>
+                </asp:View>
+                <asp:View ID="View2" runat="server">
+                   <div class="container">     
                         <div class="row" style="margin: 5px;">
 
-
+                            <div class="col-md-6">
+                                <h1>Vérification de notre couverture: </h1>
+                            </div>
+                        </div>
+                    
+                         <div class="row" style="margin: 5px;">
+                            <label for="Rebalancement" class="col-sm-2 control-label">Charger une simulation</label>
                             <div class="col-md-2">
                                 <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button2" Text="Simulation 1" OnClick="Compute_Simu1" runat="server" />
                             </div>
@@ -85,16 +90,33 @@
                             </div>
 
                         </div>
-
                         <div class="row" style="margin: 5px;">
+                           
+                            <label for="Rebalancement" class="col-sm-2 control-label">Intervalle de rebalancement en jour</label>
+                            <div class="col-md-2">
+                                <asp:TextBox class="form-control" ID="Rebalancement" runat="server">
+                                </asp:TextBox>
+                            </div>
+                        </div>
+                       <div class="row" style="margin: 5px;">
+                           <label for="Frais" class="col-sm-2 control-label">Frais de transaction</label>
+                            <div class="col-md-2">
+                                <asp:TextBox class="form-control" ID="Frais" runat="server">
+                                </asp:TextBox>
+                            </div>
+                        </div>
+
+                    </div>
+                </asp:View> 
+            </asp:MultiView>
+                   <div class="container">
+                       <div class="row" style="margin: 5px;">
                             <div class="col-md-4">
                                 <h1>Date courante</h1>
                             </div>
                             <div class="col-md-2">
                             </div>
-                            <div class="col-md-4">
-                                <h1>Date suivante</h1>
-                            </div>
+                            
                             <div class="col-md-2">
                                 <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button1" Text="Mise à jour" OnClick="Continue_Simu" runat="server" />
                             </div>
@@ -142,6 +164,7 @@
                                 </asp:TextBox>
                             </div>
                         </div>
+
                         <div class="row" style="margin: 5px;">
                             <div class="col-md-2">
                                 Cash
@@ -152,6 +175,7 @@
                                 </asp:TextBox>
                             </div>
                         </div>
+
                         <div class="row" style="margin: 5px;">
                             <div class="col-md-2">
                                 Valeur du portefeuille
@@ -190,12 +214,9 @@
                             </asp:Table>
                         </div>
                     </div>
+                
 
-
-
-                    <script src="js/jquery-2.1.1.min.js"></script>
-                    <script src="js/bootstrap.min.js"></script>
-                </div>
+                <!--Graph-->
                 <asp:Chart ID="Chart1" runat="server" Width="1283px">
                     <Series>
                         <asp:Series ChartType="Line" Name="PortfolioPrice">
@@ -208,13 +229,7 @@
                         </asp:ChartArea>
                     </ChartAreas>
                 </asp:Chart>
-
-                </asp:View>
-                <asp:View ID="View2" runat="server">
-
-
-                </asp:View> 
-            </asp:MultiView>
+            </div>
      </form>
             
 </body>
