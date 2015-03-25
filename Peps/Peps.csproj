@@ -176,6 +176,7 @@
   <ItemGroup>
     <Compile Include="MarketData.cs" />
     <Compile Include="Portfolio.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="YahooFinance.cs" />
     <Compile Include="Price.cs" />
     <Compile Include="Global.asax.cs">
@@ -239,7 +240,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1297</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

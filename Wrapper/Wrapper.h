@@ -71,7 +71,6 @@ namespace Wrapper {
 					dividend[i] = 0;
 				}
 				
-
 				//Livre
 				dividend[option_size] = 0.04;
 				//Dollars
@@ -101,9 +100,8 @@ namespace Wrapper {
 				curr[16] = 23;
 				delta = gcnew array<double>(option_size+nb_curr);
 				ic = gcnew array<double>(option_size+nb_curr);
-			
-			
 			};
+
 			void computePrice();
 			void computePrice(double t);
 			void computeDelta();
@@ -120,6 +118,7 @@ namespace Wrapper {
 				pastIndex = 0;
 				past = gcnew array<double>((option_size + nb_curr)*nbCol);
 			}
+
 			int getOption_size(){ return option_size; };
 			int getCurr_size(){ return nb_curr; };
 			double getR(){ return r; };

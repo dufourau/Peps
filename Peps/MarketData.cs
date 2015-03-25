@@ -10,7 +10,6 @@ namespace Peps
 {
     public class MarketData
     {
-        
         public Hashtable table;
         public Hashtable currSymbol;
         public List<String> Symbols;
@@ -23,7 +22,6 @@ namespace Peps
             CurrSymbols = new List<String>();
             sizeList = 2371;
         }
-
 
         public void storeData(){
             String[][] temp= new String[table.Keys.Count+1][];
@@ -56,18 +54,12 @@ namespace Peps
                     String tempStr = "";
                     for (int k = 0; k < temp.Length; k++)
                     {
-                        
                         if(z<temp[k].Length){
                             tempStr += temp[k][z] + " ";
                         }
-                        
                     }
                      file.WriteLine(tempStr);
                 }
-                
-            
-          
-           
         }
         //
         public void fixeDataSize()
@@ -88,7 +80,6 @@ namespace Peps
                     
                 }
             }
-
         }
 
         /*
@@ -120,7 +111,7 @@ namespace Peps
             Symbols.Add("PEP");
             //CHF
             currSymbol.Add("NVS", "CHFEUR");
-            Symbols.Add("NVS");
+            Symbols.Add("NVS");      
             Symbols.Add("DTE.DE"); 
             Symbols.Add("GPDNF");
             currSymbol.Add("BP","GBPEUR");
@@ -162,10 +153,7 @@ namespace Peps
                     String url = "http://ichart.finance.yahoo.com/table.csv?s=" + sym + "&d=" + d + "&e=" + e + "&f=" + f + "&g=d&a=" + a + "&b=" + b + "&c=" + c + "&ignore=.csv";
                     
                     csvData = web.DownloadString(url);
-                    
-                    
                 }
-            
                 YahooFinance.HistoricalParse(csvData, table, sym,false);
             }
             //Retrieve
@@ -180,8 +168,6 @@ namespace Peps
                 }
                 YahooFinance.HistoricalParse(csvData, table, sym,true);
             }
-            
-            
         }
     }
 }
