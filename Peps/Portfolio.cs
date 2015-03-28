@@ -1,13 +1,20 @@
-﻿using System;
+﻿using ServiceStack.Redis;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using TeamDev.Redis;
 using Wrapper;
 
 namespace Peps
 {
     public class Portfolio
     {
+        public long Id { get; set; }
+        /*
+         * Represent all market values
+         */
+        public double[][] data;
         public int index { get; set; }
         public int numberOfStock { get; set; }
         private double InitialCash;
@@ -22,20 +29,28 @@ namespace Peps
         public double[] profitAndLoss { get; set; }
         public double trackingError { get; set; }
         public double[] quantity { get; set; }
-        public List<String> dates;
-        
-        //All market values
-        public double[][] data;
+        public List<String> dates;   
         public List<String> symbols;
         public Dictionary<String, String> currSymbol;
         public Dictionary<String, double> currCash;
         //Quantity of each asset in the portfolio
         public WrapperClass wrapper;
         public MarketData marketData;
+        public void save(){
+            /*
+            * Redis DEMO: save the portefolio to the database
+            */
+            var redisManager = new PooledRedisClientManager("localhost:6379");
+            redisManager.ExecAs<Portfolio>(redisPf => {
+                var pf = this;
+                redisPf.Store(pf);
+            });
+        }
 
         public Portfolio(WrapperClass wrapper, MarketData marketData)
         {
             index = 0;
+            Id = 1;
             this.wrapper = wrapper;
             this.marketData = marketData;
             int size = wrapper.getOption_size() + wrapper.getCurr_size();
@@ -49,6 +64,12 @@ namespace Peps
             //Cach in each foreign currency
             currCash = new Dictionary<string, double>();
             symbols = new List<String>();
+            // Load the symbols from first line of market resource
+            String marketSimu = Properties.Resources.Market3;
+            this.loadSymbols(marketSimu.Substring(0, marketSimu.IndexOf('\n')).Split(' '));
+            this.dates = new List<String>();
+            this.data = Utils.parseFileToMatrix(marketSimu, dates);
+
             quantity = new double[size];
             for (int i = 0; i < size;i++ )
             {
@@ -158,7 +179,7 @@ namespace Peps
 
         public double getInitialCash()
         {
-            return Cash;
+            return InitialCash;
         }
 
         public void setCash(double cash)
@@ -186,6 +207,7 @@ namespace Peps
 
         public void getData()
         {
+        http://ichart.finance.yahoo.com/table.csv?s=C&d=0&e=30&f=2015&g=d&a=7&b=30&c=2015&ignore=.csv"
             //Retrieve data from 30 august 2005 to 30 january 2015  
             marketData.retrieveDataFromWeb("7", "30", "2005", "0", "30", "2015");
             marketData.fixeDataSize();
@@ -218,8 +240,7 @@ namespace Peps
                 default:
                     return;
             }
-            // Load the symbols from first line of market resource
-            this.loadSymbols(marketSimu.Substring(0, marketSimu.IndexOf('\n')).Split(' '));
+            
             //Initialize the historical value stored in our portfolio
             this.delta = Utils.parseFileToMatrix(deltaSimu);
             this.numberOfStock = this.delta[0].Length;
@@ -258,8 +279,6 @@ namespace Peps
             this.prix = new double[wrapper.getH()];
             this.delta = new double[wrapper.getH()][];
             this.market = new double[wrapper.getH()][];
-            this.dates = new List<String>(); 
-            this.data = Utils.parseFileToMatrix(Properties.Resources.Market3, dates);
             //Compute the current index in the data 
             String currentDateString = this.getD().ToString() + "-" + this.getM().ToString() + "-" + this.getY().ToString();
             int indexCurrentDate = this.dates.IndexOf(currentDateString);

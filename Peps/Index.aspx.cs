@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceStack.Redis;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TeamDev.Redis;
 using Wrapper;
 
 namespace Peps
@@ -25,10 +27,45 @@ namespace Peps
         }
 
         protected void Page_Load(object sender, EventArgs e)
-        { 
+        {
+            
+            if (CurrentPortfolio == null)
+            {
+                /*
+                 * Redis DEMO: get the portefolio from the database
+                 */
+                var redisManager = new PooledRedisClientManager("localhost:6379");
+                redisManager.ExecAs<Portfolio>(redisPf =>
+                {
+                    CurrentPortfolio = redisPf.GetById(1);
+                });
+            }
+            
             if (CurrentPortfolio == null)
             {
                 CurrentPortfolio = new Portfolio(new WrapperClass(), new MarketData());
+                InitDropDownList();
+                CurrentPortfolio.save();
+               
+            }
+            
+        }
+
+        public void InitDropDownList()
+        {
+            foreach(String s in CurrentPortfolio.symbols){
+                DropDownList1.Items.Add(s);
+            }
+        }
+
+        public void Display_Chart(Object sender, EventArgs e)
+        {
+            Chart1.Series.FindByName("assetPrice").Color = Color.DarkBlue;
+            String s = DropDownList1.SelectedItem.Text;
+            int indexAsset = CurrentPortfolio.symbols.IndexOf(s);
+            for (int i = CurrentPortfolio.data.Length-2; i>=0 ; i-- )
+            {
+                Chart1.Series.FindByName("assetPrice").Points.Add(CurrentPortfolio.data[i][indexAsset-1]);
             }
         }
 
@@ -47,6 +84,7 @@ namespace Peps
                 String m = date[0];
                 String d = date[1];
                 CurrentPortfolio.setDate(Convert.ToInt32(y), Convert.ToInt32(m), Convert.ToInt32(d));
+                CurrentPortfolio.save();
             }
         }
 
@@ -63,6 +101,7 @@ namespace Peps
         {
             initDisplay();
             CurrentPortfolio.LoadFromResource(1);
+            CurrentPortfolio.save();
             displayData();
         }
         
@@ -70,6 +109,7 @@ namespace Peps
         {
             initDisplay();
             CurrentPortfolio.LoadFromResource(2);
+            CurrentPortfolio.save();
             displayData();
         }
 
@@ -78,6 +118,7 @@ namespace Peps
         {
             initDisplay();
             CurrentPortfolio.LoadFromResource(3);
+            CurrentPortfolio.save();
             displayData();
         }
 
@@ -150,6 +191,10 @@ namespace Peps
         
         public void LoadPage2(Object sender, EventArgs e){
             MultiView1.SetActiveView(View2);
+        }
+        public void LoadPage3(Object sender, EventArgs e)
+        {
+            MultiView1.SetActiveView(View3);
         }
 
 

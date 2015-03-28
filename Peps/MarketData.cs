@@ -66,6 +66,9 @@ namespace Peps
         {
             foreach (String sym in Symbols)
             {
+                if(sym.Equals("WFC")){
+                    int i = 1;
+                }
                 int diff= ((List <Price>) table[sym]).Count -sizeList;
                 while(diff<0){
                     List<Price> temp ;
