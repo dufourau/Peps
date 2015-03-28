@@ -28,17 +28,32 @@ namespace Peps
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            Portfolio temp;
             if (CurrentPortfolio == null)
             {
+                
                 /*
-                 * Redis DEMO: get the portefolio from the database
+                 * Redis DEMO: get the portefolio from the database 
+                 * To comment if redis server not running on localhost:6379
                  */
                 var redisManager = new PooledRedisClientManager("localhost:6379");
+               
                 redisManager.ExecAs<Portfolio>(redisPf =>
                 {
-                    CurrentPortfolio = redisPf.GetById(1);
+                    temp = redisPf.GetById(1);
+                    CurrentPortfolio = new Portfolio(new WrapperClass(), new MarketData());                 
+                    CurrentPortfolio.setDelta(temp.delta);
+                    CurrentPortfolio.setMarket(temp.market);
+                    CurrentPortfolio.setPrix(temp.prix);
+                    CurrentPortfolio.setQuantity(temp.quantity);
+                    CurrentPortfolio.setpfvalue(temp.pfvalue);
+                    CurrentPortfolio.setPL(temp.profitAndLoss);
+                    CurrentPortfolio.setCash(temp.getCash());
+                    CurrentPortfolio.setInitialCash(temp.getInitialCash());
+                    CurrentPortfolio.index = temp.index;
+                    CurrentPortfolio.numberOfStock = temp.numberOfStock;
                 });
+                InitDropDownList();  
             }
             
             if (CurrentPortfolio == null)
@@ -46,8 +61,9 @@ namespace Peps
                 CurrentPortfolio = new Portfolio(new WrapperClass(), new MarketData());
                 InitDropDownList();
                 CurrentPortfolio.save();
-               
+
             }
+            
             
         }
 
@@ -94,6 +110,7 @@ namespace Peps
         {
             initDisplay();
             CurrentPortfolio.loadFromComputations();
+            CurrentPortfolio.save();
             displayData();
         }
 
@@ -182,6 +199,15 @@ namespace Peps
             if (CurrentPortfolio.prix == null) Compute_Simu3(sender, e);
             CurrentPortfolio.ComputeSimulation(10);
             displayData();
+        }
+
+        public void Continue_Computation(Object sender, EventArgs e)
+        {
+            if (CurrentPortfolio.prix != null)
+            {
+                CurrentPortfolio.Update();
+                displayData();
+            }
         }
 
 

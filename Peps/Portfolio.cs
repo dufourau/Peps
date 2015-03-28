@@ -17,8 +17,8 @@ namespace Peps
         public double[][] data;
         public int index { get; set; }
         public int numberOfStock { get; set; }
-        private double InitialCash;
-        private double Cash;
+        public double InitialCash { get; set; }
+        public double Cash { get; set; }
         //We can change the current Date
         private int y, m, d;
         //Historical data
@@ -205,9 +205,74 @@ namespace Peps
             }
         }
 
+        public void setDelta(double[][] deltaToCopy)
+        {
+            if(deltaToCopy != null){
+                delta = new double[deltaToCopy.Length][];
+                for (int i = 0; i < deltaToCopy.Length; i++ )
+                {
+                    if(deltaToCopy[i] != null){
+                        delta[i] = new double[deltaToCopy[i].Length];
+                        deltaToCopy[i].CopyTo(delta[i],0);
+                    }
+                }
+            }
+        }
+
+        public void setMarket(double[][] marketToCopy)
+        {
+            if (marketToCopy != null)
+            {
+                market = new double[marketToCopy.Length][];
+                for (int i = 0; i < marketToCopy.Length; i++)
+                {
+                    if (marketToCopy[i] != null)
+                    {
+                        market[i] = new double[marketToCopy[i].Length];
+                        marketToCopy[i].CopyTo(market[i], 0);
+                    }
+                }
+            }
+        }
+
+        public void setPrix(double[] prixToCopy)
+        {
+            if (prixToCopy != null)
+            {
+                prix = new double[prixToCopy.Length];
+                prixToCopy.CopyTo(prix, 0);  
+            }
+        }
+
+        public void setQuantity(double[] quantityToCopy)
+        {
+            if (quantityToCopy != null)
+            {
+                quantity = new double[quantityToCopy.Length];
+                quantityToCopy.CopyTo(quantity, 0);
+            }
+        }
+
+        public void setpfvalue(double[] pfvalueToCopy)
+        {
+            if (pfvalueToCopy != null)
+            {
+                pfvalue = new double[pfvalueToCopy.Length];
+                pfvalueToCopy.CopyTo(pfvalue, 0);
+            }
+        }
+
+        public void setPL(double[] PLToCopy)
+        {
+            if (PLToCopy != null)
+            {
+                this.profitAndLoss = new double[PLToCopy.Length];
+                PLToCopy.CopyTo(this.profitAndLoss, 0);
+            }
+        }
+
         public void getData()
         {
-        http://ichart.finance.yahoo.com/table.csv?s=C&d=0&e=30&f=2015&g=d&a=7&b=30&c=2015&ignore=.csv"
             //Retrieve data from 30 august 2005 to 30 january 2015  
             marketData.retrieveDataFromWeb("7", "30", "2005", "0", "30", "2015");
             marketData.fixeDataSize();
@@ -246,6 +311,9 @@ namespace Peps
             this.numberOfStock = this.delta[0].Length;
             this.prix = Utils.parseFileToArray(prixSimu);
             this.market = Utils.parseFileToMatrix(marketSimu);
+            // Allocate memory
+            this.pfvalue = new double[this.prix.Length];
+            this.profitAndLoss = new double[this.prix.Length];
 
             InitSimu();
         }
@@ -255,11 +323,6 @@ namespace Peps
         public void InitSimu()
         {
             this.index = 0;
-
-            // Allocate memory
-            this.pfvalue = new double[this.prix.Length];
-            this.profitAndLoss = new double[this.prix.Length];
-
             double prixInit = this.prix[0];
 
             //Initial benefit made from the sell of our product
@@ -276,9 +339,12 @@ namespace Peps
         public void loadFromComputations()
         {
             index = 0;
+            // Allocate memory
             this.prix = new double[wrapper.getH()];
             this.delta = new double[wrapper.getH()][];
-            this.market = new double[wrapper.getH()][];
+            this.market = new double[wrapper.getH()][];    
+            this.pfvalue = new double[this.prix.Length];
+            this.profitAndLoss = new double[this.prix.Length];
             //Compute the current index in the data 
             String currentDateString = this.getD().ToString() + "-" + this.getM().ToString() + "-" + this.getY().ToString();
             int indexCurrentDate = this.dates.IndexOf(currentDateString);
@@ -290,7 +356,7 @@ namespace Peps
           
             //TO DO 
             //Calibration de la volatilité
-            wrapper.initHistPrice(64);
+            /*wrapper.initHistPrice(64);
             for (int i = indexCurrentDate; i < indexCurrentDate + 64; i++ )
             {
                 for (int j = 0; j < wrapper.getOption_size() + wrapper.getCurr_size(); j++ )
@@ -299,7 +365,7 @@ namespace Peps
                 }
             }
             //wrapper.computeVol();
-
+            */
             //Price in 0
             if (this.getM() == 11 && this.getD() == 30 && this.getY() == 2005)
             {
@@ -310,42 +376,49 @@ namespace Peps
                     wrapper.setSpot(this.market[index][i], i);
                 }
                 wrapper.computePrice();
-                wrapper.computeDelta();         
-                this.delta[index] = wrapper.getDelta();
+                wrapper.computeDelta();
+                this.delta[index] = new double[numberOfStock];
+                wrapper.getDelta().CopyTo(this.delta[index], 0);
                 this.prix[index] = wrapper.getPrice();
+                this.numberOfStock = this.delta[0].Length;
                 this.InitSimu();
             }
             else
             {
+                computeDelta();
                 int indexFirstDate = this.dates.IndexOf("30-11-2005");
-                //TODO load previous delta from FILE + incrémenter index 
-
-                //Compute the date t in years
-                int[] previousDate;
-                previousDate = this.previousDate();
-                double t = previousDate[0] - 2005;
-                if (previousDate[0] == this.getY())
-                {
-                    t += ((double)previousDate[2]) / 365.0;
-                }
-                else
-                {
-                    t += ((double)(((this.getM() - previousDate[1]) + 11) * 30 + previousDate[2])) / 365.0;
-                }
-                //Compute the past matrice
-                computePast(this.dates);
-                //Compute delta and price for the date t
-                wrapper.computePrice(t);
-                wrapper.computeDelta(t);
+                //TODO load previous delta from FILE + incrémenter index             
                 //TO DO A appeler avec le premier delta et premier prix
                 //InitSimu(wrapper.getDelta(), wrapper.getPrice());
                 //Copy the current delta and market value in the portfolio
                 this.market[indexFirstDate - indexCurrentDate] = this.data[indexCurrentDate];
                 this.delta[indexFirstDate - indexCurrentDate] = wrapper.getDelta();
                 this.prix[indexFirstDate - indexCurrentDate] = wrapper.getPrice();
+                this.numberOfStock = this.delta[0].Length;
                 //We move forward in the simulation
                 ComputeSimulation(indexFirstDate - indexCurrentDate);
             }
+        }
+        //Compute delta and price at the date t
+        public void computeDelta()
+        {
+            //Compute the date t in years
+            int[] previousDate;
+            previousDate = this.previousDate();
+            double t = previousDate[0] - 2005;
+            if (previousDate[0] == this.getY())
+            {
+                t += ((double)previousDate[2]) / 365.0;
+            }
+            else
+            {
+                t += ((double)(((this.getM() - previousDate[1]) + 11) * 30 + previousDate[2])) / 365.0;
+            }
+            //Compute the past matrice
+            computePast(this.dates);
+            //Compute delta and price for the date t
+            wrapper.computePrice(t);
+            wrapper.computeDelta(t);
         }
 
         //A optimiser
@@ -373,7 +446,7 @@ namespace Peps
                 {
                     index = dates.Count - 1;
                 }
-                for (int i = 0; i < (wrapper.getOption_size() + 3); i++)
+                for (int i = 0; i < (wrapper.getOption_size() + wrapper.getCurr_size()); i++)
                 {
 
                     wrapper.set(this.data[index][i]);
@@ -381,7 +454,6 @@ namespace Peps
 
             }
             //Include one more date if t isn't a constation date
-
             if (this.getM() != 11 && this.getD() != 30)
             {
                 str = this.getD().ToString() + "-" + this.getM().ToString() + "-" + this.getY().ToString();
@@ -390,7 +462,7 @@ namespace Peps
                 {
                     indexLastDate = dates.Count - 1;
                 }
-                for (int i = 0; i < (wrapper.getOption_size() + 3); i++)
+                for (int i = 0; i < (wrapper.getOption_size() + wrapper.getCurr_size()); i++)
                 {
                     wrapper.set(this.data[indexLastDate][i]);
                 }
@@ -420,6 +492,7 @@ namespace Peps
 
         public void Update()
         {
+            //Jump to the next date
             String str = this.getD().ToString() + "-" + this.getM().ToString() + "-" + this.getY().ToString();
             int indexCurrentDate = this.dates.IndexOf(str);
             if (indexCurrentDate == -1)
@@ -429,29 +502,13 @@ namespace Peps
             indexCurrentDate--;
             str = this.dates[indexCurrentDate];
             int[] dates = Utils.convertToInt(str.Split('-'));
-            this.setDate(dates[0], dates[1], dates[2]);
+            this.setDate(dates[2], dates[1], dates[0]);
 
-            //TO DO factorise
-            //Compute the date t in years
-            int[] previousDate;
-            previousDate = this.previousDate();
-            double t = previousDate[0] - 2005;
-            if (previousDate[0] == this.getY())
-            {
-                t += ((double)previousDate[2]) / 365.0;
-            }
-            else
-            {
-                t += ((double)(((this.getM() - previousDate[1]) + 11) * 30 + previousDate[2])) / 365.0;
-            }
-            //Compute the past matrice
-            computePast(this.dates);
-            //Compute delta and price for the date t
-            wrapper.computePrice(t);
-            wrapper.computeDelta(t);
+            computeDelta();
             //Copy the current delta and market value in the portfolio
             this.market[index + 1] = this.data[indexCurrentDate];
-            this.delta[index + 1] = wrapper.getDelta();
+            this.delta[index+1] = new double[numberOfStock];
+            wrapper.getDelta().CopyTo(this.delta[index + 1],0);
             this.prix[index + 1] = wrapper.getPrice();
             ComputeSimulation();
         }

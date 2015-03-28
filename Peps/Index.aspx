@@ -74,104 +74,11 @@
                             </div>
                             
                             <div class="col-md-2">
-                                <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button7" Text="Mise à jour" OnClick="Continue_Simu" runat="server" />
+                                <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button1" Text="Mise à jour" OnClick="Continue_Computation" runat="server" />
                             </div>
 
                         </div>
-                        <div class="row" style="margin: 5px;">
-                            <div class="col-md-2">
-                                Prix
-                            </div>
-
-                            <div class="col-md-2">
-                                <asp:TextBox class="form-control" ID="TextBox1" runat="server">
-                                </asp:TextBox>
-                            </div>
-                        </div>
-                        <div class="row" style="margin: 5px;">
-                            <div class="col-md-2">
-                                Incertitude
-                            </div>
-                            <div class="col-md-2">
-
-                                <asp:TextBox class="form-control" ID="TextBox2" runat="server">
-                                </asp:TextBox>
-                            </div>
-                        </div>
-
-                        <div class="row" style="margin: 5px;">
-                            <div class="col-md-2">
-                                Tracking Error
-                            </div>
-                            <div class="col-md-2">
-
-                                <asp:TextBox class="form-control" ID="TextBox3" runat="server">
-                                </asp:TextBox>
-                            </div>
-                        </div>
-
-                        <div class="row" style="margin: 5px;">
-                            <div class="col-md-2">
-                                Profit & Loss
-                            </div>
-                            <div class="col-md-2">
-
-                                <asp:TextBox class="form-control" ID="TextBox4" runat="server">
-                                </asp:TextBox>
-                            </div>
-                        </div>
-
-                        <div class="row" style="margin: 5px;">
-                            <div class="col-md-2">
-                                Cash
-                            </div>
-                            <div class="col-md-2">
-
-                                <asp:TextBox class="form-control" ID="TextBox5" runat="server">
-                                </asp:TextBox>
-                            </div>
-                        </div>
-
-                        <div class="row" style="margin: 5px;">
-                            <div class="col-md-2">
-                                Valeur du portefeuille
-                            </div>
-                            <div class="col-md-2">
-
-                                <asp:TextBox class="form-control" ID="TextBox6" runat="server">
-                                </asp:TextBox>
-                            </div>
-                        </div>
-                   
-                    <div class="row" style="margin: 5px;">
-                        <div class="col-md-1">
-                            Portefeuille
-                        </div>
-                        <div class="col-md-4">
-                            <asp:Table ID="Table1" class="table table-bordered" runat="server">
-                                <asp:TableRow>
-                                    <asp:TableCell>Quantité d'actif présente dans le portefeuille</asp:TableCell>
-
-                                    <asp:TableCell>Cours de l'actif</asp:TableCell>
-
-                                </asp:TableRow>
-                            </asp:Table>
-                        </div>
-                        <div class="col-md-2">
-                            Delta
-                        </div>
-                        <div class="col-md-4">
-                            <asp:Table ID="Table2" class="table table-bordered" runat="server">
-                                <asp:TableRow>
-                                    <asp:TableCell>Quantité à investir dans l'actif à possèder à la date suivante</asp:TableCell>
-
-
-                                </asp:TableRow>
-                            </asp:Table>
-                        </div>
-                    </div>                       
-
-                    </div>
+                     </div> 
                 </asp:View>
                 <asp:View ID="View2" runat="server">
                    <div class="container">     
@@ -195,6 +102,18 @@
                             </div>
 
                         </div>
+                       <div class="row" style="margin: 5px;">
+                            <div class="col-md-4">
+                                <h1>Date courante</h1>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                            
+                            <div class="col-md-2">
+                                <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button7" Text="Mise à jour" OnClick="Continue_Simu" runat="server" />
+                            </div>
+
+                        </div>
                         <div class="row" style="margin: 5px;">
                            
                             <label for="Rebalancement" class="col-md-3 control-label">Intervalle de rebalancement en jour</label>
@@ -210,18 +129,26 @@
                                 </asp:TextBox>
                             </div>
                         </div>
-                       <div class="row" style="margin: 5px;">
-                            <div class="col-md-4">
-                                <h1>Date courante</h1>
+                    </div>   
+                </asp:View> 
+                <asp:View ID="View3" runat="server">
+                    
+                    <div class="container"> 
+                        <div class="row" style="margin: 5px;">
+                            <div class="col-md-2">
+                                <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
                             </div>
                             <div class="col-md-2">
+                                <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button6" Text="Afficher" OnClick="Display_Chart" runat="server" />
                             </div>
-                            
-                            <div class="col-md-2">
-                                <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button1" Text="Mise à jour" OnClick="Continue_Simu" runat="server" />
-                            </div>
-
                         </div>
+                    </div>
+                    
+                </asp:View> 
+            </asp:MultiView>
+
+            <div class="container">
+                    
                         <div class="row" style="margin: 5px;">
                             <div class="col-md-2">
                                 Prix
@@ -313,25 +240,8 @@
                                 </asp:TableRow>
                             </asp:Table>
                         </div>
-                    </div>
-                    </div>
-                </asp:View> 
-                <asp:View ID="View3" runat="server">
-                    
-                    <div class="container"> 
-                        <div class="row" style="margin: 5px;">
-                            <div class="col-md-2">
-                                <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
-                            </div>
-                            <div class="col-md-2">
-                                <asp:Button class="btn btn-lg btn-primary btn-block" ID="Button6" Text="Afficher" OnClick="Display_Chart" runat="server" />
-                            </div>
-                        </div>
-                    </div>
+                    </div>                       
 
-                </asp:View> 
-            </asp:MultiView>
-            <div class="container">
                       
                 <!--Graph-->
                 <asp:Chart ID="Chart1" runat="server" Width="1283px">
