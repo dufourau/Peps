@@ -148,8 +148,8 @@ namespace Peps
             //Color and scale of the chart
             Chart1.Series.FindByName("ProductPrice").Color = Color.DarkBlue;
             Chart1.Series.FindByName("PortfolioPrice").Color = Color.DarkRed;
-            Chart1.ChartAreas[0].AxisY.Maximum = 104;
-            Chart1.ChartAreas[0].AxisY.Minimum = 88;
+            Chart1.ChartAreas[0].AxisY.Maximum = 120;
+            Chart1.ChartAreas[0].AxisY.Minimum = 70;
         }
 
 
