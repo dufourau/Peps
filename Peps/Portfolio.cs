@@ -336,6 +336,9 @@ namespace Peps
             this.profitAndLoss[0] = 100 - prixInit;
         }
 
+        //TO DO  implement loading data: aurélien
+        //TO DO implement calib vol: morad
+        //Working only for t=0
         public void loadFromComputations()
         {
             index = 0;
@@ -345,6 +348,7 @@ namespace Peps
             this.market = new double[wrapper.getH()][];    
             this.pfvalue = new double[this.prix.Length];
             this.profitAndLoss = new double[this.prix.Length];
+            this.numberOfStock = wrapper.getCurr_size() + wrapper.getOption_size();
             //Compute the current index in the data 
             String currentDateString = this.getD().ToString() + "-" + this.getM().ToString() + "-" + this.getY().ToString();
             int indexCurrentDate = this.dates.IndexOf(currentDateString);
@@ -394,7 +398,7 @@ namespace Peps
                 this.market[indexFirstDate - indexCurrentDate] = this.data[indexCurrentDate];
                 this.delta[indexFirstDate - indexCurrentDate] = wrapper.getDelta();
                 this.prix[indexFirstDate - indexCurrentDate] = wrapper.getPrice();
-                this.numberOfStock = this.delta[0].Length;
+                
                 //We move forward in the simulation
                 ComputeSimulation(indexFirstDate - indexCurrentDate);
             }

@@ -81,13 +81,14 @@ namespace Peps
             int indexAsset = CurrentPortfolio.symbols.IndexOf(s);
             for (int i = CurrentPortfolio.data.Length-2; i>=0 ; i-- )
             {
-                Chart1.Series.FindByName("assetPrice").Points.Add(CurrentPortfolio.data[i][indexAsset-1]);
+                Chart1.Series.FindByName("assetPrice").Points.Add(CurrentPortfolio.data[i][indexAsset]);
             }
         }
 
         public void Get_Data(Object sender, EventArgs e)
         {
-            CurrentPortfolio.getData();
+            //CurrentPortfolio.getData();
+            //parseFileToMatrix(Properties.Resources);
         }
 
         public void updateDate(Object sender, EventArgs e)
