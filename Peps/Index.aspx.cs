@@ -121,6 +121,7 @@ namespace Peps
         public void Compute_Simu1(Object sender, EventArgs e)
         {
             initDisplay();
+            CurrentPortfolio.transactionFees = double.Parse(Fees.Text, System.Globalization.CultureInfo.InvariantCulture)/100;
             CurrentPortfolio.LoadFromResource(1);
             CurrentPortfolio.save();
             displayData();

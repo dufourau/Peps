@@ -17,6 +17,7 @@ namespace Peps
         public double[][] data;
         public double[][] rates;
         public double[] currentRates;
+        public double transactionFees;
         public int index { get; set; }
         public int numberOfStock { get; set; }
         public double InitialCash { get; set; }
@@ -61,6 +62,7 @@ namespace Peps
             InitialCash = 0;
             //Cash in EUR
             Cash = 0;
+            transactionFees = 0;
             //Currency of each assset
             currSymbol = new Dictionary<string, string>();
             //Cach in each foreign currency
@@ -505,7 +507,9 @@ namespace Peps
                 
                 for (int i = 0; i < this.delta[index].Length; i++)
                 {
-                    this.setCash(this.getCash() - (this.delta[index - 1][i] - this.quantity[i]) * this.market[index - 1][i]);
+                    //Apply transaction fee when asset is bought
+                    Cash -= Math.Abs((this.delta[index - 1][i] - this.quantity[i]) * this.market[index - 1][i]) * (transactionFees);
+                    this.setCash(this.getCash() - (this.delta[index - 1][i] - this.quantity[i]) * this.market[index - 1][i] );
                     this.quantity[i] = this.delta[index - 1][i];
                     vp += this.delta[index-1][i] * this.market[index-1][i];
                 }

@@ -125,7 +125,7 @@
                        <div class="row" style="margin: 5px;">
                            <label for="Frais" class="col-md-3 control-label">Frais de transaction en %</label>
                             <div class="col-md-2">
-                                <asp:TextBox class="form-control" ID="Frais" runat="server" Text="0.5">
+                                <asp:TextBox class="form-control" ID="Fees" runat="server" Text="0.5">
                                 </asp:TextBox>
                             </div>
                         </div>

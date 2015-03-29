@@ -139,13 +139,13 @@ namespace Peps {
         protected global::System.Web.UI.WebControls.TextBox Rebalancement;
         
         /// <summary>
-        /// Frais control.
+        /// Fees control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Frais;
+        protected global::System.Web.UI.WebControls.TextBox Fees;
         
         /// <summary>
         /// View3 control.
