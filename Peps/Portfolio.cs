@@ -15,6 +15,7 @@ namespace Peps
          * Represent all market values
          */
         public double[][] data;
+        public double[][] rates;
         public int index { get; set; }
         public int numberOfStock { get; set; }
         public double InitialCash { get; set; }
@@ -69,6 +70,8 @@ namespace Peps
             this.loadSymbols(marketSimu.Substring(0, marketSimu.IndexOf('\n')).Split(' '));
             this.dates = new List<String>();
             this.data = Utils.parseFileToMatrix(marketSimu, dates);
+            String rate = Properties.Resources.rate;
+            this.rates = Utils.parseFileToMatrix(rate, null);
 
             quantity = new double[size];
             for (int i = 0; i < size;i++ )
@@ -379,6 +382,7 @@ namespace Peps
                 {
                     wrapper.setSpot(this.market[index][i], i);
                 }
+                //wrapper.setR(this.rates[indexCurrentDate][0]);
                 wrapper.computePrice();
                 wrapper.computeDelta();
                 this.delta[index] = new double[numberOfStock];
@@ -395,6 +399,7 @@ namespace Peps
                 //TO DO A appeler avec le premier delta et premier prix
                 //InitSimu(wrapper.getDelta(), wrapper.getPrice());
                 //Copy the current delta and market value in the portfolio
+                //wrapper.setR(this.rates[indexCurrentDate][0]);
                 this.market[indexFirstDate - indexCurrentDate] = this.data[indexCurrentDate];
                 this.delta[indexFirstDate - indexCurrentDate] = wrapper.getDelta();
                 this.prix[indexFirstDate - indexCurrentDate] = wrapper.getPrice();
@@ -507,7 +512,7 @@ namespace Peps
             str = this.dates[indexCurrentDate];
             int[] dates = Utils.convertToInt(str.Split('-'));
             this.setDate(dates[2], dates[1], dates[0]);
-
+            wrapper.setR(this.rates[indexCurrentDate][0]);
             computeDelta();
             //Copy the current delta and market value in the portfolio
             this.market[index + 1] = this.data[indexCurrentDate];

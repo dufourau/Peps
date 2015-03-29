@@ -179,11 +179,12 @@
     <None Include="Resources\Deltas2.txt" />
     <None Include="Resources\Market2.txt" />
     <Content Include="Resources\chfRate.txt" />
-    <Content Include="Resources\eurRate.txt" />
+    <None Include="Resources\eurRate.txt" />
     <Content Include="Resources\gbpRate.txt" />
     <Content Include="Resources\MarketValues.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\rate.txt" />
     <Content Include="Resources\usdRate.txt" />
     <Content Include="Resources\yenRate.txt" />
     <Content Include="Scripts\bootstrap.js" />
@@ -194,6 +195,11 @@
     <Content Include="Scripts\jquery-1.9.0.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="chfRate.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>chfRate.resx</DependentUpon>
+    </Compile>
     <Compile Include="MarketData.cs" />
     <Compile Include="Portfolio.cs" />
     <Compile Include="Utils.cs" />
@@ -223,6 +229,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="chfRate.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>chfRate.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

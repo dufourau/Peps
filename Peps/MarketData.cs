@@ -61,6 +61,43 @@ namespace Peps
                      file.WriteLine(tempStr);
                 }
         }
+
+        public void storeRate(){
+            List<String> dates = new List<String>();
+            String fileName = Properties.Resources.eurRate;     
+            double[][] eurRate = Utils.parseFileToMatrix(fileName, dates);
+            fileName = Properties.Resources.gbpRate;
+            double[][] gbpRate = Utils.parseFileToMatrix(fileName, dates);
+            fileName = Properties.Resources.usdRate;
+            double[][] usdRate = Utils.parseFileToMatrix(fileName, dates);
+            fileName = Properties.Resources.chfRate;
+            double[][] chfRate = Utils.parseFileToMatrix(fileName, dates);
+            fileName = Properties.Resources.yenRate;
+            double[][] yenRate = Utils.parseFileToMatrix(fileName,dates);
+            
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Dufourau\Desktop\rate.txt"))
+
+                for (int z = usdRate.Length-2 ; z > 10; z--)
+                {
+                    if (usdRate[z][0] != 0)
+                    {
+                        String tempStr = "";
+                        tempStr += dates[z];
+                        tempStr += " ";
+                        tempStr += eurRate[z][0];
+                        tempStr += " ";
+                        tempStr += gbpRate[z][0];
+                        tempStr += " ";
+                        tempStr += usdRate[z][0];
+                        tempStr += " ";
+                        tempStr += chfRate[z/30][0];
+                        tempStr += " ";
+                        tempStr += yenRate[z][0];
+                        file.WriteLine(tempStr);
+                    }
+                    
+                }
+        }
         //
         public void fixeDataSize()
         {

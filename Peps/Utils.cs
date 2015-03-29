@@ -16,7 +16,7 @@ namespace Peps
             {
                 String[] items = lines[i].Trim().Split(' ');
                 parsed[i - 1] = new double[items.Length - 1];
-                dates.Add(items[0]);
+                if(dates !=null) dates.Add(items[0]);
                 for (int j = 1; j < items.Length; j++)
                 {
                     parsed[i - 1][j - 1] = double.Parse(items[j], System.Globalization.CultureInfo.InvariantCulture);

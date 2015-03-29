@@ -125,6 +125,7 @@ namespace Wrapper {
 			int getOption_size(){ return option_size; };
 			int getCurr_size(){ return nb_curr; };
 			double getR(){ return r; };
+			void setR(double rate){ r  =  rate; }
 			double getRho(){ return rho; };
 			double geth(){ return h; };
 			int getH(){ return H; };

@@ -87,8 +87,11 @@ namespace Peps
 
         public void Get_Data(Object sender, EventArgs e)
         {
+            //Get all data from serveur
             //CurrentPortfolio.getData();
-            //parseFileToMatrix(Properties.Resources);
+            //Set all rate in a file
+            CurrentPortfolio.marketData.storeRate();
+            
         }
 
         public void updateDate(Object sender, EventArgs e)

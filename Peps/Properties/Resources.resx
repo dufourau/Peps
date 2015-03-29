@@ -118,6 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="chfRate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\chfRate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="Deltas1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Deltas1.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -126,6 +129,12 @@
   </data>
   <data name="Deltas3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Deltas3.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="eurRate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eurRate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="gbpRate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gbpRate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Market1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Market1.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -144,5 +153,14 @@
   </data>
   <data name="Prix3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Prix3.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="usdRate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\usdRate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="yenRate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\yenRate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="rate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>
