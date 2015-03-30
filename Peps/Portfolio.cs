@@ -76,7 +76,7 @@ namespace Peps
             String rate = Properties.Resources.rate;
             this.rates = Utils.parseFileToMatrix(rate, null);
             this.currentRates= new double[5];
-            copyCurrentRate(rates.Length-2);
+            copyCurrentRate(0);
             quantity = new double[size];
             for (int i = 0; i < size;i++ )
             {
@@ -126,8 +126,8 @@ namespace Peps
 
         public void copyCurrentRate(int index)
         {
-            for(int i = 0 ; i < rates[index].Length ; i++){
-                currentRates[i] = rates[index][i];
+            for(int i = 0 ; i < rates[rates.Length - 2 - index].Length ; i++){
+                currentRates[i] = rates[rates.Length - 2 - index][i];
             }
         }
         public double[] getCurrentDelta()
@@ -392,8 +392,8 @@ namespace Peps
                 {
                     wrapper.setSpot(this.market[index][i], i);
                 }
-                //copyCurrentRate(indexCurrentDate);
-                //wrapper.setR(this.rates[indexCurrentDate][0]);
+               
+                wrapper.setR(this.rates[indexCurrentDate][0]/100);
                 wrapper.computePrice();
                 wrapper.computeDelta();
                 this.delta[index] = new double[numberOfStock];
@@ -410,8 +410,7 @@ namespace Peps
                 //TO DO A appeler avec le premier delta et premier prix
                 //InitSimu(wrapper.getDelta(), wrapper.getPrice());
                 //Copy the current delta and market value in the portfolio
-                //copyCurrentRate(indexCurrentDate);
-                //wrapper.setR(this.rates[indexCurrentDate][0]);
+                wrapper.setR(this.rates[indexCurrentDate][0]/100);
                 this.market[indexFirstDate - indexCurrentDate] = this.data[indexCurrentDate];
                 this.delta[indexFirstDate - indexCurrentDate] = wrapper.getDelta();
                 this.prix[indexFirstDate - indexCurrentDate] = wrapper.getPrice();
@@ -498,11 +497,11 @@ namespace Peps
                 copyCurrentRate(index);
                 this.incrementIndex();
                 double vp = 0;
-                this.setCash(this.getCash() * Math.Exp(currentRates[0] * (1 / (wrapper.getH() / wrapper.getMaturity()))));
-                this.setInitialCash(this.getInitialCash() * Math.Exp(currentRates[0] * (1 / (wrapper.getH() / wrapper.getMaturity()))));
+                this.setCash(this.getCash() * Math.Exp((currentRates[0]/100) * (1 / (wrapper.getH() / wrapper.getMaturity()))));
+                this.setInitialCash(this.getInitialCash() * Math.Exp((currentRates[0]/100) * (1 / (wrapper.getH() / wrapper.getMaturity()))));
                 //Handle the currency interest
                 for(int i = 0; i < wrapper.getCurr_size(); i++){
-                    vp += this.quantity[this.numberOfStock - wrapper.getCurr_size() - 1 + i] * currentRates[i+1]* (1 / (wrapper.getH() / wrapper.getMaturity())); 
+                    vp += this.quantity[this.numberOfStock - wrapper.getCurr_size() - 1 + i] * (currentRates[i+1]/100)* (1 / (wrapper.getH() / wrapper.getMaturity())); 
                 }
                 
                 for (int i = 0; i < this.delta[index].Length; i++)
@@ -513,8 +512,6 @@ namespace Peps
                     this.quantity[i] = this.delta[index - 1][i];
                     vp += this.delta[index-1][i] * this.market[index-1][i];
                 }
-
-                
 
                 vp += this.getCash();
                 this.pfvalue[index] = vp;
@@ -537,8 +534,7 @@ namespace Peps
             int[] dates = Utils.convertToInt(str.Split('-'));
             this.setDate(dates[2], dates[1], dates[0]);
             //rate updload
-            //copyCurrentRate(indexCurrentDate);
-            //wrapper.setR(this.rates[indexCurrentDate][0]);
+            wrapper.setR(this.rates[indexCurrentDate][0]/100);
             computeDelta();
             //Copy the current delta and market value in the portfolio
             this.market[index + 1] = this.data[indexCurrentDate];
