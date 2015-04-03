@@ -3,22 +3,23 @@
 
 using namespace std;
 
-MonteCarlo::MonteCarlo(double T_, int TimeSteps_, int size_, int optionType_, double r_, double rho_, double* curr_, double* dividend_, double* sigma_, double* spot_, double* trend_, int samples_, int sizeAsset)
+MonteCarlo::MonteCarlo(double T_, int TimeSteps_, int size_, double r_, double* curr_, double* dividend_,
+	PnlMat* stocks, int samples_, int sizeAsset, int dimStocks, double finiteDifferenceStep)
 {
-	PnlVect* sigma= pnl_vect_create_from_ptr(size_,sigma_);
-	PnlVect* spot= pnl_vect_create_from_ptr(size_, spot_);
-	PnlVect* trend= pnl_vect_create_from_ptr(size_, trend_);
+	PnlVect* spot = pnl_vect_create(size_);
+	pnl_mat_get_row(spot, stocks, dimStocks - 1);
 	PnlVect* dividend = pnl_vect_create_from_ptr(size_, dividend_);
 	PnlVect* curr = pnl_vect_create_from_ptr(sizeAsset, curr_);
 	// Construction de BS
-	this->mod_ = new BS(size_, r_, rho_, dividend, sigma, spot, trend);
-	this->opt_ = new Moduleis(curr, T_, TimeSteps_, size_, optionType_, sizeAsset);
+	this->mod_ = new BS(size_, r_, dividend, spot);
+	this->opt_ = new Moduleis(curr, T_, TimeSteps_, size_, sizeAsset);
 	// Initialisation du generateur a MERSENNE : type 7 page 63
 	rng = pnl_rng_create(PNL_RNG_MERSENNE);
 	pnl_rng_sseed(rng, time(NULL));
 	// Sample number et pas de difference finie
 	this->samples_ = samples_;
-	this->h_ = 0.1;
+	this->h_ = finiteDifferenceStep;
+	pnl_vect_free(&spot);
 }
 
 MonteCarlo::~MonteCarlo()
@@ -191,7 +192,7 @@ void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta)
 	pnl_vect_free(&St);
 }
 
-void MonteCarlo::hedge(PnlVect *V, double &PL, int H, const PnlMat *marketPath)
+void MonteCarlo::hedge(PnlVect *V, PnlVect *ptfValues, double &PL, int H, const PnlMat *marketPath)
 {
 	PnlVect *delta_cour = pnl_vect_create_from_zero(this->opt_->size_);
 	PnlVect *delta_prec = pnl_vect_create_from_zero(this->opt_->size_);
@@ -287,6 +288,6 @@ void MonteCarlo::hedge(PnlVect *V, double &PL, int H)
 {
 	PnlMat *marketPath = pnl_mat_create_from_zero(H + 1, this->opt_->size_);
 	this->mod_->asset(marketPath, this->opt_->T_, H, this->rng);
-	this->hedge(V, PL, H, marketPath);
+	//this->hedge(V, PL, H, marketPath);
 	pnl_mat_free(&marketPath);
 }

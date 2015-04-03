@@ -1,101 +1,85 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Web;
 
 namespace Peps
 {
     public class MarketData
     {
+        //All asset prices
+        Dictionary<String, ArrayList> symbolToPricesList ;
         public Hashtable table;
         public Hashtable currSymbol;
         public List<String> Symbols;
         public List<String> CurrSymbols;
         public int sizeList;
-        public MarketData(){
+        List<DateTime> dates = new List<DateTime>();
+
+        public static string urlPrototype = @"http://ichart.finance.yahoo.com/table.csv?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g={7}&ignore=.csv";
+        public static string currencyURL = @"https://www.quandl.com/api/v1/datasets/CURRFX/{0}.csv?&trim_start={1}&trim_end={2}";
+
+        public Dictionary<String, List<String>> currencyToPriceList;
+
+
+        public MarketData()
+        {
             table = new Hashtable();
-            currSymbol = new Hashtable(); 
-            Symbols= new List<String>();
+            currSymbol = new Hashtable();
+            Symbols = new List<String>();
             CurrSymbols = new List<String>();
+            dates = new List<DateTime>();
+            currencyToPriceList = new Dictionary<string, List<string>>();
+            
+            symbolToPricesList = new Dictionary<string, ArrayList>(); 
             sizeList = 2371;
         }
 
-        public void storeData(){
-            String[][] temp= new String[table.Keys.Count+1][];
+        public void storeData()
+        {
+            String[][] temp = new String[table.Keys.Count + 1][];
             Symbols.AddRange(CurrSymbols);
-            
+
             int i = 1;
             foreach (String sym in Symbols)
             {
-                if(i==7){
-                    temp[0]= new String[((List <Price>) table[sym]).Count+1];
+                if (i == 7)
+                {
+                    temp[0] = new String[((List<Price>)table[sym]).Count + 1];
                 }
-                
-                temp[i]= new String[((List <Price>) table[sym]).Count+1];
-                temp[i][0] = (String) sym;
+
+                temp[i] = new String[((List<Price>)table[sym]).Count + 1];
+                temp[i][0] = (String)sym;
                 int j = 1;
                 foreach (Price price in ((List<Price>)table[sym]))
                 {
-                    if(i==7){
-                         temp[0][j]= price.d.ToString()+"-"+price.m.ToString()+"-"+price.y.ToString();
+                    if (i == 7)
+                    {
+                        temp[0][j] = price.d.ToString() + "-" + price.m.ToString() + "-" + price.y.ToString();
                     }
                     temp[i][j] = ((price.High + price.Low) / 2).ToString();
                     j++;
                 }
                 i++;
             }
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Dufourau\Desktop\market.txt"))
-            
-                for (int z = 0; z < 2371; z++ )
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\el azari\Desktop\market.txt"))
+
+                for (int z = 0; z < 2371; z++)
                 {
                     String tempStr = "";
                     for (int k = 0; k < temp.Length; k++)
                     {
-                        if(z<temp[k].Length){
+                        if (z < temp[k].Length)
+                        {
                             tempStr += temp[k][z] + " ";
                         }
                     }
-                     file.WriteLine(tempStr);
-                }
-        }
-
-        public void storeRate(){
-            List<String> dates = new List<String>();
-            String fileName = Properties.Resources.eurRate;     
-            double[][] eurRate = Utils.parseFileToMatrix(fileName, dates);
-            fileName = Properties.Resources.gbpRate;
-            double[][] gbpRate = Utils.parseFileToMatrix(fileName, dates);
-            fileName = Properties.Resources.usdRate;
-            double[][] usdRate = Utils.parseFileToMatrix(fileName, dates);
-            fileName = Properties.Resources.chfRate;
-            double[][] chfRate = Utils.parseFileToMatrix(fileName, dates);
-            fileName = Properties.Resources.yenRate;
-            double[][] yenRate = Utils.parseFileToMatrix(fileName,dates);
-            
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Dufourau\Desktop\rate.txt"))
-
-                for (int z = usdRate.Length-2 ; z > 10; z--)
-                {
-                    if (usdRate[z][0] != 0)
-                    {
-                        String tempStr = "";
-                        tempStr += dates[z];
-                        tempStr += " ";
-                        tempStr += eurRate[z][0];
-                        tempStr += " ";
-                        tempStr += gbpRate[z][0];
-                        tempStr += " ";
-                        tempStr += usdRate[z][0];
-                        tempStr += " ";
-                        tempStr += chfRate[z/30][0];
-                        tempStr += " ";
-                        tempStr += yenRate[z][0];
-                        file.WriteLine(tempStr);
-                    }
-                    
+                    file.WriteLine(tempStr);
                 }
         }
         //
@@ -103,23 +87,151 @@ namespace Peps
         {
             foreach (String sym in Symbols)
             {
-                if(sym.Equals("WFC")){
-                    int i = 1;
-                }
-                int diff= ((List <Price>) table[sym]).Count -sizeList;
-                while(diff<0){
-                    List<Price> temp ;
-                    if(-diff >= ((List<Price>)table[sym]).Count){
-                        temp= ((List<Price>)table[sym]).ToList();
-                    }else{
-                        temp= ((List<Price>)table[sym]).GetRange(((List<Price>)table[sym]).Count + diff, -diff);
+                int diff = ((List<Price>)table[sym]).Count - sizeList;
+                while (diff < 0)
+                {
+                    List<Price> temp;
+                    if (-diff >= ((List<Price>)table[sym]).Count)
+                    {
+                        temp = ((List<Price>)table[sym]).ToList();
+                    }
+                    else
+                    {
+                        temp = ((List<Price>)table[sym]).GetRange(((List<Price>)table[sym]).Count + diff, -diff);
                     }
                     temp.Reverse();
                     ((List<Price>)table[sym]).AddRange(temp);
                     diff = ((List<Price>)table[sym]).Count - sizeList;
-                    
+
                 }
             }
+        }
+
+
+        public ArrayList getPreviousCurrencyPrices(string symbol, string startDate, string endDate)
+        {
+            ArrayList prices = new ArrayList();
+            string url = string.Format(currencyURL, symbol, startDate, endDate);
+            var webClient = new WebClient();
+            string csvData = webClient.DownloadString(url);
+            string[] rows = csvData.Replace("\r", "").Split('\n');
+            for (int i = rows.Length - 2; i >= 1; i--)
+            {
+                prices.Add(Double.Parse(rows[i].Split(',')[1], CultureInfo.InvariantCulture));
+            }
+            return prices;
+        }
+
+        public string getLastCurrencyPrice(string symbol, string startDate, string endDate)
+        {
+            //String url = "https://www.quandl.com/api/v1/datasets/CURRFX/" + symbol + ".csv";
+            string url = string.Format(currencyURL, symbol, startDate, endDate);
+            var webClient = new WebClient();
+            string csvData = webClient.DownloadString(url);
+            string[] rows = csvData.Replace("\r", "").Split('\n');
+            return rows[1].Split(',')[1];
+        }
+
+        public void getAllStockPrices(string startDay, string startMonth, string startYear, string endDay, string endMonth, string endYear){
+
+            ArrayList tmp;
+            string tmpStockTicker;
+            bool dateParsed = false;
+            foreach (PropertyInfo property 
+                in typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
+            {
+               
+                if (property.Name.Length == 12)
+                {
+                    tmpStockTicker = Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1];
+                    
+                    if (!dateParsed)
+                    {
+                        tmp = getLastStockPrices(tmpStockTicker, startDay, startMonth, startYear, endDay, endMonth, endYear,!dateParsed);
+                        dateParsed = true;
+                    }
+                    else
+                    {
+                        tmp = getLastStockPrices(tmpStockTicker, startDay, startMonth, startYear, endDay, endMonth, endYear, !dateParsed);
+                    }  
+                    symbolToPricesList.Add(property.Name, tmp);
+                }          
+            }
+            
+        }
+        
+
+        public ArrayList getLastStockPrices(string symbol, string startDay, string startMonth,  
+                        string startYear, string endDay, string endMonth, string endYear, bool addDate)
+        {
+            ArrayList prices = new ArrayList();
+            try
+            {
+                
+                string url = string.Format(urlPrototype, symbol, startMonth, startDay,
+                    startYear, endMonth, endDay, endYear, "d");
+                var webClient = new WebClient();
+                String csvData = webClient.DownloadString(url);
+                string[] rows = csvData.Replace("\r", "").Split('\n');
+                for (int i = rows.Length - 2; i >= 1; i--)
+                {   
+
+                    if(addDate == true){
+                        int year = Int32.Parse(rows[i].Split(',')[6].Split('-')[0], CultureInfo.InvariantCulture);
+                        int month = Int32.Parse(rows[i].Split(',')[6].Split('-')[1], CultureInfo.InvariantCulture);
+                        int day = Int32.Parse(rows[i].Split(',')[6].Split('-')[2], CultureInfo.InvariantCulture);
+                        this.dates.Add(new DateTime(year, month, day));
+                    }
+                    prices.Add(Double.Parse(rows[i].Split(',')[6], CultureInfo.InvariantCulture));
+                    
+                }
+
+                return prices;
+            }
+            catch
+            {
+                Console.WriteLine("No files for the stock " + symbol + " for the specified date range founded on the server.");
+            }
+            return null;
+        }
+
+        public string getStockPrice(string symbol, string day, string month, string year)
+        {
+            try
+            {
+                string url = string.Format(urlPrototype, symbol, month, day, year, month, day + 1, year, "d");
+                var webClient = new WebClient();
+                String csvData = webClient.DownloadString(url);
+                string[] rows = csvData.Replace("\r", "").Split('\n');
+                return rows[1].Split(',')[6];
+            }
+            catch
+            {
+                Console.WriteLine("No files for the stock " + symbol + " for the specified date range founded on the server.");
+            }
+            return null;
+            /*
+
+                String csvData =  webClient.DownloadString(url);
+                YahooFinance.HistoricalParse(csvData, table, symbol, false);
+            }
+            catch
+            {
+                Console.WriteLine("No files for the stock " + symbol + " for the specified date range founded on the server.");
+            }*/
+
+            //Retrieve stock prices
+            /*   foreach (String sym in Symbols)
+               {
+                   String csvData;
+                   using (WebClient web = new WebClient())
+                   {
+                       String url = "http://ichart.finance.yahoo.com/table.csv?s=" + sym + "&d=" + d + "&e=" + e + "&f=" + f + "&g=d&a=" + a + "&b=" + b + "&c=" + c + "&ignore=.csv";
+
+                       csvData = web.DownloadString(url);
+                   }
+                   YahooFinance.HistoricalParse(csvData, table, sym, false);
+               }*/
         }
 
         /*
@@ -128,35 +240,36 @@ namespace Peps
          * b et e: start and end day 
          * c et f: start and end year
          */
-        public void retrieveDataFromWeb(String a, String b, String c, String d, String e, String f){
+        public void retrieveDataFromWeb(String a, String b, String c, String d, String e, String f)
+        {
             //Jusque norvatis
             //Euro
             Symbols.Add("IBDRY");
             //Euro
             Symbols.Add("ENLAY");
             //Livre
-            currSymbol.Add("HSEA","GBPEUR");
+            currSymbol.Add("HSEA", "GBPEUR");
             Symbols.Add("HSEA");
             //Livre
-            currSymbol.Add("DEO","GBPEUR");
+            currSymbol.Add("DEO", "GBPEUR");
             Symbols.Add("DEO");
             //Livre
-            currSymbol.Add("TSCDF","GBPEUR");
+            currSymbol.Add("TSCDF", "GBPEUR");
             Symbols.Add("TSCDF");
             //Dollars
-            currSymbol.Add("WFC","USDEUR");
+            currSymbol.Add("WFC", "USDEUR");
             Symbols.Add("WFC");
             //Dollars
             currSymbol.Add("PEP", "USDEUR");
             Symbols.Add("PEP");
             //CHF
             currSymbol.Add("NVS", "CHFEUR");
-            Symbols.Add("NVS");      
-            Symbols.Add("DTE.DE"); 
+            Symbols.Add("NVS");
+            Symbols.Add("DTE.DE");
             Symbols.Add("GPDNF");
-            currSymbol.Add("BP","GBPEUR");
+            currSymbol.Add("BP", "GBPEUR");
             Symbols.Add("BP");
-            currSymbol.Add("RBS","GBPEUR");
+            currSymbol.Add("RBS", "GBPEUR");
             Symbols.Add("RBS");
             currSymbol.Add("PG", "USDEUR");
             Symbols.Add("PG");
@@ -169,20 +282,21 @@ namespace Peps
             currSymbol.Add("VZ", "USDEUR");
             Symbols.Add("VZ");
             currSymbol.Add("NTT", "EURJPY");
-            Symbols.Add("NTT");   
-            Symbols.Add("EOAN.DE");          
-            Symbols.Add("OR.PA");          
-           
+            Symbols.Add("NTT");
+            Symbols.Add("EOAN.DE");
+            Symbols.Add("OR.PA");
+
 
             //Add the currency
-          
-            CurrSymbols.Add("GBPEUR");           
+
+            CurrSymbols.Add("GBPEUR");
             CurrSymbols.Add("USDEUR");
             CurrSymbols.Add("CHFEUR");
             CurrSymbols.Add("EURJPY");
 
             //Retrieve stock prices
-            foreach(String sym in Symbols){
+            foreach (String sym in Symbols)
+            {
                 String csvData;
                 using (WebClient web = new WebClient())
                 {
@@ -191,10 +305,10 @@ namespace Peps
                     //TO DO 
                     //automatiser la recherche url en fction de la date et de l'action
                     String url = "http://ichart.finance.yahoo.com/table.csv?s=" + sym + "&d=" + d + "&e=" + e + "&f=" + f + "&g=d&a=" + a + "&b=" + b + "&c=" + c + "&ignore=.csv";
-                    
+
                     csvData = web.DownloadString(url);
                 }
-                YahooFinance.HistoricalParse(csvData, table, sym,false);
+                YahooFinance.HistoricalParse(csvData, table, sym, false);
             }
             //Retrieve
             foreach (String sym in CurrSymbols)
@@ -206,7 +320,7 @@ namespace Peps
 
                     csvData = web.DownloadString(url);
                 }
-                YahooFinance.HistoricalParse(csvData, table, sym,true);
+                YahooFinance.HistoricalParse(csvData, table, sym, true);
             }
         }
     }

@@ -14,6 +14,7 @@ namespace Peps
         /*
          * Represent all market values
          */
+        public DateTime currentDate ;
         public double[][] data;
         public double[][] rates;
         public double[] currentRates;
@@ -24,18 +25,19 @@ namespace Peps
         public double Cash { get; set; }
         //We can change the current Date
         private int y, m, d;
-        //Historical data
-        public double[][] delta { get; set; }
+        //Historical data     
         public double[][] market { get; set; }
         public double[] prix { get; set; }
         public double[] pfvalue { get; set; }
         public double[] profitAndLoss { get; set; }
         public double trackingError { get; set; }
         public double[] quantity { get; set; }
-        public List<String> dates;   
+        public List<String> dates;
+        //TO DELETE
         public List<String> symbols;
         public Dictionary<String, String> currSymbol;
         public Dictionary<String, double> currCash;
+        public double[][] delta { get; set; }
         //Quantity of each asset in the portfolio
         public WrapperClass wrapper;
         public MarketData marketData;
@@ -54,10 +56,11 @@ namespace Peps
         {
             index = 0;
             Id = 1;
+            currentDate = new DateTime(2005, 10, 30);
             this.wrapper = wrapper;
             this.marketData = marketData;
-            int size = wrapper.getOption_size() + wrapper.getCurr_size();
-            int nbDate = wrapper.getH();
+            //int size = wrapper.getOption_size() + wrapper.getCurr_size();
+            //int nbDate = wrapper.getH();
             //Benefit from the selling of the product at t=0
             InitialCash = 0;
             //Cash in EUR
@@ -73,15 +76,15 @@ namespace Peps
             this.loadSymbols(marketSimu.Substring(0, marketSimu.IndexOf('\n')).Split(' '));
             this.dates = new List<String>();
             this.data = Utils.parseFileToMatrix(marketSimu, dates);
-            String rate = Properties.Resources.rate;
-            this.rates = Utils.parseFileToMatrix(rate, null);
-            this.currentRates= new double[5];
-            copyCurrentRate(0);
-            quantity = new double[size];
-            for (int i = 0; i < size;i++ )
-            {
-                quantity[i] = 0;
-            }
+            //String rate = Properties.Resources.rate;
+            //this.rates = Utils.parseFileToMatrix(rate, null);
+            //this.currentRates= new double[5];
+            //copyCurrentRate(0);
+            //quantity = new double[size];
+            //for (int i = 0; i < size;i++ )
+            //{
+            //    quantity[i] = 0;
+            //}
             y = 2005;
             m = 11;
             d = 30;
@@ -287,9 +290,9 @@ namespace Peps
         public void getData()
         {
             //Retrieve data from 30 august 2005 to 30 january 2015  
-            marketData.retrieveDataFromWeb("7", "30", "2005", "0", "30", "2015");
-            marketData.fixeDataSize();
-            marketData.storeData();
+            //marketData.retrieveDataFromWeb("7", "30", "2005", "0", "30", "2015");
+            //marketData.fixeDataSize();
+            //marketData.storeData();
         }
 
         //Use as a validation test of our model
@@ -348,10 +351,11 @@ namespace Peps
             //Compute the profit and Loss
             this.profitAndLoss[0] = 100 - prixInit;
         }
-
+        
         //TO DO  implement loading data: aurélien
         //TO DO implement calib vol: morad
         //Working only for t=0
+        /*
         public void loadFromComputations()
         {
             index = 0;
@@ -382,7 +386,7 @@ namespace Peps
                 }
             }
             //wrapper.computeVol();
-            */
+            
             //Price in 0
             if (this.getM() == 11 && this.getD() == 30 && this.getY() == 2005)
             {
@@ -488,7 +492,8 @@ namespace Peps
                 }
             }
         }
-
+        */
+       /*
         public void ComputeSimulation(int numberOfIteration = 1)
         {
             for (int k = 0; k < numberOfIteration; k++)
@@ -519,7 +524,8 @@ namespace Peps
                 this.profitAndLoss[index] = this.trackingError + this.getInitialCash();
             }
         }
-
+        */
+        /*
         public void Update()
         {
             //Jump to the next date
@@ -543,5 +549,6 @@ namespace Peps
             this.prix[index + 1] = wrapper.getPrice();
             ComputeSimulation();
         }
+        */
     }
 }

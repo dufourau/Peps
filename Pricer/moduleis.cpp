@@ -2,8 +2,7 @@
 #include "moduleis.h"
 
 using namespace std;
-
-Moduleis::Moduleis(PnlVect* curr_, double T_, int TimeSteps_, int size_, int optionType_, int sizeAsset_)
+Moduleis::Moduleis(PnlVect* curr_, double T_, int TimeSteps_, int size_, int sizeAsset_)
 {
 	this->T_ = T_;
 	this->TimeSteps_ = TimeSteps_;
@@ -13,11 +12,11 @@ Moduleis::Moduleis(PnlVect* curr_, double T_, int TimeSteps_, int size_, int opt
 	this->nbRecDates = 9;
 	this->borneInf = -15;
 	this->sizeAsset_ = sizeAsset_;
-	this->curr_= pnl_vect_copy(curr_);
+	this->curr_ = curr_;
 
 }
 
-Moduleis::~Moduleis() 
+Moduleis::~Moduleis()
 {
 #ifdef _DEBUG
 	cout << "~Moduleis()" << endl;
@@ -58,7 +57,7 @@ void Moduleis::computePerformance(PnlVect *Performance, const PnlMat *path, PnlM
 	pnl_mat_max(Performance, path, 'r');
 }
 
-	
+
 double Moduleis::payoff(const PnlMat *path)
 {
 	PnlVect *Performances = pnl_vect_create(this->sizeAsset_);
@@ -90,7 +89,7 @@ double Moduleis::payoff(const PnlMat *path)
 	indexPath = TimeSteps_;
 	for (int d = 0; d< this->sizeAsset_; d++)
 	{
-		
+
 
 		double resultMax;
 		//TODO replace with max
@@ -108,7 +107,7 @@ double Moduleis::payoff(const PnlMat *path)
 			LET(Performances, d) = resultMax;
 		}
 
-	
+
 	}
 	// quisort Performances
 	pnl_vect_qsort(Performances, 'i');
@@ -118,7 +117,7 @@ double Moduleis::payoff(const PnlMat *path)
 	{
 		payoff += GET(Performances, d);
 	}
-	
+
 	if ((payoff*2.0 / (double)this->sizeAsset_) > borneInf){
 		payoff = payoff*2.0 / (double)this->sizeAsset_;
 	}
@@ -127,7 +126,7 @@ double Moduleis::payoff(const PnlMat *path)
 	}
 
 	pnl_vect_free(&Performances);
-	return payoff+100 ;
+	return payoff + 100;
 }
 
 void Moduleis::print()

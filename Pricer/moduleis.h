@@ -16,8 +16,7 @@ public:
 	int nbRecDates; /// nombre de dates de constatation
 	double borneInf; /// seuil garantie
 
-
-	Moduleis(PnlVect* curr_, double T_, int TimeSteps_, int size_, int optionType_, int sizeAsset_);
+	Moduleis(PnlVect* curr_, double T_, int TimeSteps_, int size_, int sizeAsset_);
 	virtual ~Moduleis();
 
 	double computeYield(const PnlMat *path, int numAsset, int date);

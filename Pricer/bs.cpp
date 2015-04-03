@@ -3,29 +3,75 @@
 
 using namespace std;
 
-BS::BS(double size_, double r_, double rho_,PnlVect* dividend_, PnlVect* sigma_, PnlVect* spot_, PnlVect* trend_)
+BS::BS(int size_, double r_, PnlVect* dividend_, PnlVect* spot_)
 {
 	this->size_ = size_;
 	this->r_ = r_;
-	this->rho_ = rho_;
-	this->sigma_= pnl_vect_copy(sigma_);
-	this->spot_= pnl_vect_copy(spot_);
-	this->trend_= pnl_vect_copy(trend_);
-	this->dividend_ = pnl_vect_copy(dividend_);
+	this->spot_ = pnl_vect_copy(spot_);
+	this->dividend_ = dividend_;
 	if (this->size_ == 1)
 		assert(this->rho_ == 1);
-	// The cholesky factorization
-	L = pnl_mat_create_from_scalar(this->size_, this->size_, 1);
-	for (int i = 0; i < this->size_; i++)
+
+	sigma_ = pnl_vect_create(this->size_);
+	L = pnl_mat_create(this->size_, this->size_);
+
+
+}
+void BS::calibrate(const PnlMat* past, double dt)// call it after construction of bs
+{
+	PnlMat* Cov = pnl_mat_create_from_zero(size_, size_);
+	PnlMat* lSk1k = pnl_mat_create_from_zero(past->m - 1, size_);
+	double sum;
+	double temp;
+	for (int d = 0; d < size_; d++)
 	{
-		for (int j = 0; j < this->size_; j++)
+		sum = 0;
+		for (int k = 0; k < past->m - 1; k++)
 		{
-			if (i != j)
-				MLET(L, i, j) = this->rho_;
+			temp = log(MGET(past, k + 1, d) / MGET(past, k, d));
+			MLET(lSk1k, k, d) += temp;
+			sum += temp;
+		}
+		for (int k = 0; k < past->m - 1; k++)
+		{
+			MLET(lSk1k, k, d) += sum / (past->m);
+		}
+	}
+	for (int i = 0; i < size_; i++)
+	{
+		for (int j = i; j < size_; j++)
+		{
+			for (int k = 0; k < past->m - 1; k++)
+			{
+				MLET(Cov, i, j) += MGET(lSk1k, k, i)*MGET(lSk1k, k, j);
+			}
+			MLET(Cov, i, j) /= dt*(past->m - 1);
+			if (i != j){
+				MLET(Cov, j, i) = MGET(Cov, i, j);
+			}
+		}
+	}
+	for (int d = 0; d < size_; d++)
+	{
+		LET(sigma_, d) = sqrt(MGET(Cov, d, d));
+	}
+	//pnl_mat_print(Cov);
+	cout << "Cov " << endl;
+	pnl_mat_set_zero(L);
+	for (int i = 0; i < size_; i++)
+	{
+		for (int j = i; j < size_; j++)
+		{
+			MLET(L, i, j) = MGET(Cov, i, j) / (GET(sigma_, i)*GET(sigma_, j));
+			MLET(L, j, i) = MGET(L, i, j);
 		}
 	}
 	pnl_mat_chol(L);
+	// pnl_mat_print(Cov);
+	// pnl_mat_set_id(L);
 
+	pnl_mat_free(&Cov);
+	pnl_mat_free(&lSk1k);
 }
 
 BS::~BS()
@@ -33,9 +79,8 @@ BS::~BS()
 #ifdef _DEBUG
 	cout << "~BS() : Ready to call pnl_vect_free on sigma, spot and trend  " << endl;
 #endif
-	pnl_vect_free(&this->sigma_);
 	pnl_vect_free(&this->spot_);
-	pnl_vect_free(&this->trend_);
+	pnl_vect_free(&this->sigma_);
 	pnl_mat_free(&L);
 #ifdef _DEBUG
 	cout << "~BS() : Successfull call of pnl_rng_free" << endl;

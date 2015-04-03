@@ -21,7 +21,7 @@ public:
 	PnlVect *trend_; /// vecteur des tendances des sous-jacent
 	PnlMat *L; /// Cholesky factorization of the correlation matrix
 
-	BS(double size_, double r_, double rho_, PnlVect* dividend_, PnlVect* sigma_, PnlVect* spot_, PnlVect* trend_);
+	BS(int size_, double r_, PnlVect* dividend_, PnlVect* spot_);
 	~BS();
 
 	/**
@@ -77,6 +77,8 @@ public:
 	* @param[in] H nombre de dates de constatation
 	*/
 	void simul_market(PnlMat *path, double T, int H, PnlRng *rng);
+
+	void calibrate(const PnlMat* past, double dt);
 
 };
 

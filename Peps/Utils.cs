@@ -74,5 +74,22 @@ namespace Peps
             }
             return dates;
         }
+
+        public static double[] Convert2dArrayto1d(double[,] previousStocksPrices)
+        {
+
+            int k = 0;
+            double[] oneDpreviousStockPrices = new double[previousStocksPrices.GetLength(0) * previousStocksPrices.GetLength(1)];
+
+            for (int i = 0; i < previousStocksPrices.GetLength(0); i++)
+            {
+                for (int j = 0; j < previousStocksPrices.GetLength(1); j++)
+                {
+                    oneDpreviousStockPrices[k++] = previousStocksPrices[i, j];
+                }
+            }
+            return oneDpreviousStockPrices;
+
+        }
     }
 }

@@ -20,7 +20,10 @@ public:
 	double h_; /*! pas de différence finie */
 	int samples_; /*! nombre de tirages Monte Carlo */
 
-	MonteCarlo(double T_, int TimeSteps_, int size_, int optionType_, double r_, double rho_, double* curr_, double* dividend_, double* sigma_, double* spot_, double* trend_, int samples_, int sizeAsset);
+	MonteCarlo(double T_, int TimeSteps_, int size_, double r_, double* curr_, double* dividend_,
+		PnlMat* stocks, int samples_, int sizeAsset, int dimStocks, double finiteDifferenceStep);
+
+
 	~MonteCarlo();
 
 	/**
@@ -78,7 +81,7 @@ public:
 	* de dimension H+1
 	* @param[out] PL Profit and Loss
 	*/
-	void hedge(PnlVect *V, double &PL, int H, const PnlMat *marketPath);
+	void hedge(PnlVect *V, PnlVect *ptfValues, double &PL, int H, const PnlMat *marketPath);
 
 	/**
 	* Construit le portefeuille de couverture et calcule le P&L
