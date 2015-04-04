@@ -16,11 +16,7 @@ namespace Peps
 {
     public partial class Index : System.Web.UI.Page
     {
-        double[,] hedgingPreviousStocksPrices;
-        double[] hedgeDPreviousStockPrices;
 
-        int RBSindex = 18;
-        int citiGroupIndex;
 
         public Portfolio CurrentPortfolio
         {
@@ -43,44 +39,49 @@ namespace Peps
                     //CurrentPortfolio.MarketData.dumpToRedis("30", "7", "2005", "30", "3", "2015");
                     CurrentPortfolio.save();
                 }
-                //Init the Display
-                initDisplay();              
-                //Compute delta and price at date 0          
-               
-                CurrentPortfolio.compute();
-                //Display the result of the computation
-                displayData();
+                
             }
         }
 
+        public void load_computation(Object sender, EventArgs e)
+        {
+         
+                //Init the Display
+                initDisplay();              
+                //Compute delta and price at date 0          
+                CurrentPortfolio.compute();
+                //Display the result of the computation
+                displayData();
+          
+            }
+
+        public void computeHedge(Object sender, EventArgs e){
+            CurrentPortfolio.computeHedge();
+        }
+
+
         public void initDisplay()
         {
-            //Color and scale of the chart
-            /*
-            Chart1.Series.FindByName("ProductPrice").Color = Color.DarkBlue;
-            Chart1.Series.FindByName("PortfolioPrice").Color = Color.DarkRed;
-            Chart1.ChartAreas[0].AxisY.Maximum = 104;
-            Chart1.ChartAreas[0].AxisY.Minimum = 88;
-             */
-            this.PnLDiv.Text = "0.0983";
-            this.PdtValue.Text = Properties.Settings.Default.Nominal.ToString();
-            this.PtfValue.Text = "99.31";
+            InitialCash.Text = "0";
+            CashEuro.Text = "0";
+            CashDollar.Text = "0";
+            CashCHF.Text = "0";
+            CashGBP.Text = "0";
+            CashYen.Text = "0";     
         }
 
         //HERE: 
         //Display logic
         public void displayData()
         {
+            InitialCash.Text = Math.Round(CurrentPortfolio.InitialCash, Properties.Settings.Default.Precision).ToString();
+            this.PdtValue.Text = Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision).ToString();
             this.PtfValue.Text = Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision).ToString();
-            // this.PtfValue.Text = CurrentPortfolio.Wrapper.getPrice().ToString();
             this.IcInterval.Text = Math.Round(CurrentPortfolio.Wrapper.getIC(), Properties.Settings.Default.Precision).ToString();
             this.PnLDiv.Text = (100 - Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision)).ToString();
             FillAssetsTable("27", "02", "2015");
             FillCurrenciesTable("2005-11-29", "2005-11-29");
-            //Plot product price and portfolio value
-            //number of Step
-            // int nbStep = CurrentPortfolio.ProductPrice;
-            initDisplay();
+           
             //for (int j = 0; j < CurrentPortfolio.index; j++)
             //{
             //    Chart1.Series.FindByName("ProductPrice").Points.Add(CurrentPortfolio.prix[j]);
@@ -88,15 +89,7 @@ namespace Peps
             //}
         }
 
-        //Compute the price to the next date
-        public void Continue_Computation(Object sender, EventArgs e)
-        {
-            if (CurrentPortfolio.ProductPrice != null)
-            {
-                //CurrentPortfolio.Update();
-                displayData();
-            }
-        }
+     
         
         private void FillCurrenciesTable(string fxStartDate, string fxEndDate)
         {
@@ -183,53 +176,7 @@ namespace Peps
         }
 
        
-
         /*
-         *TODO A mettre dans l'onglet de vérification 
-         * 
-        public void Get_Data(Object sender, EventArgs e)
-        {
-            CurrentPortfolio.getData();
-        }
-
-        public void updateDate(Object sender, EventArgs e)
-        {
-            String str = Request.Form[DisplayCalendar.UniqueID];
-            String[] date = str.Split('/');
-            if (date.Length == 3)
-            {
-                String y = date[2];
-                String m = date[0];
-                String d = date[1];
-                CurrentPortfolio.setDate(Convert.ToInt32(y), Convert.ToInt32(m), Convert.ToInt32(d));
-            }
-        }
-
-       
-        public void Compute_Simu1(Object sender, EventArgs e)
-        {
-            initDisplay();
-            CurrentPortfolio.LoadFromResource(1);
-            displayData();
-        }
-        
-        public void Compute_Simu2(Object sender, EventArgs e)
-        {
-            initDisplay();
-            CurrentPortfolio.LoadFromResource(2);
-            displayData();
-        }
-
-
-        public void Compute_Simu3(Object sender, EventArgs e)
-        {
-            initDisplay();
-            CurrentPortfolio.LoadFromResource(3);
-            displayData();
-        }
-
-        
-
         public void Continue_Simu(Object sender, EventArgs e)
         {
             if (CurrentPortfolio.prix == null) Compute_Simu3(sender, e);

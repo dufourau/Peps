@@ -19,20 +19,18 @@ namespace Wrapper {
 
 	}
 
-	void WrapperClass::computePrice(double t){
-		/*
+	void WrapperClass::computePrice(double t,array<double>^pastPrices, array<double>^ stockPrices, array<double>^ interestRates, array<double>^ stockToFxIndex,
+		int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int nbDatesStockPrices, double finiteDifferenceStep){
+		
 		double ic, px;
-		pin_ptr<double> pSpot = &spot[0];
-		pin_ptr<double> pSigma = &sigma[0];
-		pin_ptr<double> pTrend = &trend[0];
-		pin_ptr<double> pCoeff = &coeff[0];
-		pin_ptr<double> pDividend = &dividend[0];
-		pin_ptr<double> pCurr = &curr[0];
-		pin_ptr<double> pPast = &past[0];
-		compute_price(ic, px,t, pPast, option_size + nb_curr, pDividend, pCurr, pSpot, pSigma, pTrend, r, rho, h, H, maturity, timeSteps, pCoeff, samples, option_size);
+		pin_ptr<double> stocktoCurrIndex = &stockToFxIndex[0];
+		pin_ptr<double> interestRate = &interestRates[0];
+		pin_ptr<double> stocks = &stockPrices[0];
+		pin_ptr<double> past = &pastPrices[0];
 
+		compute_price(ic, px, t, past,stocks, interestRate, stocktoCurrIndex, assetNb, fxNb, maturity, mcSamples, timeSteps, nbDatesStockPrices, finiteDifferenceStep);	
 		this->confidenceInterval = ic;
-		this->prix = px;*/
+		this->prix = px;
 
 
 	}
@@ -50,33 +48,19 @@ namespace Wrapper {
 
 	}
 
-	void WrapperClass::computeDelta(double t){
-		//pin_ptr<double> pDeltaIc = &ic[0];
-		//
-		//pin_ptr<double> pSpot = &spot[0];
-		//pin_ptr<double> pSigma = &sigma[0];
-		//pin_ptr<double> pTrend = &trend[0];
-		//pin_ptr<double> pCoeff = &coeff[0];
-		//pin_ptr<double> pDividend = &dividend[0];
-		//pin_ptr<double> pCurr = &curr[0];
-		//pin_ptr<double> pPast = &past[0];
-		//compute_delta(pDelta, pDeltaIc, t, pPast, option_size + nb_curr, pDividend, pCurr, pSpot, pSigma, pTrend, r, rho, h, H, maturity, timeSteps, pCoeff, samples, option_size);
+	void WrapperClass::computeDelta(double t, array<double>^pastPrices, array<double>^ stockPrices, array<double>^ interestRates, array<double>^ stockToFxIndex,
+		int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int nbDatesStockPrices, double finiteDifferenceStep){
+		delta = gcnew array<double>(assetNb + fxNb);
+		pin_ptr<double> pDelta = &delta[0];
+		pin_ptr<double> stocktoCurrIndex = &stockToFxIndex[0];
+		pin_ptr<double> interestRate = &interestRates[0];
+		pin_ptr<double> stocks = &stockPrices[0];
+		pin_ptr<double> past = &pastPrices[0];
+
+		compute_delta(pDelta,t, past, stocks, interestRate, stocktoCurrIndex, assetNb, fxNb,
+			maturity, mcSamples, timeSteps, nbDatesStockPrices, finiteDifferenceStep);
 
 	}
-
-	void WrapperClass::computeVol(){
-		/**/
-		/*pin_ptr<double> pSpot = &spot[0];
-		pin_ptr<double> pSigma = &sigma[0];
-		pin_ptr<double> pTrend = &trend[0];
-		pin_ptr<double> pCoeff = &coeff[0];
-		pin_ptr<double> pDividend = &dividend[0];
-		pin_ptr<double> pCurr = &curr[0];
-		pin_ptr<double> pHist = &historicalStockPrices[0];
-		compute_vol(pHist, option_size + nb_curr, pDividend, pCurr, pSpot, pSigma, pTrend, r, rho, h, H, maturity, timeSteps, pCoeff, samples, option_size);
-		*/
-	}
-
 
 	void WrapperClass::computeHedge(array<double>^ stockPrices, array<double>^ interestRates, array<double>^ stockToFxIndex,
 		int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int dimStockPast, double finiteDifferenceStep, double H){

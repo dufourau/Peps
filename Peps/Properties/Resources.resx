@@ -196,6 +196,9 @@
   <data name="Prix3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Prix3.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="rate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="US1729671016" xml:space="preserve">
     <value>CITIGROUP;C</value>
   </data>

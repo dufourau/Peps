@@ -62,7 +62,7 @@
                         <a href="Charts.aspx"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                     </li>
                     <li>
-                        <a href="Validation.aspx"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+                        <a href="Validation.aspx"><i class="fa fa-fw fa-bar-chart-o"></i> Validation</a>
                     </li>
                 </ul>
             </div>

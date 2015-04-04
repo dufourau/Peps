@@ -1,6 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="Peps.Index" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Validation.aspx.cs" Inherits="Peps.Validation" %>
 
-<%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
 
 <!DOCTYPE html>
 
@@ -19,11 +18,12 @@
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
-    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
     <script type="text/javascript">
-        $(function () {
+        $(document).ready(function(){
             var date = new Date(2005, 10, 30);
             $("[id$=DisplayCalendar]").datepicker({
                 showOn: 'focus',
@@ -34,8 +34,12 @@
             });
         });
     </script>
+    
+    
 </head>
 <body>
+     
+                                             
     <div id="wrapper">
 
     <!-- Navigation -->
@@ -79,7 +83,7 @@
                         <a href="Charts.aspx"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                     </li>
                     <li class="active">
-                        <a href="Validation.aspx"><i class="fa fa-fw fa-bar-chart-o"></i> Validation</a>
+                        <a href="Validation.aspx"><i class="fa fa-fw fa-calendar"></i> Validation</a>
                     </li>
                 </ul>
             </div>
@@ -89,11 +93,10 @@
 
 
 
-
-                <div id="page-wrapper">
+         <div id="page-wrapper">
 
             <div class="container-fluid">
-
+                    
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
@@ -106,9 +109,22 @@
                                         <span class="pull-left">  <i class="fa fa-dashboard"></i>  Current date: 30/11/2005 </span>
                                     </div>
                                     <div class="col-lg-6 text-center">
-                                        <span class="pull-right"> <button type="button" class="btn btn-xs btn-default"> <span class="glyphicon glyphicon-refresh"></span> Refresh</button></span>
-                                                        
-                                          </div>
+                                       <form runat="server">
+                                            <span class="pull-right"> 
+                                                  
+                                                    <asp:TextBox ID="DisplayCalendar" type="text" placeholder="11/30/2015" runat="server" ReadOnly="true"></asp:TextBox>
+                                                    <asp:Button  OnClick="load_computation" class="btn btn-xs btn-default fa fa-download"  Text="Load" runat="server"> 
+
+                                                    </asp:Button>
+                                                    <asp:Button OnClick="computeHedge" class="btn btn-xs btn-default glyphicon glyphicon-refresh" Text="Refresh" runat="server"> 
+                                             
+                                                    </asp:Button>
+                                             
+
+                                            </span>
+                                        </form>
+                                                       
+                                    </div>
                                 </div>
                         </div>
                         </div>
@@ -157,7 +173,7 @@
                                         <div class="huge">
                                         <span><asp:Literal ID="PnLDiv" runat="server" /></span> 
                                             </div>
-                                        <div>%</div>
+                                        <div>euro</div>
                                     </div>
                                 </div>
                             </div>
@@ -274,23 +290,27 @@
                             <div class="panel-body">
                                 <div class="list-group">
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">39.34</span>
+                                        <span class="badge"><asp:Literal ID="InitialCash" runat="server" /></span>
+                                        <i class="fa fa-fw fa-money"></i> Initial Benefit 
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge"><asp:Literal ID="CashEuro" runat="server" /></span>
                                         <i class="fa fa-fw fa-money"></i> Cash Euro
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">10</span>
+                                        <span class="badge"><asp:Literal ID="CashGBP" runat="server" /></span>
                                         <i class="fa fa-fw fa-money"></i> Cash GBP
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">10.34</span>
+                                        <span class="badge"><asp:Literal ID="CashDollar" runat="server" /></span>
                                         <i class="fa fa-fw fa-money"></i> Cash Dollar
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">10.34</span>
+                                        <span class="badge"><asp:Literal ID="CashYen" runat="server" /></span>
                                         <i class="fa fa-fw fa-money"></i> Cash Yen
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">10.34</span>
+                                        <span class="badge"><asp:Literal ID="CashCHF" runat="server" /></span>
                                         <i class="fa fa-fw fa-money"></i> Cash CHF
                                     </a>
                                 </div>
@@ -354,9 +374,9 @@
 
               
 
-    <!-- jQuery -->
+    <!-- jQuery 
     <script src="js/jquery.js"></script>
-
+    -->
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 

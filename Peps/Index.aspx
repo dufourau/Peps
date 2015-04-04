@@ -9,7 +9,7 @@
     <title>PEPS</title>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
-
+    s
     <!-- Custom CSS -->
     <link href="css/sb-admin.css" rel="stylesheet"/>
 
@@ -19,21 +19,6 @@
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
-    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
-    <script type="text/javascript">
-        $(function () {
-            var date = new Date(2005, 10, 30);
-            $("[id$=DisplayCalendar]").datepicker({
-                showOn: 'focus',
-                defaultDate: date,
-                changeYear: true,
-                minDate: date,
-                maxDate: new Date(2015, 1, 30)
-            });
-        });
-    </script>
 </head>
 <body>
     <div id="wrapper">
@@ -79,7 +64,7 @@
                         <a href="Charts.aspx"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                     </li>
                     <li>
-                        <a href="Validation.aspx"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+                        <a href="Validation.aspx"><i class="fa fa-fw fa-calendar"></i> Validation</a>
                     </li>
                 </ul>
             </div>
@@ -106,11 +91,18 @@
                                         <span class="pull-left">  <i class="fa fa-dashboard"></i>  Current date: 30/11/2005 </span>
                                     </div>
                                     <div class="col-lg-6 text-center">
-                                        <span class="pull-right"> 
-                                            <button type="button" onclick="computeHedge" class="btn btn-xs btn-default"> 
-                                            <span class="glyphicon glyphicon-refresh" ></span> Refresh</button></span>
-                                                        
-                                          </div>
+                                        <form runat="server">
+                                            <span class="pull-right"> 
+                                            
+                                                    <asp:Button  OnClick="load_computation" class="btn btn-xs btn-default fa fa-download"  Text="Load" runat="server"> 
+                                                    </asp:Button>
+                                                    <asp:Button OnClick="computeHedge" class="btn btn-xs btn-default glyphicon glyphicon-refresh" Text="Refresh" runat="server">                                             
+                                                    </asp:Button>
+                                            
+
+                                            </span>
+                                        </form>                
+                                    </div>
                                 </div>
                         </div>
                         </div>
@@ -159,7 +151,7 @@
                                         <div class="huge">
                                         <span><asp:Literal ID="PnLDiv" runat="server" /></span> 
                                             </div>
-                                        <div>%</div>
+                                        <div>euro</div>
                                     </div>
                                 </div>
                             </div>
@@ -276,23 +268,27 @@
                             <div class="panel-body">
                                 <div class="list-group">
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">39.34</span>
+                                        <span class="badge"><asp:Literal ID="InitialCash" runat="server" /></span>
+                                        <i class="fa fa-fw fa-money"></i> Initial Benefit 
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge"><asp:Literal ID="CashEuro" runat="server" /></span>
                                         <i class="fa fa-fw fa-money"></i> Cash Euro
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">10</span>
+                                        <span class="badge"><asp:Literal ID="CashGBP" runat="server" /></span>
                                         <i class="fa fa-fw fa-money"></i> Cash GBP
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">10.34</span>
+                                        <span class="badge"><asp:Literal ID="CashDollar" runat="server" /></span>
                                         <i class="fa fa-fw fa-money"></i> Cash Dollar
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">10.34</span>
+                                        <span class="badge"><asp:Literal ID="CashYen" runat="server" /></span>
                                         <i class="fa fa-fw fa-money"></i> Cash Yen
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">10.34</span>
+                                        <span class="badge"><asp:Literal ID="CashCHF" runat="server" /></span>
                                         <i class="fa fa-fw fa-money"></i> Cash CHF
                                     </a>
                                 </div>

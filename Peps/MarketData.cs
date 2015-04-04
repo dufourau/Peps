@@ -16,8 +16,9 @@ namespace Peps
         //All asset prices
         Dictionary<String, ArrayList> symbolToPricesList ;
         //All the dates
-        List<DateTime> dates = new List<DateTime>();
+        public List<DateTime> dates;
         //All the rates
+        public double [][] rates;
 
         public static string urlPrototype = @"http://ichart.finance.yahoo.com/table.csv?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g={7}&ignore=.csv";
         public static string currencyURL = @"https://www.quandl.com/api/v1/datasets/CURRFX/{0}.csv?&trim_start={1}&trim_end={2}";
@@ -28,6 +29,8 @@ namespace Peps
         {
             dates = new List<DateTime>(); 
             symbolToPricesList = new Dictionary<string, ArrayList>(); 
+            String rate = Properties.Resources.rate;
+            this.rates = Utils.parseFileToMatrix(rate, null);
         }
 
         public ArrayList getAllPricesAtDate(DateTime date)
@@ -72,9 +75,9 @@ namespace Peps
             // Market datas are already in our database
             if (firstDateInDatabase != null && lastDateInDatabase != null)
             {
-                foreach (PropertyInfo property
-                    in typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
-                {
+            foreach (PropertyInfo property 
+                in typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
+            {
                     using (var redis = new RedisClient(Properties.Settings.Default.RedisDatabaseURL)){
                         if (property.Name.Length == 12)
                         {
@@ -97,34 +100,34 @@ namespace Peps
                 foreach (PropertyInfo property
                     in typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
                 {
-
-                    if (property.Name.Length == 12)
+               
+                if (property.Name.Length == 12)
+                {
+                    tmpStockTicker = Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1];
+                    
+                    if (!dateParsed)
                     {
-                        tmpStockTicker = Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1];
-
-                        if (!dateParsed)
-                        {
-                            tmp = getLastStockPricesFromWeb(tmpStockTicker, startDay, startMonth, startYear, endDay, endMonth, endYear);
-                            dateParsed = true;
-                        }
-                        else
-                        {
-                            tmp = getLastStockPricesFromWeb(tmpStockTicker, startDay, startMonth, startYear, endDay, endMonth, endYear);
-                        }
-                        symbolToPricesList.Add(tmpStockTicker, tmp);
+                        tmp = getLastStockPricesFromWeb(tmpStockTicker, startDay, startMonth, startYear, endDay, endMonth, endYear);
+                        dateParsed = true;
                     }
-                    if (property.Name.Substring(0, 2).Equals("Fx"))
+                    else
                     {
-                        DateTime startDate = Utils.createDateTime(startYear, startMonth, startDay);
-                        DateTime endDate = Utils.createDateTime(endYear, endMonth, endDay);
-                        ArrayList fxPrices;
-                        fxPrices = getPreviousCurrencyPricesFromWeb(property.Name.Substring(2), startDate.ToString("u"), endDate.ToString("u"));
-                        symbolToPricesList.Add(property.Name.Substring(2), fxPrices);
-
+                        tmp = getLastStockPricesFromWeb(tmpStockTicker, startDay, startMonth, startYear, endDay, endMonth, endYear);
                     }
-                }
-                dumpToRedis(startDay, startMonth, startYear, endDay, endMonth, endYear);
+                    symbolToPricesList.Add(tmpStockTicker, tmp);
+                }  
+                if (property.Name.Substring(0, 2).Equals("Fx"))
+                {
+                    DateTime startDate = Utils.createDateTime(startYear, startMonth, startDay);
+                    DateTime endDate = Utils.createDateTime(endYear, endMonth, endDay);
+                    ArrayList fxPrices;
+                    fxPrices = getPreviousCurrencyPricesFromWeb(property.Name.Substring(2), startDate.ToString("u"), endDate.ToString("u"));
+                    symbolToPricesList.Add(property.Name.Substring(2), fxPrices);
+             
+                }  
             }
+                dumpToRedis(startDay, startMonth, startYear, endDay, endMonth, endYear);
+        }
         }
         //Get prices from the dictionnary
         public ArrayList getLastStockPrices(string symbol, string startDay, string startMonth,
