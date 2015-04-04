@@ -625,7 +625,7 @@ namespace Peps
                     tmpStockTicker = Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1];
 
                     tmp = marketData.getLastStockPrices(tmpStockTicker, stocksStartDate.Day.ToString(), stocksStartDate.Month.ToString(),
-                        stocksStartDate.Year.ToString(), stocksEndDate.Day.ToString(), stocksEndDate.Month.ToString(), stocksEndDate.Year.ToString(), false);
+                        stocksStartDate.Year.ToString(), stocksEndDate.Day.ToString(), stocksEndDate.Month.ToString(), stocksEndDate.Year.ToString());
                     if (tmp != null)
                     {
                         symbolToPricesList.Add(property.Name, tmp);
@@ -679,7 +679,7 @@ namespace Peps
                         citiGroupIndex = cpt;
 
                     tmp = marketData.getLastStockPrices(tmpStockTicker, calibrationStartDate.Day.ToString(), calibrationStartDate.Month.ToString(),
-                    calibrationStartDate.Year.ToString(), currentDate.Day.ToString(), currentDate.Month.ToString(), currentDate.Year.ToString(), false);
+                    calibrationStartDate.Year.ToString(), currentDate.Day.ToString(), currentDate.Month.ToString(), currentDate.Year.ToString());
                     if (tmp != null)
                     {
                         symbolToPricesList.Add(property.Name, tmp);
@@ -722,7 +722,8 @@ namespace Peps
             }
 
         }
-
+        
+        //Fill currency prices
         private void FillFxRates(double[,] previousStocksPrices)
         {
             DateTime calibrationStartDate = currentDate.AddDays(-Properties.Settings.Default.VolCalibrationDaysNb);
@@ -733,7 +734,7 @@ namespace Peps
             {
                 if (property.Name.Substring(0, 2).Equals("Fx"))
                 {
-                    fxPrices = marketData.getPreviousCurrencyPrices(property.Name.Substring(2), calibrationStartDate.ToString("u"), currentDate.ToString("u"));
+                    fxPrices = marketData.getPreviousCurrencyPricesFromWeb(property.Name.Substring(2), calibrationStartDate.ToString("u"), currentDate.ToString("u"));
                     for (int j = 0; j < Math.Min(previousStocksPrices.GetLength(0), fxPrices.Count); j++)
                     {
                         previousStocksPrices[j, cpt] = (double)fxPrices[j];

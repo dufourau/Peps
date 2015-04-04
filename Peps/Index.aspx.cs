@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -66,24 +67,23 @@ namespace Peps
                         CurrentPortfolio.numberOfStock = temp.numberOfStock;
                     });
 
-                    CurrentPortfolio.marketData.getAllStockPrices("30", "7", "2005", "30", "0", "2015");
+                    CurrentPortfolio.marketData.getAllStockPrices("30", "7", "2005", "30", "3", "2015");
                     CurrentPortfolio.save();
                     
                 }
                 if (CurrentPortfolio == null)
                 {
                     CurrentPortfolio = new Portfolio(new WrapperClass(), new MarketData());
-                    CurrentPortfolio.marketData.getAllStockPrices("30", "7", "2005", "30", "0", "2015");
+                    CurrentPortfolio.marketData.getAllStockPrices("30", "7", "2005", "30", "3", "2015");
                     CurrentPortfolio.save();
                 }
                 //Init the Display
-                //initDisplay();
-               
+                initDisplay();              
                 //Compute delta and price at date 0          
                
                 CurrentPortfolio.compute();
                 //Display the result of the computation
-                //displayData();
+                displayData();
                
             }
         }
@@ -108,8 +108,9 @@ namespace Peps
         {
 
             this.PtfValue.Text = Math.Round(CurrentPortfolio.wrapper.getPrice(), Properties.Settings.Default.Precision).ToString();
-            //this.PtfValue.Text = CurrentPortfolio.wrapper.getPrice().ToString();
+            //     this.PtfValue.Text = CurrentPortfolio.wrapper.getPrice().ToString();
             this.IcInterval.Text = Math.Round(CurrentPortfolio.wrapper.getIC(), Properties.Settings.Default.Precision).ToString();
+            this.PnLDiv.Text = (100 - Math.Round(CurrentPortfolio.wrapper.getPrice(), Properties.Settings.Default.Precision)).ToString();
             FillAssetsTable("27", "02", "2015");
             FillCurrenciesTable("2005-11-29", "2005-11-29");
             //Plot product price and portfolio value
@@ -132,13 +133,12 @@ namespace Peps
                 displayData();
             }
         }
-        
-     
 
         private void FillCurrenciesTable(string fxStartDate, string fxEndDate)
         {
             double[] deltaVect = CurrentPortfolio.wrapper.getDelta();
             int cpt = Properties.Settings.Default.AssetNb;
+            string tmp;
             foreach (PropertyInfo property in
                 typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
             {
@@ -155,7 +155,8 @@ namespace Peps
                     tr.Cells.Add(name);
 
                     TableCell price = new TableCell();
-                    price.Text = CurrentPortfolio.marketData.getLastCurrencyPrice(property.Name.Substring(2), fxStartDate, fxEndDate) + "€";
+                    tmp = CurrentPortfolio.marketData.getLastCurrencyPrice(property.Name.Substring(2), fxStartDate, fxEndDate);
+                    price.Text = tmp + "€";
                     // price.Text = "73.73 €";
                     tr.Cells.Add(price);
 
@@ -165,7 +166,7 @@ namespace Peps
                     tr.Cells.Add(delta);
 
                     TableCell totalValue = new TableCell();
-                    totalValue.Text = "90.1";
+                    totalValue.Text = (Math.Round(Double.Parse(tmp, CultureInfo.InvariantCulture) * deltaVect[cpt], Properties.Settings.Default.Precision)).ToString();
                     tr.Cells.Add(totalValue);
 
                     stocksTable.Rows.Add(tr);
@@ -180,6 +181,7 @@ namespace Peps
             double[] deltaVect = CurrentPortfolio.wrapper.getDelta();
             string tmpStockTicker;
             int cpt = 0;
+            string tmp;
             foreach (PropertyInfo property in
                 typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
             {
@@ -198,8 +200,9 @@ namespace Peps
 
                     tmpStockTicker = Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1];
                     TableCell price = new TableCell();
-                    //NOT CALL TO YAHOO FINANCE !!!
-                    price.Text = CurrentPortfolio.marketData.getStockPrice(tmpStockTicker, day, month, year) + "€";              
+                    tmp = CurrentPortfolio.marketData.getStockPrice(tmpStockTicker, day, month, year);
+                    price.Text = tmp + "€";
+                    // price.Text = "73.73 €";
                     tr.Cells.Add(price);
 
 
@@ -209,7 +212,7 @@ namespace Peps
                     tr.Cells.Add(delta);
 
                     TableCell totalValue = new TableCell();
-                    totalValue.Text = "90.1";
+                    totalValue.Text = (Math.Round(Double.Parse(tmp, CultureInfo.InvariantCulture) * deltaVect[cpt], Properties.Settings.Default.Precision)).ToString();
                     tr.Cells.Add(totalValue);
 
                     stocksTable.Rows.Add(tr);
