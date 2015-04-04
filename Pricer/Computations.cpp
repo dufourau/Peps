@@ -25,28 +25,28 @@ void Computations::compute_price(double &ic, double &prix, double *stockPrices, 
 	delete mc;
 }
 
-void Computations::compute_price(double &ic, double &prix, double t, double *past, int option_size, double* dividend, double* curr, double *spot, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double* payoffCoeff, int samples, int sizeAsset)
+void Computations::compute_price(double &ic, double &prix, double t, double *past, double *stockPrices, double *interestRates,
+	double *stockToFxIndex, int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int dimStockPast, double finiteDifferenceStep)
 {
+	PnlMat* stocksPx = pnl_mat_create_from_ptr(dimStockPast, assetNb + fxNb, stockPrices);
 
-	//int optionType_;
-	//MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, option_size, optionType_, r, rho, curr, dividend, sigma, spot, trend, samples, sizeAsset);
-	////m rows and n columns
-	//double step = maturity / timeSteps;
-	////double dt = t / step;
-	//int m;
-	////valeur exacte
-	//if (floor(t)==t){
-	//	m = floor(t);
-	//}
-	//else{
-	//	m = floor(t)+1;
-	//}
-	////We have to include the spot price
-	//m++;
-	////PnlMat* pastMat=pnl_mat_create_from_zero(timeSteps+1, option_size);
-	//PnlMat* pastMat = pnl_mat_create_from_ptr(m,option_size,past);
-	//mc->price(pastMat,t,prix, ic);
-	//delete mc;
+	MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, assetNb + fxNb, interestRates[0], stockToFxIndex,
+		interestRates + 1, stocksPx, mcSamples, assetNb, dimStockPast, finiteDifferenceStep);
+	PnlMat* marketPath = pnl_mat_create_from_ptr(dimStockPast, assetNb + fxNb, stockPrices);
+	int m;
+	if (floor(t)==t){
+		m = floor(t);
+	}
+	else{
+		m = floor(t)+1;
+	}
+	PnlMat* pastMat = pnl_mat_create_from_ptr(m, assetNb + fxNb, past);
+
+	mc->mod_->calibrate(marketPath, 1 / 252.);
+	mc->price(pastMat,t,prix,ic);
+	pnl_mat_free(&marketPath);
+	pnl_mat_free(&stocksPx);
+	delete mc;
 }
 
 
@@ -78,54 +78,40 @@ void Computations::compute_delta(double *delta, double *stockPrices, double *int
 	pnl_vect_free(&spot_);
 }
 
-void Computations::compute_delta(double *delta, double *ic, double t, double *past, int option_size, double* dividend, double* curr, double *spot, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double* payoffCoeff, int samples, int sizeAsset)
+void Computations::compute_delta(double *delta, double t, double *past, double *stockPrices, double *interestRates,
+	double *stockToFxIndex, int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int dimStockPast, double finiteDifferenceStep)
 {
-	//int optionType_;
-	//MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, option_size, optionType_, r, rho, curr, dividend, sigma, spot, trend, samples, sizeAsset);
-	//PnlVect* deltaVect = pnl_vect_new();
-	//deltaVect = pnl_vect_create(option_size);
-	////PnlVect* icVect = pnl_vect_new();
-	////icVect = pnl_vect_create(option_size);
-	//int m;
-	////valeur exacte
-	//if (floor(t) == t){
-	//	m = floor(t);
-	//}
-	//else{
-	//	m = floor(t) + 1;
-	//}
-	////We have to include the spot price
-	//m++;
-	////PnlMat* pastMat=pnl_mat_create_from_zero(timeSteps+1, option_size);
-	//PnlMat* pastMat = pnl_mat_create_from_ptr(m, option_size, past);
+	PnlMat* stocksPx = pnl_mat_create_from_ptr(dimStockPast, assetNb + fxNb, stockPrices);
 
-	//PnlVect* spot_ = pnl_vect_create_from_ptr(option_size, spot);
-	//
-	//mc->delta(pastMat, t, deltaVect);
-	//for (int i = 0; i < option_size; i++){
-	//	delta[i] = GET(deltaVect, i);
-	//	//ic[i]= GET(icVect,i);
-	//}
-	//delete mc;
-	//pnl_vect_free(&deltaVect);
-	//pnl_mat_free(&pastMat);
-	//pnl_vect_free(&spot_);
-}
+	MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, assetNb + fxNb, interestRates[0], stockToFxIndex,
+		interestRates + 1, stocksPx, mcSamples, assetNb, dimStockPast, finiteDifferenceStep);
+	PnlMat* marketPath = pnl_mat_create_from_ptr(dimStockPast, assetNb + fxNb, stockPrices);
+	mc->mod_->calibrate(marketPath, 1 / 252.);
 
-void Computations::compute_vol(double*historicalPrice, int option_size, double* dividend, double* curr, double *spot, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double* payoffCoeff, int samples, int sizeAsset){
-	int optionType_;
+	PnlVect* deltaVect = pnl_vect_create(assetNb + fxNb);
+	int m;
+	if (floor(t) == t){
+		m = floor(t);
+	}
+	else{
+		m = floor(t) + 1;
+	}
+	PnlMat* pastMat = pnl_mat_create_from_ptr(m, assetNb + fxNb, past);
+	PnlVect* spot_ = pnl_vect_create(assetNb + fxNb);
 
-	//MonteCarlo* mc = new MonteCarlo(maturity, timeSteps, option_size, optionType_, r, rho, curr, dividend, sigma, spot, trend, samples, sizeAsset);
-	//PnlVect* volVect = pnl_vect_new();
-	//volVect = pnl_vect_create(option_size);
-	//PnlMat* histMat = pnl_mat_create_from_ptr(63, option_size, historicalPrice);
-	//mc->estimVolHistMethod(histMat, volVect, 1 );
-	//for (int i = 0; i < option_size; i++){
-	//	sigma[i] = GET(volVect, i);
-	//	//ic[i]= GET(icVect,i);
-	//}
-	//delete mc;
-	//pnl_vect_free(&volVect);
+	pnl_mat_get_row(spot_, stocksPx, dimStockPast - 1);
+	
+	mc->delta(pastMat, t, deltaVect);
+	for (int i = 0; i < assetNb + fxNb; i++){
+		delta[i] = GET(deltaVect, i);
+		//ic[i]= GET(icVect,i);
+	}
+	delete mc;
+	pnl_mat_free(&marketPath);
+	pnl_vect_free(&deltaVect);
+	pnl_mat_free(&pastMat);
+	pnl_vect_free(&spot_);
+	
 }
 
 

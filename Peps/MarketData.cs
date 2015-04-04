@@ -15,8 +15,9 @@ namespace Peps
         //All asset prices
         Dictionary<String, ArrayList> symbolToPricesList ;
         //All the dates
-        List<DateTime> dates = new List<DateTime>();
+        public List<DateTime> dates;
         //All the rates
+        public double [][] rates;
 
         public static string urlPrototype = @"http://ichart.finance.yahoo.com/table.csv?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g={7}&ignore=.csv";
         public static string currencyURL = @"https://www.quandl.com/api/v1/datasets/CURRFX/{0}.csv?&trim_start={1}&trim_end={2}";
@@ -25,10 +26,10 @@ namespace Peps
 
         public MarketData()
         {
-
-            dates = new List<DateTime>(); 
-            symbolToPricesList = new Dictionary<string, ArrayList>(); 
-         
+            dates = new List<DateTime>();
+            symbolToPricesList = new Dictionary<string, ArrayList>();
+            String rate = Properties.Resources.rate;
+            this.rates = Utils.parseFileToMatrix(rate, null);
         }
 
         public ArrayList getAllPricesAtDate(DateTime date)

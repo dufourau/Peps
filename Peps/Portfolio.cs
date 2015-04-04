@@ -15,17 +15,7 @@ namespace Peps
         private static long CurrentId = 0;
 
         public long Id { get; set; }
-        public int NumberOfAsset
-        {
-            get
-            {
-                return Properties.Settings.Default.AssetNb;
-            }
-            set
-            {
-                this.NumberOfAsset = value;
-            }
-        }
+        public int NumberOfAsset { get; set; }
         public DateTime CurrentDate { get; set; }
         //Quantity of each asset in the portfolio
         public WrapperClass Wrapper;
@@ -44,22 +34,12 @@ namespace Peps
         double[,] PreviousStocksPrices { get; set; }
         double[] PreviousInterestRates { get; set; }
         double[] StockToFxIndex{ get; set; }
-        int RBSindex { 
-            get { return 18; } 
-            set { this.RBSindex = value; } 
-        }
+        int RBSindex { get; set; }       
         int CitiGroupIndex { get; set; }
 
         double[,] hedgingPreviousStocksPrices { get; set; }
         double[] hedgeDPreviousStockPrices { get; set; }
-
-        //Historical data     
-        public double[][] market { get; set; }
-        public double[][] data;
-        public double[][] rates;
-        public double[] currentRates;
-        public List<String> dates;
-        
+  
         public void save(){
             /*
             * Redis DEMO: save the portefolio to the database
@@ -80,6 +60,8 @@ namespace Peps
             //Cash in EUR
             this.InitialCash = 0;
             this.Cash = 0;
+            this.NumberOfAsset = Properties.Settings.Default.AssetNb;
+            this.RBSindex = 18;
         }
 
         public Portfolio(WrapperClass wrapper, MarketData marketData, long Id) 
@@ -119,29 +101,107 @@ namespace Peps
             this.CurrentDate.AddDays(1);
         }
 
-        public void copyCurrentRate(int index)
-        {
-            for(int i = 0 ; i < rates[rates.Length - 2 - index].Length ; i++){
-                currentRates[i] = rates[rates.Length - 2 - index][i];
-            }
-        }
-
         internal void compute()
         {
-            initComputationParameters();
-            //We convert RBS and citigroup stocks prices:
-            for (int j = 0; j < PreviousStocksPrices.GetLength(0); j++)
+            DateTime initialDate = new DateTime(2005, 11, 30);
+            DateTime finalDate = new DateTime(2015,11,30);
+            //t=0
+            if (initialDate.CompareTo(CurrentDate) == 0)
             {
-                PreviousStocksPrices[j, RBSindex] = PreviousStocksPrices[j, RBSindex] * PreviousStocksPrices[j,Properties.Settings.Default.AssetNb + 1] / 100.0;
-                PreviousStocksPrices[j, CitiGroupIndex] = PreviousStocksPrices[j, CitiGroupIndex] * PreviousStocksPrices[j,Properties.Settings.Default.AssetNb + 3];
+                initComputationParameters();
+                //We convert RBS and citigroup stocks prices:
+                for (int j = 0; j < PreviousStocksPrices.GetLength(0); j++)
+                {
+                    PreviousStocksPrices[j, RBSindex] = PreviousStocksPrices[j, RBSindex] * PreviousStocksPrices[j, Properties.Settings.Default.AssetNb + 1] / 100.0;
+                    PreviousStocksPrices[j, CitiGroupIndex] = PreviousStocksPrices[j, CitiGroupIndex] * PreviousStocksPrices[j, Properties.Settings.Default.AssetNb + 3];
+                }
+                performInitialComputations();           
+                this.InitialCash = Properties.Settings.Default.Nominal - this.Wrapper.getPrice();
+            }else{
+                double nbdays = (CurrentDate - initialDate).TotalDays;
+                double totalnbdays = (finalDate - initialDate).TotalDays;
+                double t = nbdays / (totalnbdays/10);            
+                initComputationParameters();
+                //We convert RBS and citigroup stocks prices:
+                for (int j = 0; j < PreviousStocksPrices.GetLength(0); j++)
+                {
+                    PreviousStocksPrices[j, RBSindex] = PreviousStocksPrices[j, RBSindex] * PreviousStocksPrices[j, Properties.Settings.Default.AssetNb + 1] / 100.0;
+                    PreviousStocksPrices[j, CitiGroupIndex] = PreviousStocksPrices[j, CitiGroupIndex] * PreviousStocksPrices[j, Properties.Settings.Default.AssetNb + 3];
+                }
+                performComputations(t, Utils.Convert2dArrayto1d(computePast(t)));
+                //TO DO: 
+                double actualizationFactor = Math.Exp((PreviousInterestRates[0] / 100) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
+                this.InitialCash = Properties.Settings.Default.Nominal - this.Wrapper.getPrice();
+                
             }
-
-            performComputations();
+            
         }
 
-        private void performComputations()
+        //TODO to factorize
+        public double[,] computePast(double t)
+        {
+            double[,] past;
+            //Constatation date
+            if(Math.Floor(t) == t){
+                past = new double[(int)Math.Floor(t),Properties.Settings.Default.AssetNb];
+                int cpt = 0;
+                for(int i = 2005; i < 2005 +(int)Math.Floor(t) ;i++){
+                    DateTime date = new DateTime(i, 30, 11);
+                    ArrayList prices = MarketData.getAllPricesAtDate(date);
+                    for (int j = 0; j < prices.Count; j++)
+                    {
+                        past[cpt, j] = (double)prices[0];
+                    }
+                    cpt++;
+                }
+            }
+            else
+            {
+                 past = new double[(int)Math.Floor(t)+1,Properties.Settings.Default.AssetNb];
+                 int cpt = 0;
+                 for (int i = 2005; i < 2005 + (int)Math.Floor(t); i++)
+                 {
+                     DateTime date = new DateTime(i, 30, 11);
+                     ArrayList prices = MarketData.getAllPricesAtDate(date);
+                     for (int j = 0; j < prices.Count; j++)
+                     {
+                         past[cpt, j] = (double)prices[0];
+                     }
+                     cpt++;
+                 }
+                 ArrayList lastPrices = MarketData.getAllPricesAtDate(CurrentDate);
+                 for (int j = 0; j < lastPrices.Count; j++)
+                 {
+                     past[cpt, j] = (double)lastPrices[0];
+                 }
+
+            }
+
+            return past;
+
+
+            
+        }
+
+        private void performInitialComputations()
         {
             double [] oneDpreviousStocksPrices = Utils.Convert2dArrayto1d(PreviousStocksPrices);
+            Wrapper.computePrice(oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
+                Properties.Settings.Default.AssetNb, Properties.Settings.Default.FxNb, Properties.Settings.Default.Maturity,
+                Properties.Settings.Default.McSamplesNb, Properties.Settings.Default.TimeSteps, PreviousStocksPrices.GetLength(0),
+                Properties.Settings.Default.StepFiniteDifference);
+            this.ProductPrice = Wrapper.getPrice();
+
+            Wrapper.computeDelta(oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
+                Properties.Settings.Default.AssetNb, Properties.Settings.Default.FxNb, Properties.Settings.Default.Maturity,
+                Properties.Settings.Default.McSamplesNb, Properties.Settings.Default.TimeSteps, PreviousStocksPrices.GetLength(0),
+                Properties.Settings.Default.StepFiniteDifference);
+            this.Delta = Wrapper.getDelta();
+        }
+
+        private void performComputations(double t, double[] oneDPast)
+        {
+            double[] oneDpreviousStocksPrices = Utils.Convert2dArrayto1d(PreviousStocksPrices);
             Wrapper.computePrice(oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
                 Properties.Settings.Default.AssetNb, Properties.Settings.Default.FxNb, Properties.Settings.Default.Maturity,
                 Properties.Settings.Default.McSamplesNb, Properties.Settings.Default.TimeSteps, PreviousStocksPrices.GetLength(0),
@@ -209,12 +269,13 @@ namespace Peps
         //TO DO get real rate for all date
         private void FillPreviousInterestRates(double[] previousInterestRates)
         {
-            previousInterestRates[0] = 0.02;
+            int index = this.MarketData.dates.IndexOf(this.CurrentDate);
+            previousInterestRates[0] = this.MarketData.rates[index][0];
             for (int i = 1; i < Properties.Settings.Default.AssetNb; i++) previousInterestRates[i] = 0;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 1] = 0.0075;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 2] = 0.0475;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 3] = 0.0004;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 4] = 0.0407;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 1] = this.MarketData.rates[index][1];
+            previousInterestRates[Properties.Settings.Default.AssetNb + 2] = this.MarketData.rates[index][2]; 
+            previousInterestRates[Properties.Settings.Default.AssetNb + 3] = this.MarketData.rates[index][3];
+            previousInterestRates[Properties.Settings.Default.AssetNb + 4] = this.MarketData.rates[index][4];
         }
 
         private void FillPreviousStockPrices(double[,] previousStocksPrices, double[] stockToFxIndex)
@@ -300,22 +361,22 @@ namespace Peps
             }
         }
 
-        public void ComputeSimulation(int numberOfIteration = 1)
+        public void computeHedge(int numberOfIteration = 1)
         {
             for (int k = 0; k < numberOfIteration; k++)
             {
                 this.goToNextDate();
                 double portfolioValue = 0;
                 // Actualize Cash and Initial Cash
-                double actualizationFactor = Math.Exp((currentRates[0] / 100) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
+                double actualizationFactor = Math.Exp((PreviousInterestRates[0] / 100) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
                 this.Cash *= actualizationFactor;
                 this.InitialCash *= actualizationFactor;
                 // Handle the currency interest
                 for (int i = 0; i < Properties.Settings.Default.FxNb; i++)
                 {
-                    portfolioValue += this.QuantityOfAssets[Properties.Settings.Default.AssetNb - 1 + i] * (currentRates[i + 1] / 100) * (1 / (Properties.Settings.Default.AssetNb / Properties.Settings.Default.Maturity));
+                    portfolioValue += this.QuantityOfAssets[Properties.Settings.Default.AssetNb - 1 + i] * (PreviousInterestRates[i + 1] / 100) * (1 / (Properties.Settings.Default.AssetNb / Properties.Settings.Default.Maturity));
                 }
-       
+
                 ArrayList assetPrices = MarketData.getAllPricesAtDate(CurrentDate);
 
                 for (int i = 0; i < this.Delta.Length; i++)
@@ -323,7 +384,7 @@ namespace Peps
                     //Apply transaction fee when asset is bought
                     double assetPrice = ((double)assetPrices[i]);
                     double quantityToBuy = (this.Delta[i] - this.QuantityOfAssets[i]) * assetPrice;
-                    this.Cash -= quantityToBuy + Math.Abs(quantityToBuy) * this.TransactionFees;
+                    //this.Cash -= quantityToBuy + Math.Abs(quantityToBuy) * this.TransactionFees;
                     this.QuantityOfAssets[i] = this.Delta[i];
                     portfolioValue += this.Delta[i] * assetPrice;
                 }
