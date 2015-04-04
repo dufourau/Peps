@@ -16,15 +16,11 @@ namespace Peps
     public partial class Index : System.Web.UI.Page
     {
 
-        
-
         double[,] hedgingPreviousStocksPrices;
         double[] hedgeDPreviousStockPrices;
 
         int RBSindex = 18;
         int citiGroupIndex;
-
-        
 
         public Portfolio CurrentPortfolio
         {
@@ -39,41 +35,22 @@ namespace Peps
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
-            {         
-                Portfolio temp;
+            {
+                //if (CurrentPortfolio == null)
+                //{
+                //    /*
+                //     * Redis DEMO: get the portefolio from the database 
+                //     * To comment if redis server not running on localhost:6379
+                //     */
+                //    CurrentPortfolio = new Portfolio(new WrapperClass(), new MarketData(), 1);
+                //    CurrentPortfolio.MarketData.getAllStockPrices("30", "7", "2005", "30", "0", "2015");
+                //    CurrentPortfolio.save();
+                //}
+
                 if (CurrentPortfolio == null)
                 {
-
-                    /*
-                     * Redis DEMO: get the portefolio from the database 
-                     * To comment if redis server not running on localhost:6379
-                     */
-                    var redisManager = new PooledRedisClientManager("localhost:6379");
-
-                    redisManager.ExecAs<Portfolio>(redisPf =>
-                    {
-                        temp = redisPf.GetById(1);
-                        CurrentPortfolio = new Portfolio(new WrapperClass(), new MarketData());
-                        CurrentPortfolio.setDelta(temp.delta);
-                        CurrentPortfolio.setMarket(temp.market);
-                        CurrentPortfolio.setPrix(temp.prix);
-                        CurrentPortfolio.setQuantity(temp.quantity);
-                        CurrentPortfolio.setpfvalue(temp.pfvalue);
-                        CurrentPortfolio.setPL(temp.profitAndLoss);
-                        CurrentPortfolio.setCash(temp.getCash());
-                        CurrentPortfolio.setInitialCash(temp.getInitialCash());
-                        CurrentPortfolio.index = temp.index;
-                        CurrentPortfolio.numberOfStock = temp.numberOfStock;
-                    });
-
-                    CurrentPortfolio.marketData.getAllStockPrices("30", "7", "2005", "30", "0", "2015");
-                    CurrentPortfolio.save();
-                    
-                }
-                if (CurrentPortfolio == null)
-                {
-                    CurrentPortfolio = new Portfolio(new WrapperClass(), new MarketData());
-                    CurrentPortfolio.marketData.getAllStockPrices("30", "7", "2005", "30", "0", "2015");
+                    CurrentPortfolio = new Portfolio(new WrapperClass(), new MarketData(), new DateTime(2005, 11, 30));
+                    CurrentPortfolio.MarketData.getAllStockPrices("30", "7", "2005", "30", "0", "2015");
                     CurrentPortfolio.save();
                 }
                 //Init the Display
@@ -107,14 +84,14 @@ namespace Peps
         public void displayData()
         {
 
-            this.PtfValue.Text = Math.Round(CurrentPortfolio.wrapper.getPrice(), Properties.Settings.Default.Precision).ToString();
+            this.PtfValue.Text = Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision).ToString();
             //this.PtfValue.Text = CurrentPortfolio.wrapper.getPrice().ToString();
-            this.IcInterval.Text = Math.Round(CurrentPortfolio.wrapper.getIC(), Properties.Settings.Default.Precision).ToString();
+            this.IcInterval.Text = Math.Round(CurrentPortfolio.Wrapper.getIC(), Properties.Settings.Default.Precision).ToString();
             FillAssetsTable("27", "02", "2015");
             FillCurrenciesTable("2005-11-29", "2005-11-29");
             //Plot product price and portfolio value
             //number of Step
-            int nbStep = CurrentPortfolio.prix.Length;
+            int nbStep = CurrentPortfolio.ProductPrice.Length;
             initDisplay();
             for (int j = 0; j < CurrentPortfolio.index; j++)
             {
@@ -126,7 +103,7 @@ namespace Peps
         //Compute the price to the next date
         public void Continue_Computation(Object sender, EventArgs e)
         {
-            if (CurrentPortfolio.prix != null)
+            if (CurrentPortfolio.ProductPrice != null)
             {
                 //CurrentPortfolio.Update();
                 displayData();
@@ -137,7 +114,7 @@ namespace Peps
 
         private void FillCurrenciesTable(string fxStartDate, string fxEndDate)
         {
-            double[] deltaVect = CurrentPortfolio.wrapper.getDelta();
+            double[] deltaVect = CurrentPortfolio.Wrapper.getDelta();
             int cpt = Properties.Settings.Default.AssetNb;
             foreach (PropertyInfo property in
                 typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
@@ -155,7 +132,7 @@ namespace Peps
                     tr.Cells.Add(name);
 
                     TableCell price = new TableCell();
-                    price.Text = CurrentPortfolio.marketData.getLastCurrencyPrice(property.Name.Substring(2), fxStartDate, fxEndDate) + "€";
+                    price.Text = CurrentPortfolio.MarketData.getLastCurrencyPrice(property.Name.Substring(2), fxStartDate, fxEndDate) + "€";
                     // price.Text = "73.73 €";
                     tr.Cells.Add(price);
 
@@ -177,7 +154,7 @@ namespace Peps
         //day et year: normaux
         private void FillAssetsTable(string day, string month, string year)
         {
-            double[] deltaVect = CurrentPortfolio.wrapper.getDelta();
+            double[] deltaVect = CurrentPortfolio.Wrapper.getDelta();
             string tmpStockTicker;
             int cpt = 0;
             foreach (PropertyInfo property in
@@ -199,7 +176,7 @@ namespace Peps
                     tmpStockTicker = Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1];
                     TableCell price = new TableCell();
                     //NOT CALL TO YAHOO FINANCE !!!
-                    price.Text = CurrentPortfolio.marketData.getStockPrice(tmpStockTicker, day, month, year) + "€";              
+                    price.Text = CurrentPortfolio.MarketData.getStockPrice(tmpStockTicker, day, month, year) + "€";              
                     tr.Cells.Add(price);
 
 

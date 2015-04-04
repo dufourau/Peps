@@ -121,5 +121,16 @@ namespace Peps.Properties {
                 return ((int)(this["Precision"]));
             }
         }
+
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("moduleis@pub-redis-11983.us-east-1-1.2.ec2.garantiadata.com:11983")]
+        public string RedisDatabaseURL
+        {
+            get
+            {
+                return ((string)(this["RedisDatabaseURL"]));
+            }
+        }
     }
 }
