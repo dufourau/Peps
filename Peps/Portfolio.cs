@@ -84,7 +84,7 @@ namespace Peps
             var redisManager = new PooledRedisClientManager(Properties.Settings.Default.RedisDatabaseURL);
 
             redisManager.ExecAs<Portfolio>(redisPf =>
-            {
+        {
                 Portfolio temp = redisPf.GetById(Id);
                 this.Id = temp.Id;
                 this.NumberOfAsset = temp.NumberOfAsset;
@@ -178,8 +178,8 @@ namespace Peps
                 {
                     tmpStockTicker = Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1];
 
-                    tmp = MarketData.getLastStockPrices(tmpStockTicker, stocksStartDate.Day.ToString(), stocksStartDate.Month.ToString(),
-                        stocksStartDate.Year.ToString(), stocksEndDate.Day.ToString(), stocksEndDate.Month.ToString(), stocksEndDate.Year.ToString(), false);
+                    tmp = marketData.getLastStockPrices(tmpStockTicker, stocksStartDate.Day.ToString(), stocksStartDate.Month.ToString(),
+                        stocksStartDate.Year.ToString(), stocksEndDate.Day.ToString(), stocksEndDate.Month.ToString(), stocksEndDate.Year.ToString());
                     if (tmp != null)
                     {
                         symbolToPricesList.Add(property.Name, tmp);
@@ -273,6 +273,7 @@ namespace Peps
             }
         }
 
+        //Fill currency prices
         private void FillFxRates(double[,] previousStocksPrices)
         {
             DateTime calibrationStartDate = CurrentDate.AddDays(-Properties.Settings.Default.VolCalibrationDaysNb);
@@ -283,7 +284,7 @@ namespace Peps
             {
                 if (property.Name.Substring(0, 2).Equals("Fx"))
                 {
-                    fxPrices = MarketData.getPreviousCurrencyPrices(property.Name.Substring(2), calibrationStartDate.ToString("u"), CurrentDate.ToString("u"));
+                    fxPrices = MarketData.getPreviousCurrencyPricesFromWeb(property.Name.Substring(2), calibrationStartDate.ToString("u"), currentDate.ToString("u"));
                     for (int j = 0; j < Math.Min(previousStocksPrices.GetLength(0), fxPrices.Count); j++)
                     {
                         previousStocksPrices[j, cpt] = (double)fxPrices[j];
@@ -308,7 +309,7 @@ namespace Peps
                 {
                     portfolioValue += this.QuantityOfAssets[Properties.Settings.Default.AssetNb - 1 + i] * (currentRates[i + 1] / 100) * (1 / (Properties.Settings.Default.AssetNb / Properties.Settings.Default.Maturity));
                 }
-
+       
                 for (int i = 0; i < this.Delta.Length; i++)
                 {
                     //Apply transaction fee when asset is bought

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -23,6 +24,15 @@ namespace Peps
                 }
             }
             return parsed;
+        }
+
+        public static DateTime createDateTime(String year, String month, String day)
+        {
+            int intYear = Int32.Parse(year, CultureInfo.InvariantCulture);
+            int intMonth = Int32.Parse(month, CultureInfo.InvariantCulture);
+            int intDay = Int32.Parse(day, CultureInfo.InvariantCulture);
+            return new DateTime(intYear, intMonth, intDay);
+
         }
 
         public static double[][] parseFileToMatrix(String file)
