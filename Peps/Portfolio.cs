@@ -15,17 +15,8 @@ namespace Peps
         private static long CurrentId = 0;
 
         public long Id { get; set; }
-        public int NumberOfAsset
-        {
-            get
-            {
-                return Properties.Settings.Default.AssetNb;
-            }
-            set
-            {
-                this.NumberOfAsset = value;
-            }
-        }
+
+        public int NumberOfAsset { get; set; }
         public DateTime CurrentDate { get; set; }
         //Quantity of each asset in the portfolio
         public WrapperClass Wrapper;
@@ -44,10 +35,7 @@ namespace Peps
         double[,] PreviousStocksPrices { get; set; }
         double[] PreviousInterestRates { get; set; }
         double[] StockToFxIndex{ get; set; }
-        int RBSindex { 
-            get { return 18; } 
-            set { this.RBSindex = value; } 
-        }
+        int RBSindex { get; set; }
         int CitiGroupIndex { get; set; }
 
         double[,] hedgingPreviousStocksPrices { get; set; }
@@ -66,52 +54,42 @@ namespace Peps
             */
             var redisManager = new PooledRedisClientManager(Properties.Settings.Default.RedisDatabaseURL);
             redisManager.ExecAs<Portfolio>(redisPf => {
-                var pf = this;
-                redisPf.Store(pf);
+                using (var redis = new RedisClient(Properties.Settings.Default.RedisDatabaseURL))
+                {
+                    this.Id = redis.As<Portfolio>().GetNextSequence();
+                    var pf = this;
+                    redisPf.Store(pf);
+                }
             });
         }
 
         public Portfolio(WrapperClass wrapper, MarketData marketData, DateTime initialDate)
         {
-            this.Id = CurrentId++;
             this.CurrentDate = initialDate;
             this.Wrapper = wrapper;
             this.MarketData = marketData;
             //Cash in EUR
             this.InitialCash = 0;
             this.Cash = 0;
+            this.RBSindex = 18;
+            this.NumberOfAsset = Properties.Settings.Default.AssetNb;
         }
 
-        public Portfolio(WrapperClass wrapper, MarketData marketData, long Id) 
+        public Portfolio find(long Id)
         {
-            this.MarketData = marketData;
-            this.Wrapper = wrapper;
-
             var redisManager = new PooledRedisClientManager(Properties.Settings.Default.RedisDatabaseURL);
 
-            redisManager.ExecAs<Portfolio>(redisPf =>
-        {
-                Portfolio temp = redisPf.GetById(Id);
-                this.Id = temp.Id;
-                this.NumberOfAsset = temp.NumberOfAsset;
-                this.CurrentDate = temp.CurrentDate;
-                this.InitialCash = temp.InitialCash;
-                this.Cash = temp.Cash;
-                this.ProductPrice = temp.ProductPrice;
-                this.PortfolioValue = temp.PortfolioValue;
-                this.PortfolioValueHistory = temp.PortfolioValueHistory;
-                this.ProductPriceHistory = temp.ProductPriceHistory;
-                this.ProfitAndLoss = temp.ProfitAndLoss;
-                this.TrackingError = temp.TrackingError;
-                this.QuantityOfAssets = temp.QuantityOfAssets;
-                this.Delta = temp.Delta;
-                this.TransactionFees = temp.TransactionFees;
-                this.PreviousStocksPrices = temp.PreviousStocksPrices;
-                this.PreviousInterestRates = temp.PreviousInterestRates;
-                this.StockToFxIndex = temp.StockToFxIndex;
-                this.RBSindex = temp.RBSindex;
-                this.CitiGroupIndex = temp.RBSindex;
+            Portfolio portfolio = null;
+
+            redisManager.ExecAs<Portfolio>(redis =>
+            {
+                portfolio = redis.GetById(Id);
             });
+
+            portfolio.MarketData = new MarketData();
+            portfolio.Wrapper = new WrapperClass();
+
+            return portfolio;
         }
 
         public void goToNextDate()

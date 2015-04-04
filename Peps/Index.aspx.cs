@@ -40,6 +40,7 @@ namespace Peps
                 {
                     CurrentPortfolio = new Portfolio(new WrapperClass(), new MarketData(), new DateTime(2005, 11, 30));
                     CurrentPortfolio.MarketData.getAllStockPrices("30", "7", "2005", "30", "3", "2015");
+                    //CurrentPortfolio.MarketData.dumpToRedis("30", "7", "2005", "30", "3", "2015");
                     CurrentPortfolio.save();
                 }
                 //Init the Display

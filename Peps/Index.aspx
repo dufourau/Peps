@@ -55,7 +55,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> User <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            <a href="#"><i class="fa fa-fw fa-database"></i>Dump DB</a>
                         </li>
                         <li>
                             <a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-fw fa-gear" ></i> Settings</a>
