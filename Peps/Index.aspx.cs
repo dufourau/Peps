@@ -16,16 +16,11 @@ namespace Peps
 {
     public partial class Index : System.Web.UI.Page
     {
-
-        
-
         double[,] hedgingPreviousStocksPrices;
         double[] hedgeDPreviousStockPrices;
 
         int RBSindex = 18;
         int citiGroupIndex;
-
-        
 
         public Portfolio CurrentPortfolio
         {

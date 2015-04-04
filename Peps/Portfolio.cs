@@ -21,7 +21,10 @@ namespace Peps
             {
                 return Properties.Settings.Default.AssetNb;
             }
-            set;
+            set
+            {
+                this.NumberOfAsset = value;
+            }
         }
         public DateTime CurrentDate { get; set; }
         //Quantity of each asset in the portfolio
@@ -41,7 +44,10 @@ namespace Peps
         double[,] PreviousStocksPrices { get; set; }
         double[] PreviousInterestRates { get; set; }
         double[] StockToFxIndex{ get; set; }
-        int RBSindex { get { return 18; } set; }
+        int RBSindex { 
+            get { return 18; } 
+            set { this.RBSindex = value; } 
+        }
         int CitiGroupIndex { get; set; }
 
         double[,] hedgingPreviousStocksPrices { get; set; }
@@ -178,7 +184,7 @@ namespace Peps
                 {
                     tmpStockTicker = Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1];
 
-                    tmp = marketData.getLastStockPrices(tmpStockTicker, stocksStartDate.Day.ToString(), stocksStartDate.Month.ToString(),
+                    tmp = this.MarketData.getLastStockPrices(tmpStockTicker, stocksStartDate.Day.ToString(), stocksStartDate.Month.ToString(),
                         stocksStartDate.Year.ToString(), stocksEndDate.Day.ToString(), stocksEndDate.Month.ToString(), stocksEndDate.Year.ToString());
                     if (tmp != null)
                     {
@@ -230,8 +236,8 @@ namespace Peps
                     else if (tmpStockTicker.Equals("C"))
                         CitiGroupIndex = cpt;
 
-                    tmp = MarketData.getLastStockPrices(tmpStockTicker, calibrationStartDate.Day.ToString(), calibrationStartDate.Month.ToString(),
-                    calibrationStartDate.Year.ToString(), CurrentDate.Day.ToString(), CurrentDate.Month.ToString(), CurrentDate.Year.ToString(), false);
+                    tmp = MarketData.getLastStockPricesFromWeb(tmpStockTicker, calibrationStartDate.Day.ToString(), calibrationStartDate.Month.ToString(),
+                    calibrationStartDate.Year.ToString(), CurrentDate.Day.ToString(), CurrentDate.Month.ToString(), CurrentDate.Year.ToString());
                     if (tmp != null)
                     {
                         symbolToPricesList.Add(property.Name, tmp);
@@ -284,7 +290,7 @@ namespace Peps
             {
                 if (property.Name.Substring(0, 2).Equals("Fx"))
                 {
-                    fxPrices = MarketData.getPreviousCurrencyPricesFromWeb(property.Name.Substring(2), calibrationStartDate.ToString("u"), currentDate.ToString("u"));
+                    fxPrices = MarketData.getPreviousCurrencyPricesFromWeb(property.Name.Substring(2), calibrationStartDate.ToString("u"), CurrentDate.ToString("u"));
                     for (int j = 0; j < Math.Min(previousStocksPrices.GetLength(0), fxPrices.Count); j++)
                     {
                         previousStocksPrices[j, cpt] = (double)fxPrices[j];
@@ -310,13 +316,16 @@ namespace Peps
                     portfolioValue += this.QuantityOfAssets[Properties.Settings.Default.AssetNb - 1 + i] * (currentRates[i + 1] / 100) * (1 / (Properties.Settings.Default.AssetNb / Properties.Settings.Default.Maturity));
                 }
        
+                ArrayList assetPrices = MarketData.getAllPricesAtDate(CurrentDate);
+
                 for (int i = 0; i < this.Delta.Length; i++)
                 {
                     //Apply transaction fee when asset is bought
-                    double quantityToBuy = (this.Delta[i] - this.QuantityOfAssets[i]) * this.market[i];
+                    double assetPrice = ((double)assetPrices[i]);
+                    double quantityToBuy = (this.Delta[i] - this.QuantityOfAssets[i]) * assetPrice;
                     this.Cash -= quantityToBuy + Math.Abs(quantityToBuy) * this.TransactionFees;
                     this.QuantityOfAssets[i] = this.Delta[i];
-                    portfolioValue += this.Delta[i] * this.market[i];
+                    portfolioValue += this.Delta[i] * assetPrice;
                 }
                 portfolioValue += this.Cash;
                 this.PortfolioValue = portfolioValue;
