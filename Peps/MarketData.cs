@@ -34,80 +34,12 @@ namespace Peps
             Symbols = new List<String>();
             CurrSymbols = new List<String>();
             dates = new List<DateTime>();
-            currencyToPriceList = new Dictionary<string, List<string>>();
-            
+            currencyToPriceList = new Dictionary<string, List<string>>();    
             symbolToPricesList = new Dictionary<string, ArrayList>(); 
             sizeList = 2371;
         }
 
-        public void storeData()
-        {
-            String[][] temp = new String[table.Keys.Count + 1][];
-            Symbols.AddRange(CurrSymbols);
-
-            int i = 1;
-            foreach (String sym in Symbols)
-            {
-                if (i == 7)
-                {
-                    temp[0] = new String[((List<Price>)table[sym]).Count + 1];
-                }
-
-                temp[i] = new String[((List<Price>)table[sym]).Count + 1];
-                temp[i][0] = (String)sym;
-                int j = 1;
-                foreach (Price price in ((List<Price>)table[sym]))
-                {
-                    if (i == 7)
-                    {
-                        temp[0][j] = price.d.ToString() + "-" + price.m.ToString() + "-" + price.y.ToString();
-                    }
-                    temp[i][j] = ((price.High + price.Low) / 2).ToString();
-                    j++;
-                }
-                i++;
-            }
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\el azari\Desktop\market.txt"))
-
-                for (int z = 0; z < 2371; z++)
-                {
-                    String tempStr = "";
-                    for (int k = 0; k < temp.Length; k++)
-                    {
-                        if (z < temp[k].Length)
-                        {
-                            tempStr += temp[k][z] + " ";
-                        }
-                    }
-                    file.WriteLine(tempStr);
-                }
-        }
-        //
-        public void fixeDataSize()
-        {
-            foreach (String sym in Symbols)
-            {
-                int diff = ((List<Price>)table[sym]).Count - sizeList;
-                while (diff < 0)
-                {
-                    List<Price> temp;
-                    if (-diff >= ((List<Price>)table[sym]).Count)
-                    {
-                        temp = ((List<Price>)table[sym]).ToList();
-                    }
-                    else
-                    {
-                        temp = ((List<Price>)table[sym]).GetRange(((List<Price>)table[sym]).Count + diff, -diff);
-                    }
-                    temp.Reverse();
-                    ((List<Price>)table[sym]).AddRange(temp);
-                    diff = ((List<Price>)table[sym]).Count - sizeList;
-
-                }
-            }
-        }
-
-
+       
         public ArrayList getPreviousCurrencyPrices(string symbol, string startDate, string endDate)
         {
             ArrayList prices = new ArrayList();
@@ -232,6 +164,76 @@ namespace Peps
                    }
                    YahooFinance.HistoricalParse(csvData, table, sym, false);
                }*/
+        }
+
+        /// <summary>
+        /// TODO: delete later
+        /// </summary>
+
+        public void storeData()
+        {
+            String[][] temp = new String[table.Keys.Count + 1][];
+            Symbols.AddRange(CurrSymbols);
+
+            int i = 1;
+            foreach (String sym in Symbols)
+            {
+                if (i == 7)
+                {
+                    temp[0] = new String[((List<Price>)table[sym]).Count + 1];
+                }
+
+                temp[i] = new String[((List<Price>)table[sym]).Count + 1];
+                temp[i][0] = (String)sym;
+                int j = 1;
+                foreach (Price price in ((List<Price>)table[sym]))
+                {
+                    if (i == 7)
+                    {
+                        temp[0][j] = price.d.ToString() + "-" + price.m.ToString() + "-" + price.y.ToString();
+                    }
+                    temp[i][j] = ((price.High + price.Low) / 2).ToString();
+                    j++;
+                }
+                i++;
+            }
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\el azari\Desktop\market.txt"))
+
+                for (int z = 0; z < 2371; z++)
+                {
+                    String tempStr = "";
+                    for (int k = 0; k < temp.Length; k++)
+                    {
+                        if (z < temp[k].Length)
+                        {
+                            tempStr += temp[k][z] + " ";
+                        }
+                    }
+                    file.WriteLine(tempStr);
+                }
+        }
+        public void fixeDataSize()
+        {
+            foreach (String sym in Symbols)
+            {
+                int diff = ((List<Price>)table[sym]).Count - sizeList;
+                while (diff < 0)
+                {
+                    List<Price> temp;
+                    if (-diff >= ((List<Price>)table[sym]).Count)
+                    {
+                        temp = ((List<Price>)table[sym]).ToList();
+                    }
+                    else
+                    {
+                        temp = ((List<Price>)table[sym]).GetRange(((List<Price>)table[sym]).Count + diff, -diff);
+                    }
+                    temp.Reverse();
+                    ((List<Price>)table[sym]).AddRange(temp);
+                    diff = ((List<Price>)table[sym]).Count - sizeList;
+
+                }
+            }
         }
 
         /*
