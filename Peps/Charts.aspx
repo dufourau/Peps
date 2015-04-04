@@ -61,6 +61,9 @@
                     <li class="active">
                         <a href="Charts.aspx"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                     </li>
+                    <li>
+                        <a href="Validation.aspx"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

@@ -65,20 +65,24 @@ namespace Peps
                         CurrentPortfolio.index = temp.index;
                         CurrentPortfolio.numberOfStock = temp.numberOfStock;
                     });
+
+                    CurrentPortfolio.marketData.getAllStockPrices("30", "7", "2005", "30", "0", "2015");
+                    CurrentPortfolio.save();
                     
                 }
                 if (CurrentPortfolio == null)
                 {
                     CurrentPortfolio = new Portfolio(new WrapperClass(), new MarketData());
+                    CurrentPortfolio.marketData.getAllStockPrices("30", "7", "2005", "30", "0", "2015");
+                    CurrentPortfolio.save();
                 }
                 //Init the Display
                 //initDisplay();
-                CurrentPortfolio.marketData.getAllStockPrices("30","7", "2005","30","0", "2015");
-                CurrentPortfolio.save();
+               
                 //Compute delta and price at date 0          
-                Compute_Price();
+                //Compute_Price();
                 //Display the result of the computation
-                displayData();
+                //displayData();
                
             }
         }

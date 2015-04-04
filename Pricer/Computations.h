@@ -18,6 +18,6 @@ namespace Computations{
 	DLLEXP void compute_delta(double *deltaVect, double *icVect, double t, double* past, int option_size, double *spot, double* dividend, double* curr, double *sigma, double* trend, double r, double rho, double h, int H, double maturity, int timeSteps, double* payoffCoeff, int samples, int sizeAsset);
 
 	DLLEXP void compute_hedge(double *V, double *ptfV, double *stockPrices, double *interestRates, double * stockToFxIndex,
-		int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps,
-		int dimStockPast, int dimStockFuture, double finiteDifferenceStep, double H);
+		int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int dimStockPast,
+		double finiteDifferenceStep, double H);
 }

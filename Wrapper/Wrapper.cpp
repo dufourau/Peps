@@ -45,7 +45,9 @@ namespace Wrapper {
 		pin_ptr<double> interestRate = &interestRates[0];
 		pin_ptr<double> stocks = &stockPrices[0];
 
-		compute_delta(pDelta, stocks, interestRate, stocktoCurrIndex, assetNb, fxNb, maturity, mcSamples, timeSteps, nbDatesStockPrices, finiteDifferenceStep);
+		compute_delta(pDelta, stocks, interestRate, stocktoCurrIndex, assetNb, fxNb,
+			maturity, mcSamples, timeSteps, nbDatesStockPrices, finiteDifferenceStep);
+
 	}
 
 	void WrapperClass::computeDelta(double t){
@@ -77,7 +79,7 @@ namespace Wrapper {
 
 
 	void WrapperClass::computeHedge(array<double>^ stockPrices, array<double>^ interestRates, array<double>^ stockToFxIndex,
-		int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int nbDatesStockPricesPast, int nbDatesStockPricesFuture, double finiteDifferenceStep, double H){
+		int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int dimStockPast, double finiteDifferenceStep, double H){
 
 		double pnl;
 		ptfValues = gcnew array<double>(H + 1);
@@ -88,14 +90,10 @@ namespace Wrapper {
 		pin_ptr<double> stocks = &stockPrices[0];
 		pin_ptr<double> interestRate = &interestRates[0];
 
-		/*	compute_hedge(V, ptfV, stocks, interestRate, stocktoCurrIndex, assetNb, fxNb, maturity,
-		mcSamples, timeSteps, nbDatesStockPrices, finiteDifferenceStep, H);
+		compute_hedge(V, ptfV, stocks, interestRate, stocktoCurrIndex, assetNb, fxNb, maturity,
+			mcSamples, timeSteps, dimStockPast, finiteDifferenceStep, H);
 
 
-
-		compute_delta(pDelta, stocks, interestRate, stocktoCurrIndex, assetNb, fxNb, maturity,
-		mcSamples, timeSteps, nbDatesStockPrices, finiteDifferenceStep);
-		*/
 		double Pl;/*
 				  pin_ptr<double> pSpot = &spot[0];
 				  pin_ptr<double> pSigma = &sigma[0];

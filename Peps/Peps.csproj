@@ -121,6 +121,7 @@
     <Content Include="font-awesome\scss\_spinning.scss" />
     <Content Include="font-awesome\scss\_stacked.scss" />
     <Content Include="font-awesome\scss\_variables.scss" />
+    <Content Include="Validation.aspx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -263,6 +264,13 @@
     <Compile Include="Portfolio.cs" />
     <Compile Include="Properties\Settings.Designer.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="Validation.aspx.cs">
+      <DependentUpon>Validation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Validation.aspx.designer.cs">
+      <DependentUpon>Validation.aspx</DependentUpon>
+    </Compile>
     <Compile Include="YahooFinance.cs" />
     <Compile Include="Price.cs" />
     <Compile Include="Global.asax.cs">

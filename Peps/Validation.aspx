@@ -38,7 +38,7 @@
 <body>
     <div id="wrapper">
 
-        <!-- Navigation -->
+    <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -72,14 +72,14 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
+                    <li>
                         <a href="Index.aspx"><i class="fa fa-fw fa-dashboard"></i> General</a>
                     </li>
                     <li>
                         <a href="Charts.aspx"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                     </li>
-                    <li>
-                        <a href="Validation.aspx"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+                    <li class="active">
+                        <a href="Validation.aspx"><i class="fa fa-fw fa-bar-chart-o"></i> Validation</a>
                     </li>
                 </ul>
             </div>
@@ -106,9 +106,7 @@
                                         <span class="pull-left">  <i class="fa fa-dashboard"></i>  Current date: 30/11/2005 </span>
                                     </div>
                                     <div class="col-lg-6 text-center">
-                                        <span class="pull-right"> 
-                                            <button type="button" onclick="computeHedge" class="btn btn-xs btn-default"> 
-                                            <span class="glyphicon glyphicon-refresh" ></span> Refresh</button></span>
+                                        <span class="pull-right"> <button type="button" class="btn btn-xs btn-default"> <span class="glyphicon glyphicon-refresh"></span> Refresh</button></span>
                                                         
                                           </div>
                                 </div>

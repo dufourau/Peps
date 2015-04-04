@@ -14,12 +14,13 @@ namespace Wrapper {
 		array<double> ^delta;
 		array<double> ^ic;
 
-		array<double> ^ptfValues;
-		array<double> ^cashValues;
 
 		array<double> ^curr;
 		array<double> ^past;
 	public:
+
+		array<double> ^ptfValues;
+		array<double> ^cashValues;
 		//Temp constructor for a basket option
 		WrapperClass() {
 			confidenceInterval = prix = 0;
@@ -66,8 +67,7 @@ namespace Wrapper {
 			int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int nbDatesStockPrices, double finiteDifferenceStep);
 		void computeDelta(double t);
 		void computeHedge(array<double>^ stockPrices, array<double>^ interestRates, array<double>^ stockToFxIndex,
-			int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int nbDatesStockPricesPast, int nbDatesStockPricesFuture,
-			double finiteDifferenceStep, double H);
+			int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int dimStockPast, double finiteDifferenceStep, double H);
 		void computeVol();
 		double getPrice() { return prix; };
 		double getIC() { return confidenceInterval; };
