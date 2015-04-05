@@ -49,6 +49,13 @@ namespace Peps
                     tmp = this.symbolToPricesList[tmpStockTicker];                   
                     prices.Add(tmp[index]);
                 }
+                
+            }
+
+            foreach (PropertyInfo property
+                in typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
+            {
+
                 if (property.Name.Substring(0, 2).Equals("Fx"))
                 {
                     tmp = this.symbolToPricesList[property.Name.Substring(2)];

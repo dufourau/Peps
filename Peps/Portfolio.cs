@@ -65,7 +65,8 @@ namespace Peps
             this.InitialCash = 0;
             this.Cash = 0;
             this.RBSindex = 18;
-            this.NumberOfAsset = Properties.Settings.Default.AssetNb;
+            this.NumberOfAsset = Properties.Settings.Default.AssetNb + Properties.Settings.Default.FxNb;
+            this.QuantityOfAssets = new double[NumberOfAsset];
         }
 
         public Portfolio find(long Id)
@@ -87,7 +88,7 @@ namespace Peps
 
         public void goToNextDate()
         {
-            this.CurrentDate.AddDays(1);
+            this.CurrentDate = this.CurrentDate.AddDays(1);
         }
 
         internal void compute(Boolean live)
@@ -106,6 +107,10 @@ namespace Peps
                 }
                 performInitialComputations();           
                 this.InitialCash = Properties.Settings.Default.Nominal - this.Wrapper.getPrice();
+                this.Cash = this.Wrapper.getPrice();
+                this.PortfolioValue = Cash;
+                this.ProfitAndLoss = InitialCash;
+
             }else{
                 double nbdays = (CurrentDate - initialDate).TotalDays;
                 double totalnbdays = (finalDate - initialDate).TotalDays;
@@ -393,13 +398,14 @@ namespace Peps
                 this.goToNextDate();
                 double portfolioValue = 0;
                 // Actualize Cash and Initial Cash
-                double actualizationFactor = Math.Exp((PreviousInterestRates[0] / 100) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
+                double actualizationFactor = Math.Exp((PreviousInterestRates[0]) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
                 this.Cash *= actualizationFactor;
                 this.InitialCash *= actualizationFactor;
+                //To put in currency cash? or in cash?
                 // Handle the currency interest
                 for (int i = 0; i < Properties.Settings.Default.FxNb; i++)
                 {
-                    portfolioValue += this.QuantityOfAssets[Properties.Settings.Default.AssetNb - 1 + i] * (PreviousInterestRates[i + 1] / 100) * (1 / (Properties.Settings.Default.AssetNb / Properties.Settings.Default.Maturity));
+                    this.Cash += this.QuantityOfAssets[Properties.Settings.Default.AssetNb + i] * (PreviousInterestRates[Properties.Settings.Default.AssetNb + i +1]) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity));
                 }
        
                 ArrayList assetPrices = MarketData.getAllPricesAtDate(CurrentDate);
@@ -407,9 +413,20 @@ namespace Peps
                 for (int i = 0; i < this.Delta.Length; i++)
                 {
                     //Apply transaction fee when asset is bought
-                    double assetPrice = ((double)assetPrices[i]);
+                    double assetPrice = Double.Parse(((String)assetPrices[i]).Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
+                    //We convert RBS and citigroup stocks prices:
+                    if(i == RBSindex)
+                    {
+                        assetPrice *= Double.Parse(((String)assetPrices[Properties.Settings.Default.AssetNb + 1]).Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture)/ 100.0;
+                       
+                    }
+                    if(i == CitiGroupIndex){
+                        assetPrice *= Double.Parse(((String)assetPrices[Properties.Settings.Default.AssetNb + 3]).Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture) / 100.0;
+                    }
+
+                    
                     double quantityToBuy = (this.Delta[i] - this.QuantityOfAssets[i]) * assetPrice;
-                    //this.Cash -= quantityToBuy + Math.Abs(quantityToBuy) * this.TransactionFees;
+                    this.Cash -= quantityToBuy ;
                     this.QuantityOfAssets[i] = this.Delta[i];
                     portfolioValue += this.Delta[i] * assetPrice;
                 }
