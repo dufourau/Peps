@@ -34,9 +34,9 @@ namespace Peps
             {
                 if (CurrentPortfolio == null)
                 {
-                    CurrentPortfolio = new Portfolio(new WrapperClass(), new MarketData(), new DateTime(2005, 11, 30));
-                    CurrentPortfolio.MarketData.getAllStockPrices("30", "7", "2005", "30", "3", "2015");
-                    //CurrentPortfolio.MarketData.dumpToRedis("30", "7", "2005", "30", "3", "2015");
+                    CurrentPortfolio = Portfolio.find();
+                    CurrentPortfolio.CurrentDate = new DateTime(2005, 11, 30);
+                    CurrentPortfolio.MarketData.loadAllStockPrices();
                     CurrentPortfolio.save();
                 }
                 
@@ -45,15 +45,13 @@ namespace Peps
 
         public void load_computation(Object sender, EventArgs e)
         {
-         
                 //Init the Display
-                initDisplay();              
+                initDisplay();
                 //Compute delta and price at date 0          
                 CurrentPortfolio.compute();
                 //Display the result of the computation
                 displayData();
-          
-            }
+        }
 
         public void computeHedge(Object sender, EventArgs e){
             CurrentPortfolio.computeHedge();
@@ -79,13 +77,13 @@ namespace Peps
             this.PtfValue.Text = Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision).ToString();
             this.IcInterval.Text = Math.Round(CurrentPortfolio.Wrapper.getIC(), Properties.Settings.Default.Precision).ToString();
             this.PnLDiv.Text = (100 - Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision)).ToString();
-            FillAssetsTable("27", "02", "2015");
-            FillCurrenciesTable("2005-11-29", "2005-11-29");
+            FillAssetsTable(new DateTime(2015, 02, 27));
+            FillCurrenciesTable(new DateTime(2005,11,29), new DateTime(2005, 11, 29));
         }
 
      
         
-        private void FillCurrenciesTable(string fxStartDate, string fxEndDate)
+        private void FillCurrenciesTable(DateTime fxStartDate, DateTime fxEndDate)
         {
             double[] deltaVect = CurrentPortfolio.Wrapper.getDelta();
             int cpt = Properties.Settings.Default.AssetNb;
@@ -125,7 +123,7 @@ namespace Peps
         }
         //month de 00 à 11
         //day et year: normaux
-        private void FillAssetsTable(string day, string month, string year)
+        private void FillAssetsTable(DateTime date)
         {
             double[] deltaVect = CurrentPortfolio.Wrapper.getDelta();
             string tmpStockTicker;
@@ -149,7 +147,7 @@ namespace Peps
 
                     tmpStockTicker = Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1];
                     TableCell price = new TableCell();
-                    tmp = CurrentPortfolio.MarketData.getStockPrice(tmpStockTicker, day, month, year) + "€";
+                    tmp = CurrentPortfolio.MarketData.getStockPrice(tmpStockTicker, date) + "€";
                     price.Text = tmp + " €";
                     tr.Cells.Add(price);
 

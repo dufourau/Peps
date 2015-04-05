@@ -49,16 +49,15 @@ namespace Peps
             redisManager.ExecAs<Portfolio>(redisPf => {
                 using (var redis = new RedisClient(Properties.Settings.Default.RedisDatabaseURL))
                 {
-                    this.Id = redis.As<Portfolio>().GetNextSequence();
-                var pf = this;
-                redisPf.Store(pf);
+                    var pf = this;
+                    pf.Id = 1;
+                    redisPf.StoreAsHash(pf);
                 }
             });
         }
 
-        public Portfolio(WrapperClass wrapper, MarketData marketData, DateTime initialDate)
+        public Portfolio(WrapperClass wrapper, MarketData marketData)
         {
-            this.CurrentDate = initialDate;
             this.Wrapper = wrapper;
             this.MarketData = marketData;
             //Cash in EUR
@@ -68,20 +67,26 @@ namespace Peps
             this.NumberOfAsset = Properties.Settings.Default.AssetNb;
         }
 
-        public Portfolio find(long Id)
+        public static Portfolio find()
         {
             var redisManager = new PooledRedisClientManager(Properties.Settings.Default.RedisDatabaseURL);
 
             Portfolio portfolio = null;
 
             redisManager.ExecAs<Portfolio>(redis =>
-        {
-                portfolio = redis.GetById(Id);
+            {
+                portfolio = redis.GetFromHash(1);
             });
 
-            portfolio.MarketData = new MarketData();
-            portfolio.Wrapper = new WrapperClass();
-
+            if (portfolio == null)
+            {
+                return new Portfolio(new WrapperClass(), new MarketData());
+            }
+            else
+            {
+                portfolio.MarketData = new MarketData();
+                portfolio.Wrapper = new WrapperClass();
+            }
             return portfolio;
         }
 
@@ -106,7 +111,8 @@ namespace Peps
                 }
                 performInitialComputations();           
                 this.InitialCash = Properties.Settings.Default.Nominal - this.Wrapper.getPrice();
-            }else{
+            } else 
+            {
                 double nbdays = (CurrentDate - initialDate).TotalDays;
                 double totalnbdays = (finalDate - initialDate).TotalDays;
                 double t = nbdays / (totalnbdays/10);            
@@ -116,12 +122,11 @@ namespace Peps
                 {
                     PreviousStocksPrices[j, RBSindex] = PreviousStocksPrices[j, RBSindex] * PreviousStocksPrices[j, Properties.Settings.Default.AssetNb + 1] / 100.0;
                     PreviousStocksPrices[j, CitiGroupIndex] = PreviousStocksPrices[j, CitiGroupIndex] * PreviousStocksPrices[j, Properties.Settings.Default.AssetNb + 3];
-        }
+                }
                 performComputations(t, Utils.Convert2dArrayto1d(computePast(t)));
                 //TO DO: 
                 double actualizationFactor = Math.Exp((PreviousInterestRates[0] / 100) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
                 this.InitialCash = Properties.Settings.Default.Nominal - this.Wrapper.getPrice();
-
             }
             
         }
@@ -224,8 +229,8 @@ namespace Peps
             DateTime stocksEndDate = CurrentDate.AddYears(2);
 
             int size = 900;
-            Dictionary<String, ArrayList> symbolToPricesList = new Dictionary<string, ArrayList>();
-            ArrayList tmp;
+            Dictionary<String, List<double>> symbolToPricesList = new Dictionary<string, List<double>>();
+            List<double> tmp;
             foreach (PropertyInfo property in
                 typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
             {
@@ -233,8 +238,7 @@ namespace Peps
                 {
                     tmpStockTicker = Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1];
 
-                    tmp = this.MarketData.getLastStockPrices(tmpStockTicker, stocksStartDate.Day.ToString(), stocksStartDate.Month.ToString(),
-                        stocksStartDate.Year.ToString(), stocksEndDate.Day.ToString(), stocksEndDate.Month.ToString(), stocksEndDate.Year.ToString());
+                    tmp = this.MarketData.getPricesRange(tmpStockTicker, stocksStartDate, stocksEndDate);
                     if (tmp != null)
                     {
                         symbolToPricesList.Add(property.Name, tmp);
@@ -244,7 +248,7 @@ namespace Peps
             }
             int cpt = 0;
             hedgingPreviousStocksPrices = new double[size, Properties.Settings.Default.AssetNb + Properties.Settings.Default.FxNb];
-            foreach (KeyValuePair<String, ArrayList> entry in symbolToPricesList)
+            foreach (KeyValuePair<String, List<double>> entry in symbolToPricesList)
             {
                 for (int i = 0; i < size; i++)
                 {
@@ -258,7 +262,7 @@ namespace Peps
         //TO DO get real rate for all date
         private void FillPreviousInterestRates(double[] previousInterestRates)
         {
-            int index = this.MarketData.dates.IndexOf(this.CurrentDate);
+            int index = this.MarketData.dates.ToList().IndexOf(this.CurrentDate);
             previousInterestRates[0] = this.MarketData.rates[index][0];
             for (int i = 1; i < Properties.Settings.Default.AssetNb; i++) previousInterestRates[i] = 0;
             previousInterestRates[Properties.Settings.Default.AssetNb + 1] = this.MarketData.rates[index][1]/100;
@@ -272,8 +276,8 @@ namespace Peps
             string tmpStockTicker;
             DateTime calibrationStartDate = CurrentDate.AddDays(-Properties.Settings.Default.VolCalibrationDaysNb);
             int size = Properties.Settings.Default.VolCalibrationDaysNb + 1;
-            Dictionary<String, ArrayList> symbolToPricesList = new Dictionary<string, ArrayList>();
-            ArrayList tmp;
+            Dictionary<String, List<double>> symbolToPricesList = new Dictionary<string, List<double>>();
+            List<double> tmp;
             int cpt = 0;
             foreach (PropertyInfo property in
                 typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
@@ -286,8 +290,7 @@ namespace Peps
                     else if (tmpStockTicker.Equals("C"))
                         CitiGroupIndex = cpt;
 
-                    tmp = MarketData.getLastStockPrices(tmpStockTicker, calibrationStartDate.Day.ToString(), calibrationStartDate.Month.ToString(),
-                    calibrationStartDate.Year.ToString(), CurrentDate.Day.ToString(), CurrentDate.Month.ToString(), CurrentDate.Year.ToString());
+                    tmp = MarketData.getPricesRange(tmpStockTicker, calibrationStartDate, CurrentDate);
                     if (tmp != null)
                     {
                         symbolToPricesList.Add(property.Name, tmp);
@@ -300,11 +303,11 @@ namespace Peps
             }
 
             cpt = 0;
-            foreach (KeyValuePair<String, ArrayList> entry in symbolToPricesList)
+            foreach (KeyValuePair<String, List<double>> entry in symbolToPricesList)
             {
                 for (int i = 0; i < size; i++)
                 {
-                    previousStocksPrices[i, cpt] = Double.Parse(((String)entry.Value[i]).Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
+                    previousStocksPrices[i, cpt] = entry.Value[i];
                     SetStockToFxList(stockToFxIndex, entry.Key, cpt);
                     if (previousStocksPrices[i, cpt] < 0.01) throw new Exception();
                 }
@@ -333,7 +336,7 @@ namespace Peps
         private void FillFxRates(double[,] previousStocksPrices)
         {
             DateTime calibrationStartDate = CurrentDate.AddDays(-Properties.Settings.Default.VolCalibrationDaysNb);
-            ArrayList fxPrices;
+            List<double> fxPrices;
             int cpt = Properties.Settings.Default.AssetNb;
             foreach (PropertyInfo property in
                typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
@@ -341,10 +344,10 @@ namespace Peps
                 if (property.Name.Substring(0, 2).Equals("Fx"))
                 {
                     //fxPrices = MarketData.getPreviousCurrencyPricesFromWeb(property.Name.Substring(2), calibrationStartDate.ToString("u"), CurrentDate.ToString("u"));
-                    fxPrices = MarketData.getPreviousCurrencyPrices(property.Name.Substring(2), calibrationStartDate, CurrentDate);
+                    fxPrices = MarketData.getPricesRange(property.Name.Substring(2), calibrationStartDate, CurrentDate);
                     for (int j = 0; j < Math.Min(previousStocksPrices.GetLength(0), fxPrices.Count); j++)
                     {
-                        previousStocksPrices[j, cpt] = Double.Parse(((String)fxPrices[j]).Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
+                        previousStocksPrices[j, cpt] = fxPrices[j];
                         //previousStocksPrices[j, cpt] = (double)fxPrices[j];
                     }
                     cpt++;
