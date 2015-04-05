@@ -124,12 +124,34 @@ namespace Peps.Properties {
 
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("localhost:6379")]
+        [global::System.Configuration.DefaultSettingValueAttribute("pub-redis-11983.us-east-1-1.2.ec2.garantiadata.com")]
         public string RedisDatabaseURL
         {
             get
             {
                 return ((string)(this["RedisDatabaseURL"]));
+            }
+        }
+
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("11983")]
+        public int RedisPort
+        {
+            get
+            {
+                return ((int)(this["RedisPort"]));
+            }
+        }
+
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("moduleis")]
+        public string RedisPassword
+        {
+            get
+            {
+                return ((string)(this["RedisPassword"]));
             }
         }
     }

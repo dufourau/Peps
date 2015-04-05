@@ -45,13 +45,13 @@ namespace Peps
             /*
             * Redis DEMO: save the portefolio to the database
             */
-            var redisManager = new PooledRedisClientManager(Properties.Settings.Default.RedisDatabaseURL);
+            var redisManager = new PooledRedisClientManager(Properties.Settings.Default.RedisPassword + "@" + Properties.Settings.Default.RedisDatabaseURL + ":" + Properties.Settings.Default.RedisPort);
             redisManager.ExecAs<Portfolio>(redisPf => {
-                using (var redis = new RedisClient(Properties.Settings.Default.RedisDatabaseURL))
+                using (var redis = new RedisClient(Properties.Settings.Default.RedisDatabaseURL, Properties.Settings.Default.RedisPort, Properties.Settings.Default.RedisPassword))
                 {
-                var pf = this;
+                    var pf = this;
                     pf.Id = 1;
-                redisPf.Store(pf);
+                    redisPf.Store(pf);
                 }
             });
         }
@@ -71,7 +71,7 @@ namespace Peps
 
         public static Portfolio find()
         {
-            var redisManager = new PooledRedisClientManager(Properties.Settings.Default.RedisDatabaseURL);
+            var redisManager = new PooledRedisClientManager(Properties.Settings.Default.RedisPassword + "@" + Properties.Settings.Default.RedisDatabaseURL + ":" + Properties.Settings.Default.RedisPort);
 
             Portfolio portfolio = null;
 

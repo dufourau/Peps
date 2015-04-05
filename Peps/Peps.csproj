@@ -126,6 +126,8 @@
     <Content Include="font-awesome\scss\_stacked.scss" />
     <Content Include="font-awesome\scss\_variables.scss" />
     <Content Include="Validation.aspx" />
+    <None Include="Properties\PublishProfiles\moduleis - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\moduleis - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

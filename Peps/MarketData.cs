@@ -85,7 +85,7 @@ namespace Peps
 
             DateTime today = DateTime.Today;
 
-            using (var redis = new RedisClient(Properties.Settings.Default.RedisDatabaseURL))
+            using (var redis = new RedisClient(Properties.Settings.Default.RedisDatabaseURL, Properties.Settings.Default.RedisPort, Properties.Settings.Default.RedisPassword))
             {
                 stringFirstDateInDatabase = redis.GetValue("firstDate");
                 stringLastDateInDatabase = redis.GetValue("lastDate");
@@ -106,7 +106,7 @@ namespace Peps
 
                 foreach (string symbol in symbolList)
                 {
-                    using (var redis = new RedisClient(Properties.Settings.Default.RedisDatabaseURL))
+                    using (var redis = new RedisClient(Properties.Settings.Default.RedisDatabaseURL, Properties.Settings.Default.RedisPort, Properties.Settings.Default.RedisPassword))
                     {
                         Dictionary<string, string> dataForSymbol = redis.GetAllEntriesFromHash(symbol);
                         SortedList<DateTime, double> parsedData = new SortedList<DateTime,double>();
@@ -224,7 +224,7 @@ namespace Peps
 
         public void dumpToRedis(DateTime startDate, DateTime endDate)
         {
-            using(var redis = new RedisClient(Properties.Settings.Default.RedisDatabaseURL))
+            using (var redis = new RedisClient(Properties.Settings.Default.RedisDatabaseURL, Properties.Settings.Default.RedisPort, Properties.Settings.Default.RedisPassword))
             {
                 SortedList<DateTime, double> symbolData;
                 foreach (string symbol in symbolList)
