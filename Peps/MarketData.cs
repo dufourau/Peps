@@ -47,6 +47,13 @@ namespace Peps
                 {
                     symbolList.Add(Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1]);
                 }
+                
+            }
+
+            foreach (PropertyInfo property
+                in typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
+            {
+
                 if (property.Name.Substring(0, 2).Equals("Fx"))
                 {
                     symbolList.Add(property.Name.Substring(2));
@@ -85,17 +92,17 @@ namespace Peps
             }
 
             if (stringFirstDateInDatabase != null) firstDBAvailableDate = DateTime.ParseExact(stringFirstDateInDatabase, dateFormat, null);
-            if (stringLastDateInDatabase != null) lastDBAvailableDate = DateTime.ParseExact(stringFirstDateInDatabase, dateFormat, null);
+            if (stringLastDateInDatabase != null) lastDBAvailableDate = DateTime.ParseExact(stringLastDateInDatabase, dateFormat, null);
 
             // Market data is already in our database
             if (stringFirstDateInDatabase != null && stringLastDateInDatabase != null)
             {
                 if (lastDBAvailableDate.CompareTo(today) == -1)
-            {
+                {
                     loadMarketDataFromWeb(lastDBAvailableDate, today);
                     lastDBAvailableDate = today;
                     dumpToRedis(lastDBAvailableDate, today);
-                        }
+                }
 
                 foreach (string symbol in symbolList)
                 {
@@ -105,7 +112,8 @@ namespace Peps
                         SortedList<DateTime, double> parsedData = new SortedList<DateTime,double>();
                         foreach (KeyValuePair<string, string> pair in dataForSymbol){
                             DateTime date = DateTime.ParseExact(pair.Key, dateFormat, null);
-                            parsedData.Add(date, Double.Parse(pair.Value, CultureInfo.InvariantCulture));
+                            parsedData.Add(date, Double.Parse(pair.Value.Replace(',','.'), CultureInfo.InvariantCulture));
+                            dates.Add(date);
                         }
                         marketDataDictionary[symbol] = parsedData;
                     }
@@ -233,6 +241,13 @@ namespace Peps
                 redis.SetEntry("firstDate", dates.Min.ToString(dateFormat));
                 redis.SetEntry("lastDate", dates.Max.ToString(dateFormat));
             }
+        }
+
+        public DateTime getNextDate(DateTime date){
+            List<DateTime> datesList = dates.ToList();
+            int index = datesList.IndexOf(date);
+            if (index == -1 || index >= datesList.Count) return date;
+            return datesList[index + 1];
         }
     }
 }

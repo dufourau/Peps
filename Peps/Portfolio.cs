@@ -51,7 +51,7 @@ namespace Peps
                 {
                 var pf = this;
                     pf.Id = 1;
-                    redisPf.StoreAsHash(pf);
+                    redisPf.Store(pf);
                 }
             });
         }
@@ -64,7 +64,9 @@ namespace Peps
             this.InitialCash = 0;
             this.Cash = 0;
             this.RBSindex = 18;
-            this.NumberOfAsset = Properties.Settings.Default.AssetNb;
+            this.NumberOfAsset = Properties.Settings.Default.AssetNb + Properties.Settings.Default.FxNb;
+            this.QuantityOfAssets = new double[NumberOfAsset];
+            for (int i = 0; i < NumberOfAsset; i++) { QuantityOfAssets[i] = 0; }
         }
 
         public static Portfolio find()
@@ -74,8 +76,8 @@ namespace Peps
             Portfolio portfolio = null;
 
             redisManager.ExecAs<Portfolio>(redis =>
-        {
-                portfolio = redis.GetFromHash(1);
+            {
+                portfolio = redis.GetById(1);
             });
 
             if (portfolio == null)
@@ -84,15 +86,15 @@ namespace Peps
             }
             else
             {
-            portfolio.MarketData = new MarketData();
-            portfolio.Wrapper = new WrapperClass();
+                portfolio.MarketData = new MarketData();
+                portfolio.Wrapper = new WrapperClass();
             }
             return portfolio;
         }
 
         public void goToNextDate()
         {
-            this.CurrentDate.AddDays(1);
+            this.CurrentDate = MarketData.getNextDate(this.CurrentDate);
         }
 
         internal void compute()
@@ -111,7 +113,11 @@ namespace Peps
                 }
                 performInitialComputations();           
                 this.InitialCash = Properties.Settings.Default.Nominal - this.Wrapper.getPrice();
-            } else 
+                this.Cash = this.Wrapper.getPrice();
+                this.PortfolioValue = Cash;
+                this.ProfitAndLoss = InitialCash;
+            }
+            else
             {
                 double nbdays = (CurrentDate - initialDate).TotalDays;
                 double totalnbdays = (finalDate - initialDate).TotalDays;
@@ -122,7 +128,7 @@ namespace Peps
                 {
                     PreviousStocksPrices[j, RBSindex] = PreviousStocksPrices[j, RBSindex] * PreviousStocksPrices[j, Properties.Settings.Default.AssetNb + 1] / 100.0;
                     PreviousStocksPrices[j, CitiGroupIndex] = PreviousStocksPrices[j, CitiGroupIndex] * PreviousStocksPrices[j, Properties.Settings.Default.AssetNb + 3];
-        }
+                }
                 performComputations(t, Utils.Convert2dArrayto1d(computePast(t)));
                 //TO DO: 
                 double actualizationFactor = Math.Exp((PreviousInterestRates[0] / 100) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
@@ -158,23 +164,18 @@ namespace Peps
                      DateTime date = new DateTime(i, 30, 11);
                      ArrayList prices = MarketData.getAllPricesAtDate(date);
                      for (int j = 0; j < prices.Count; j++)
-        {
+                     {
                          past[cpt, j] = (double)prices[0];
                      }
                      cpt++;
                  }
                  ArrayList lastPrices = MarketData.getAllPricesAtDate(CurrentDate);
                  for (int j = 0; j < lastPrices.Count; j++)
-            {
+                 {
                      past[cpt, j] = (double)lastPrices[0];
                  }
-
             }
-
             return past;
-
-
-            
         }
 
         private void performInitialComputations()
@@ -190,7 +191,7 @@ namespace Peps
                 Properties.Settings.Default.AssetNb, Properties.Settings.Default.FxNb, Properties.Settings.Default.Maturity,
                 Properties.Settings.Default.McSamplesNb, Properties.Settings.Default.TimeSteps, PreviousStocksPrices.GetLength(0),
                 Properties.Settings.Default.StepFiniteDifference);
-            this.Delta = Wrapper.getDelta();
+          this.Delta = Wrapper.getDelta();
         }
 
         private void performComputations(double t, double[] oneDPast)
@@ -209,8 +210,6 @@ namespace Peps
             this.Delta = Wrapper.getDelta();
         }
 
-        //live = true => request to yahoo finance
-        //live = false => search in our database
         private void initComputationParameters()
         {
             StockToFxIndex = new double[Properties.Settings.Default.AssetNb];
@@ -293,7 +292,7 @@ namespace Peps
                         CitiGroupIndex = cpt;
 
                     tmp = MarketData.getPricesRange(tmpStockTicker, calibrationStartDate, CurrentDate);
-
+                    
                     if (tmp != null)
                     {
                         symbolToPricesList.Add(property.Name, tmp);
@@ -366,13 +365,14 @@ namespace Peps
                 this.goToNextDate();
                 double portfolioValue = 0;
                 // Actualize Cash and Initial Cash
-                double actualizationFactor = Math.Exp((PreviousInterestRates[0] / 100) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
+                double actualizationFactor = Math.Exp((PreviousInterestRates[0]) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
                 this.Cash *= actualizationFactor;
                 this.InitialCash *= actualizationFactor;
+                //To put in currency cash? or in cash?
                 // Handle the currency interest
                 for (int i = 0; i < Properties.Settings.Default.FxNb; i++)
                 {
-                    portfolioValue += this.QuantityOfAssets[Properties.Settings.Default.AssetNb - 1 + i] * (PreviousInterestRates[i + 1] / 100) * (1 / (Properties.Settings.Default.AssetNb / Properties.Settings.Default.Maturity));
+                    this.Cash += this.QuantityOfAssets[Properties.Settings.Default.AssetNb + i] * (PreviousInterestRates[Properties.Settings.Default.AssetNb + i +1]) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity));
                 }
        
                 ArrayList assetPrices = MarketData.getAllPricesAtDate(CurrentDate);
@@ -380,9 +380,20 @@ namespace Peps
                 for (int i = 0; i < this.Delta.Length; i++)
                 {
                     //Apply transaction fee when asset is bought
-                    double assetPrice = ((double)assetPrices[i]);
+                    double assetPrice = (double) assetPrices[i];
+                    //We convert RBS and citigroup stocks prices:
+                    if(i == RBSindex)
+                    {
+                        assetPrice *= ((double) assetPrices[Properties.Settings.Default.AssetNb + 1])/ 100.0;
+                       
+                    }
+                    if(i == CitiGroupIndex){
+                        assetPrice *= ((double) assetPrices[Properties.Settings.Default.AssetNb + 3]) / 100.0;
+                    }
+
+                    
                     double quantityToBuy = (this.Delta[i] - this.QuantityOfAssets[i]) * assetPrice;
-                    //this.Cash -= quantityToBuy + Math.Abs(quantityToBuy) * this.TransactionFees;
+                    this.Cash -= quantityToBuy ;
                     this.QuantityOfAssets[i] = this.Delta[i];
                     portfolioValue += this.Delta[i] * assetPrice;
                 }

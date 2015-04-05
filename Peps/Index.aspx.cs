@@ -43,7 +43,7 @@ namespace Peps
             }
         }
 
-        public void load_computation(Object sender, EventArgs e)
+        public void loadComputation(Object sender, EventArgs e)
         {
                 //Init the Display
                 initDisplay();              
@@ -55,6 +55,8 @@ namespace Peps
 
         public void computeHedge(Object sender, EventArgs e){
             CurrentPortfolio.computeHedge();
+            displayData();
+            date.Text = "Next Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
         }
 
 
@@ -68,17 +70,18 @@ namespace Peps
             CashYen.Text = "0";     
         }
 
-        //HERE: 
+
         //Display logic
         public void displayData()
         {
             InitialCash.Text = Math.Round(CurrentPortfolio.InitialCash, Properties.Settings.Default.Precision).ToString();
             this.PdtValue.Text = Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision).ToString();
-            this.PtfValue.Text = Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision).ToString();
+            this.PtfValue.Text = Math.Round(CurrentPortfolio.PortfolioValue, Properties.Settings.Default.Precision).ToString();
             this.IcInterval.Text = Math.Round(CurrentPortfolio.Wrapper.getIC(), Properties.Settings.Default.Precision).ToString();
-            this.PnLDiv.Text = (100 - Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision)).ToString();
-            FillAssetsTable(new DateTime(2015, 02, 27));
-            FillCurrenciesTable(new DateTime(2005,11,29), new DateTime(2005, 11, 29));
+            this.PnLDiv.Text = Math.Round(CurrentPortfolio.ProfitAndLoss, Properties.Settings.Default.Precision).ToString();
+            CashEuro.Text = Math.Round(CurrentPortfolio.Cash, Properties.Settings.Default.Precision).ToString();
+            FillAssetsTable(new DateTime(2005, 11, 30));
+            FillCurrenciesTable(new DateTime(2005, 11, 29), new DateTime(2005, 11, 29));
         }
 
      
@@ -115,6 +118,10 @@ namespace Peps
                     TableCell totalValue = new TableCell();
                     totalValue.Text = (Math.Round(tmp * deltaVect[cpt], Properties.Settings.Default.Precision)).ToString();
                     tr.Cells.Add(totalValue);
+
+                    TableCell quantity = new TableCell();
+                    quantity.Text = (Math.Round(CurrentPortfolio.QuantityOfAssets[cpt], Properties.Settings.Default.Precision)).ToString();
+                    tr.Cells.Add(quantity);
 
                     stocksTable.Rows.Add(tr);
                     cpt++;
@@ -159,6 +166,10 @@ namespace Peps
                     TableCell totalValue = new TableCell();
                     totalValue.Text = (Math.Round(tmp * deltaVect[cpt], Properties.Settings.Default.Precision)).ToString();
                     tr.Cells.Add(totalValue);
+
+                    TableCell quantity = new TableCell();
+                    quantity.Text = (Math.Round(CurrentPortfolio.QuantityOfAssets[cpt], Properties.Settings.Default.Precision)).ToString();
+                    tr.Cells.Add(quantity);
 
                     stocksTable.Rows.Add(tr);
 
