@@ -235,6 +235,7 @@ namespace Peps
                         if (pair.Key.CompareTo(startDate) == 1 && pair.Key.CompareTo(endDate) <= 0)
                         {
                             redis.SetEntryInHash(symbol, pair.Key.ToString(dateFormat), pair.Value.ToString());
+                          
                         }
                     }
                 }
