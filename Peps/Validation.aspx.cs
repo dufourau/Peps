@@ -51,7 +51,7 @@ namespace Peps
         public void computeHedge(Object sender, EventArgs e)
         {
             CurrentPortfolio.computeHedge();
-            CurrentPortfolio.compute(false);
+            CurrentPortfolio.compute();
             displayData();
         }
 

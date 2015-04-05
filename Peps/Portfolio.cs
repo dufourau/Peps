@@ -134,7 +134,7 @@ namespace Peps
                 double actualizationFactor = Math.Exp((PreviousInterestRates[0] / 100) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
                 this.InitialCash = Properties.Settings.Default.Nominal - this.Wrapper.getPrice();
             }
-            
+            this.save();
         }
 
         //TODO to factorize

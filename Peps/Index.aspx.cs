@@ -17,7 +17,6 @@ namespace Peps
     public partial class Index : System.Web.UI.Page
     {
 
-
         public Portfolio CurrentPortfolio
         {
             get
@@ -51,13 +50,12 @@ namespace Peps
                 CurrentPortfolio.compute();
                 //Display the result of the computation
                 displayData();
-            }
+        }
 
         public void computeHedge(Object sender, EventArgs e){
+            CurrentPortfolio.compute();
             CurrentPortfolio.computeHedge();
             displayData();
-            
-           
         }
 
 
@@ -81,13 +79,12 @@ namespace Peps
             this.IcInterval.Text = Math.Round(CurrentPortfolio.Wrapper.getIC(), Properties.Settings.Default.Precision).ToString();
             this.PnLDiv.Text = Math.Round(CurrentPortfolio.ProfitAndLoss, Properties.Settings.Default.Precision).ToString();
             CashEuro.Text = Math.Round(CurrentPortfolio.Cash, Properties.Settings.Default.Precision).ToString();
-            FillAssetsTable(new DateTime(2005, 11, 30));
-            FillCurrenciesTable(new DateTime(2005, 11, 29), new DateTime(2005, 11, 29));
+            FillAssetsTable(CurrentPortfolio.CurrentDate);
+            FillCurrenciesTable(CurrentPortfolio.CurrentDate);
+            date.Text = "Current Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
         }
 
-     
-        
-        private void FillCurrenciesTable(DateTime fxStartDate, DateTime fxEndDate)
+        private void FillCurrenciesTable(DateTime fxStartDate)
         {
             double[] deltaVect = CurrentPortfolio.Wrapper.getDelta();
             int cpt = Properties.Settings.Default.AssetNb;
