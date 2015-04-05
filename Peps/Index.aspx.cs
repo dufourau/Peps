@@ -56,7 +56,8 @@ namespace Peps
         public void computeHedge(Object sender, EventArgs e){
             CurrentPortfolio.computeHedge();
             displayData();
-            date.Text = "Next Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
+            
+           
         }
 
 

@@ -51,7 +51,7 @@ namespace Peps
                 {
                 var pf = this;
                     pf.Id = 1;
-                    redisPf.Store(pf);
+                redisPf.Store(pf);
                 }
             });
         }
@@ -76,7 +76,7 @@ namespace Peps
             Portfolio portfolio = null;
 
             redisManager.ExecAs<Portfolio>(redis =>
-            {
+        {
                 portfolio = redis.GetById(1);
             });
 
@@ -86,8 +86,8 @@ namespace Peps
             }
             else
             {
-                portfolio.MarketData = new MarketData();
-                portfolio.Wrapper = new WrapperClass();
+            portfolio.MarketData = new MarketData();
+            portfolio.Wrapper = new WrapperClass();
             }
             return portfolio;
         }
@@ -157,7 +157,7 @@ namespace Peps
             }
             else
             {
-                 past = new double[(int)Math.Floor(t)+1,Properties.Settings.Default.AssetNb];
+                 past = new double[(int)Math.Floor(t)+1,this.NumberOfAsset];
                  int cpt = 0;
                  for (int i = 2005; i < 2005 + (int)Math.Floor(t); i++)
                  {
@@ -165,14 +165,16 @@ namespace Peps
                      ArrayList prices = MarketData.getAllPricesAtDate(date);
                      for (int j = 0; j < prices.Count; j++)
                      {
-                         past[cpt, j] = (double)prices[0];
+                         //past[cpt, j] = (double)prices[0];
+                         past[cpt, j] = Double.Parse(((String)prices[j]).Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
                      }
                      cpt++;
                  }
                  ArrayList lastPrices = MarketData.getAllPricesAtDate(CurrentDate);
                  for (int j = 0; j < lastPrices.Count; j++)
-                 {
-                     past[cpt, j] = (double)lastPrices[0];
+            {
+                    //past[cpt, j] = (double)lastPrices[0];
+                     past[cpt, j] = Double.Parse(((String)lastPrices[j]).Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
                  }
             }
             return past;
@@ -276,6 +278,7 @@ namespace Peps
             double[,] previousStocksPrices;
             string tmpStockTicker;
             DateTime calibrationStartDate = CurrentDate.AddDays(-Properties.Settings.Default.VolCalibrationDaysNb);
+            calibrationStartDate = Utils.GetWorkingWeekday(calibrationStartDate);
             int size = Properties.Settings.Default.VolCalibrationDaysNb + 1;
             Dictionary<String, List<double>> symbolToPricesList = new Dictionary<string, List<double>>();
             List<double> tmp;
@@ -339,6 +342,7 @@ namespace Peps
         private void FillFxRates(double[,] previousStocksPrices)
         {
             DateTime calibrationStartDate = CurrentDate.AddDays(-Properties.Settings.Default.VolCalibrationDaysNb);
+            calibrationStartDate = Utils.GetWorkingWeekday(calibrationStartDate);
             List<double> fxPrices;
             int cpt = Properties.Settings.Default.AssetNb;
             foreach (PropertyInfo property in
