@@ -174,7 +174,7 @@ namespace Peps
                  for (int j = 0; j < lastPrices.Count; j++)
             {
                     //past[cpt, j] = (double)lastPrices[0];
-                     past[cpt, j] = Double.Parse(((String)lastPrices[j]).Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
+                     past[cpt, j] = (double) lastPrices[j];
                  }
             }
             return past;
