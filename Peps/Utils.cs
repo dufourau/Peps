@@ -52,6 +52,19 @@ namespace Peps
             return parsed;
         }
 
+        public static DateTime GetWorkingWeekday(DateTime start)
+        {
+            if (start.DayOfWeek == DayOfWeek.Sunday || start.DayOfWeek == DayOfWeek.Saturday)
+            {
+                DayOfWeek day = DayOfWeek.Monday;
+                // The (... + 7) % 7 ensures we end up with a value in the range [0, 6]
+                int daysToAdd = ((int)day - (int)start.DayOfWeek + 7) % 7;
+                return start.AddDays(daysToAdd);
+            }
+            return start;
+            
+        }
+
         public static double[] parseFileToArray(String file)
         {
             String[] lines = file.Split('\n').Where(x => x != "" && x != null).ToArray();

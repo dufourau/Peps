@@ -106,14 +106,14 @@
                         <div class="breadcrumb">
                                  <div class="row">
                                     <div class="col-lg-6">
-                                        <span class="pull-left">  <i class="fa fa-dashboard"></i>  Current date: 30/11/2005 </span>
+                                        <span class="pull-left">  <i class="fa fa-dashboard"></i>   <asp:Literal ID="date" runat="server">Current date: 30/11/2005</asp:Literal></span>
                                     </div>
                                     <div class="col-lg-6 text-center">
                                        <form runat="server">
                                             <span class="pull-right"> 
                                                   
                                                     <asp:TextBox ID="DisplayCalendar" type="text" placeholder="11/30/2015" runat="server" ReadOnly="true"></asp:TextBox>
-                                                    <asp:Button  OnClick="load_computation" class="btn btn-xs btn-default fa fa-download"  Text="Load" runat="server"> 
+                                                    <asp:Button  OnClick="loadComputation" class="btn btn-xs btn-default fa fa-download"  Text="Load" runat="server"> 
 
                                                     </asp:Button>
                                                     <asp:Button OnClick="computeHedge" class="btn btn-xs btn-default glyphicon glyphicon-refresh" Text="Refresh" runat="server"> 
