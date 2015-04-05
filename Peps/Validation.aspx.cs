@@ -77,8 +77,8 @@ namespace Peps
             this.PnLDiv.Text = Math.Round(CurrentPortfolio.ProfitAndLoss, Properties.Settings.Default.Precision).ToString();
             CashEuro.Text = Math.Round(CurrentPortfolio.Cash, Properties.Settings.Default.Precision).ToString();
             //Use current date instead
-            FillAssetsTable(new DateTime(2015, 02, 27));
-            FillCurrenciesTable(new DateTime(2005, 11, 29));
+            FillAssetsTable(CurrentPortfolio.CurrentDate);
+            FillCurrenciesTable(CurrentPortfolio.CurrentDate);
             date.Text = "Current Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
         
 
