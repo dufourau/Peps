@@ -53,7 +53,7 @@ namespace Peps
         }
 
         public void computeHedge(Object sender, EventArgs e){
-            CurrentPortfolio.compute();
+            
             CurrentPortfolio.computeHedge();
             displayData();
         }
@@ -81,7 +81,7 @@ namespace Peps
             CashEuro.Text = Math.Round(CurrentPortfolio.Cash, Properties.Settings.Default.Precision).ToString();
             FillAssetsTable(CurrentPortfolio.CurrentDate);
             FillCurrenciesTable(CurrentPortfolio.CurrentDate);
-            date.Text = "Current Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
+            date.Text = "Next Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
         }
 
         private void FillCurrenciesTable(DateTime fxStartDate)

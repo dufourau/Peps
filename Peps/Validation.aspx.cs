@@ -14,7 +14,14 @@ namespace Peps
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            CurrentPortfolio.CurrentDate = new DateTime(2015, 11, 30);
+            if (!Page.IsPostBack)
+            {
+                if (CurrentPortfolio == null)
+                {
+                    CurrentPortfolio = Portfolio.find();
+                    //CurrentPortfolio.CurrentDate = new DateTime(2005, 11, 30);
+                }
+            }
         }
 
         public Portfolio CurrentPortfolio
@@ -77,12 +84,12 @@ namespace Peps
             this.PnLDiv.Text = Math.Round(CurrentPortfolio.ProfitAndLoss, Properties.Settings.Default.Precision).ToString();
             CashEuro.Text = Math.Round(CurrentPortfolio.Cash, Properties.Settings.Default.Precision).ToString();
             //Use current date instead
-            FillAssetsTable(new DateTime(2015, 02, 27));
-            FillCurrenciesTable(new DateTime(2005, 11, 29));
-            date.Text = "Current Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
+            FillAssetsTable(CurrentPortfolio.CurrentDate);
+            FillCurrenciesTable(CurrentPortfolio.CurrentDate);
+            date.Text = "Next Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
         
 
-
+            //TODO display graph of all data values
             //for (int j = 0; j < CurrentPortfolio.index; j++)
             //{
             //    Chart1.Series.FindByName("ProductPrice").Points.Add(CurrentPortfolio.prix[j]);
@@ -124,6 +131,11 @@ namespace Peps
                     TableCell totalValue = new TableCell();
                     totalValue.Text = (Math.Round(tmp * deltaVect[cpt], Properties.Settings.Default.Precision)).ToString();
                     tr.Cells.Add(totalValue);
+
+                    TableCell quantity = new TableCell();
+                    quantity.Text = (Math.Round(CurrentPortfolio.QuantityOfAssets[cpt], Properties.Settings.Default.Precision)).ToString();
+                    tr.Cells.Add(quantity);
+
 
                     stocksTable.Rows.Add(tr);
                     cpt++;
@@ -168,6 +180,11 @@ namespace Peps
                     TableCell totalValue = new TableCell();
                     totalValue.Text = (Math.Round(tmp * deltaVect[cpt], Properties.Settings.Default.Precision)).ToString();
                     tr.Cells.Add(totalValue);
+
+                    TableCell quantity = new TableCell();
+                    quantity.Text = (Math.Round(CurrentPortfolio.QuantityOfAssets[cpt], Properties.Settings.Default.Precision)).ToString();
+                    tr.Cells.Add(quantity);
+
 
                     stocksTable.Rows.Add(tr);
 
