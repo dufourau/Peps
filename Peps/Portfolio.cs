@@ -90,14 +90,14 @@ namespace Peps
             this.CurrentDate.AddDays(1);
         }
 
-        internal void compute()
+        internal void compute(Boolean live)
         {
             DateTime initialDate = new DateTime(2005, 11, 30);
             DateTime finalDate = new DateTime(2015,11,30);
             //t=0
             if (initialDate.CompareTo(CurrentDate) == 0)
             {
-                initComputationParameters();
+                initComputationParameters(live);
                 //We convert RBS and citigroup stocks prices:
                 for (int j = 0; j < PreviousStocksPrices.GetLength(0); j++)
                 {
@@ -110,13 +110,13 @@ namespace Peps
                 double nbdays = (CurrentDate - initialDate).TotalDays;
                 double totalnbdays = (finalDate - initialDate).TotalDays;
                 double t = nbdays / (totalnbdays/10);            
-                initComputationParameters();
+                initComputationParameters(live);
                 //We convert RBS and citigroup stocks prices:
                 for (int j = 0; j < PreviousStocksPrices.GetLength(0); j++)
                 {
                     PreviousStocksPrices[j, RBSindex] = PreviousStocksPrices[j, RBSindex] * PreviousStocksPrices[j, Properties.Settings.Default.AssetNb + 1] / 100.0;
                     PreviousStocksPrices[j, CitiGroupIndex] = PreviousStocksPrices[j, CitiGroupIndex] * PreviousStocksPrices[j, Properties.Settings.Default.AssetNb + 3];
-        }
+                }
                 performComputations(t, Utils.Convert2dArrayto1d(computePast(t)));
                 //TO DO: 
                 double actualizationFactor = Math.Exp((PreviousInterestRates[0] / 100) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
@@ -153,7 +153,7 @@ namespace Peps
                      DateTime date = new DateTime(i, 30, 11);
                      ArrayList prices = MarketData.getAllPricesAtDate(date);
                      for (int j = 0; j < prices.Count; j++)
-        {
+                     {
                          past[cpt, j] = (double)prices[0];
                      }
                      cpt++;
@@ -185,7 +185,7 @@ namespace Peps
                 Properties.Settings.Default.AssetNb, Properties.Settings.Default.FxNb, Properties.Settings.Default.Maturity,
                 Properties.Settings.Default.McSamplesNb, Properties.Settings.Default.TimeSteps, PreviousStocksPrices.GetLength(0),
                 Properties.Settings.Default.StepFiniteDifference);
-            this.Delta = Wrapper.getDelta();
+          this.Delta = Wrapper.getDelta();
         }
 
         private void performComputations(double t, double[] oneDPast)
@@ -204,16 +204,16 @@ namespace Peps
             this.Delta = Wrapper.getDelta();
         }
 
-        private void initComputationParameters()
+        //live = true => request to yahoo finance
+        //live = false => search in our database
+        private void initComputationParameters(Boolean live)
         {
             StockToFxIndex = new double[Properties.Settings.Default.AssetNb];
-            PreviousStocksPrices = new double[Properties.Settings.Default.VolCalibrationDaysNb + 1, Properties.Settings.Default.AssetNb + Properties.Settings.Default.FxNb];
             PreviousInterestRates = new double[Properties.Settings.Default.FxNb + Properties.Settings.Default.AssetNb + 1];
 
-            //NO CALL TO YAHOO FINANCE => throw too much request exception
-            //GET DATA From Portfolio, it's persistent
-            FillPreviousStockPrices(PreviousStocksPrices, StockToFxIndex);
-            FillFxRates(PreviousStocksPrices);
+            
+            PreviousStocksPrices = FillPreviousStockPrices( StockToFxIndex, live);
+            FillFxRates(PreviousStocksPrices,live);
             FillPreviousInterestRates(PreviousInterestRates);
         }
 
@@ -255,20 +255,23 @@ namespace Peps
             }
         }
 
-        //TO DO get real rate for all date
         private void FillPreviousInterestRates(double[] previousInterestRates)
         {
-            int index = this.MarketData.dates.IndexOf(this.CurrentDate);
-            previousInterestRates[0] = this.MarketData.rates[index][0];
+            int index = this.MarketData.rates.Length - this.MarketData.dates.IndexOf(this.CurrentDate);
+
+            previousInterestRates[0] = this.MarketData.rates[index][0] / 100;
             for (int i = 1; i < Properties.Settings.Default.AssetNb; i++) previousInterestRates[i] = 0;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 1] = this.MarketData.rates[index][1]/100;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 2] = this.MarketData.rates[index][2]/100; 
-            previousInterestRates[Properties.Settings.Default.AssetNb + 3] = this.MarketData.rates[index][3]/100;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 4] = this.MarketData.rates[index][4]/100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 1] = this.MarketData.rates[index][1] / 100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 2] = this.MarketData.rates[index][2] / 100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 3] = this.MarketData.rates[index][3] / 100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 4] = this.MarketData.rates[index][4] / 100;
         }
 
-        private void FillPreviousStockPrices(double[,] previousStocksPrices, double[] stockToFxIndex)
+      
+
+        private double[,] FillPreviousStockPrices(double[] stockToFxIndex, Boolean live)
         {
+            double[,] previousStocksPrices;
             string tmpStockTicker;
             DateTime calibrationStartDate = CurrentDate.AddDays(-Properties.Settings.Default.VolCalibrationDaysNb);
             int size = Properties.Settings.Default.VolCalibrationDaysNb + 1;
@@ -286,8 +289,17 @@ namespace Peps
                     else if (tmpStockTicker.Equals("C"))
                         CitiGroupIndex = cpt;
 
-                    tmp = MarketData.getLastStockPrices(tmpStockTicker, calibrationStartDate.Day.ToString(), calibrationStartDate.Month.ToString(),
-                    calibrationStartDate.Year.ToString(), CurrentDate.Day.ToString(), CurrentDate.Month.ToString(), CurrentDate.Year.ToString());
+                    if (live)
+                    {
+                        tmp = MarketData.getLastStockPricesFromWeb(tmpStockTicker, calibrationStartDate.Day.ToString(), calibrationStartDate.Month.ToString(),
+                        calibrationStartDate.Year.ToString(), CurrentDate.Day.ToString(), CurrentDate.Month.ToString(), CurrentDate.Year.ToString());
+                    }
+                    else
+                    {
+                        tmp = MarketData.getLastStockPrices(tmpStockTicker, calibrationStartDate.Day.ToString(), calibrationStartDate.Month.ToString(),
+                        calibrationStartDate.Year.ToString(), CurrentDate.Day.ToString(), CurrentDate.Month.ToString(), CurrentDate.Year.ToString());
+                    }
+                    
                     if (tmp != null)
                     {
                         symbolToPricesList.Add(property.Name, tmp);
@@ -298,18 +310,26 @@ namespace Peps
                     cpt++;
                 }
             }
-
+            previousStocksPrices = new double[size, Properties.Settings.Default.AssetNb + Properties.Settings.Default.FxNb];
             cpt = 0;
             foreach (KeyValuePair<String, ArrayList> entry in symbolToPricesList)
             {
                 for (int i = 0; i < size; i++)
                 {
-                    previousStocksPrices[i, cpt] = Double.Parse(((String)entry.Value[i]).Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
+                    if (live)
+                    {
+                        previousStocksPrices[i, cpt] = (double)entry.Value[i];
+                    }
+                    else
+                    {
+                        previousStocksPrices[i, cpt] = Double.Parse(((String)entry.Value[i]).Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
+                    }
                     SetStockToFxList(stockToFxIndex, entry.Key, cpt);
                     if (previousStocksPrices[i, cpt] < 0.01) throw new Exception();
                 }
                 cpt++;
             }
+            return previousStocksPrices;
         }
 
         void SetStockToFxList(double[] stockToFxIndex, string stockSymbol, int stockIndex)
@@ -330,7 +350,7 @@ namespace Peps
         }
 
         //Fill currency prices
-        private void FillFxRates(double[,] previousStocksPrices)
+        private void FillFxRates(double[,] previousStocksPrices,Boolean live)
         {
             DateTime calibrationStartDate = CurrentDate.AddDays(-Properties.Settings.Default.VolCalibrationDaysNb);
             ArrayList fxPrices;
@@ -340,12 +360,26 @@ namespace Peps
             {
                 if (property.Name.Substring(0, 2).Equals("Fx"))
                 {
-                    //fxPrices = MarketData.getPreviousCurrencyPricesFromWeb(property.Name.Substring(2), calibrationStartDate.ToString("u"), CurrentDate.ToString("u"));
-                    fxPrices = MarketData.getPreviousCurrencyPrices(property.Name.Substring(2), calibrationStartDate, CurrentDate);
+                    if (live)
+                    {
+                        fxPrices = MarketData.getPreviousCurrencyPricesFromWeb(property.Name.Substring(2), calibrationStartDate.ToString("u"), CurrentDate.ToString("u"));
+                    }
+                    else
+                    {
+                        fxPrices = MarketData.getPreviousCurrencyPrices(property.Name.Substring(2), calibrationStartDate, CurrentDate);
+                    }    
+                        
                     for (int j = 0; j < Math.Min(previousStocksPrices.GetLength(0), fxPrices.Count); j++)
                     {
-                        previousStocksPrices[j, cpt] = Double.Parse(((String)fxPrices[j]).Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
-                        //previousStocksPrices[j, cpt] = (double)fxPrices[j];
+                        if (live)
+                        {
+                            previousStocksPrices[j, cpt] = (double)fxPrices[j];
+                        }
+                        else
+                        {
+                            previousStocksPrices[j, cpt] = Double.Parse(((String)fxPrices[j]).Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                                            
                     }
                     cpt++;
                 }

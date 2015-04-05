@@ -45,11 +45,11 @@ namespace Peps
 
         public void load_computation(Object sender, EventArgs e)
         {
-         
+                Boolean live = true;
                 //Init the Display
                 initDisplay();              
                 //Compute delta and price at date 0          
-                CurrentPortfolio.compute();
+                CurrentPortfolio.compute(live);
                 //Display the result of the computation
                 displayData();
           
@@ -106,7 +106,7 @@ namespace Peps
                     tr.Cells.Add(name);
 
                     TableCell price = new TableCell();
-                    tmp = CurrentPortfolio.MarketData.getLastCurrencyPrice(property.Name.Substring(2), fxStartDate, fxEndDate) + "€";
+                    tmp = CurrentPortfolio.MarketData.getLastCurrencyPrice(property.Name.Substring(2), fxStartDate, fxEndDate);
                     price.Text = tmp + " €";
                     tr.Cells.Add(price);
 
@@ -149,7 +149,7 @@ namespace Peps
 
                     tmpStockTicker = Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1];
                     TableCell price = new TableCell();
-                    tmp = CurrentPortfolio.MarketData.getStockPrice(tmpStockTicker, day, month, year) + "€";
+                    tmp = CurrentPortfolio.MarketData.getStockPrice(tmpStockTicker, day, month, year);
                     price.Text = tmp + " €";
                     tr.Cells.Add(price);
 

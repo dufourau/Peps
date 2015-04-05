@@ -139,7 +139,7 @@ namespace Peps
             DateTime endDate = Utils.createDateTime(endYear, endMonth, endDay);
             int startIndex = this.dates.IndexOf(endDate);
             prices = this.symbolToPricesList[symbol];
-            return prices.GetRange(startIndex, startIndex -endIndex) ;
+            return prices.GetRange(endIndex, startIndex -endIndex) ;
 
         }
 

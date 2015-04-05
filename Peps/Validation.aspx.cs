@@ -42,7 +42,7 @@ namespace Peps
             }
             initDisplay();
             //Compute delta and price at date 0                     
-            CurrentPortfolio.compute();          
+            CurrentPortfolio.compute(true);          
             //Display the result of the computation
             displayData();
 
