@@ -20,7 +20,7 @@ namespace Peps
                 {
                     CurrentPortfolio = Portfolio.find();
                     //CurrentPortfolio.CurrentDate = new DateTime(2005, 11, 30);
-                }
+        }
             }
         }
 
@@ -87,7 +87,7 @@ namespace Peps
             FillAssetsTable(CurrentPortfolio.CurrentDate);
             FillCurrenciesTable(CurrentPortfolio.CurrentDate);
             date.Text = "Next Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
-        
+
 
             //TODO display graph of all data values
             //for (int j = 0; j < CurrentPortfolio.index; j++)

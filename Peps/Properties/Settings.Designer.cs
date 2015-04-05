@@ -61,7 +61,7 @@ namespace Peps.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
         public int McSamplesNb {
             get {
                 return ((int)(this["McSamplesNb"]));
@@ -124,7 +124,7 @@ namespace Peps.Properties {
 
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("pub-redis-11983.us-east-1-1.2.ec2.garantiadata.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("localhost")] //"pub-redis-11983.us-east-1-1.2.ec2.garantiadata.com")]
         public string RedisDatabaseURL
         {
             get
@@ -135,7 +135,7 @@ namespace Peps.Properties {
 
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("11983")]
+        [global::System.Configuration.DefaultSettingValueAttribute("6379")] //
         public int RedisPort
         {
             get
