@@ -103,7 +103,7 @@ namespace Peps
                 {
                     PreviousStocksPrices[j, RBSindex] = PreviousStocksPrices[j, RBSindex] * PreviousStocksPrices[j, Properties.Settings.Default.AssetNb + 1] / 100.0;
                     PreviousStocksPrices[j, CitiGroupIndex] = PreviousStocksPrices[j, CitiGroupIndex] * PreviousStocksPrices[j, Properties.Settings.Default.AssetNb + 3];
-            }
+                }
                 performInitialComputations();           
                 this.InitialCash = Properties.Settings.Default.Nominal - this.Wrapper.getPrice();
             }else{
@@ -261,10 +261,10 @@ namespace Peps
             int index = this.MarketData.dates.IndexOf(this.CurrentDate);
             previousInterestRates[0] = this.MarketData.rates[index][0];
             for (int i = 1; i < Properties.Settings.Default.AssetNb; i++) previousInterestRates[i] = 0;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 1] = this.MarketData.rates[index][1];
-            previousInterestRates[Properties.Settings.Default.AssetNb + 2] = this.MarketData.rates[index][2]; 
-            previousInterestRates[Properties.Settings.Default.AssetNb + 3] = this.MarketData.rates[index][3];
-            previousInterestRates[Properties.Settings.Default.AssetNb + 4] = this.MarketData.rates[index][4];
+            previousInterestRates[Properties.Settings.Default.AssetNb + 1] = this.MarketData.rates[index][1]/100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 2] = this.MarketData.rates[index][2]/100; 
+            previousInterestRates[Properties.Settings.Default.AssetNb + 3] = this.MarketData.rates[index][3]/100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 4] = this.MarketData.rates[index][4]/100;
         }
 
         private void FillPreviousStockPrices(double[,] previousStocksPrices, double[] stockToFxIndex)
@@ -286,7 +286,7 @@ namespace Peps
                     else if (tmpStockTicker.Equals("C"))
                         CitiGroupIndex = cpt;
 
-                    tmp = MarketData.getLastStockPricesFromWeb(tmpStockTicker, calibrationStartDate.Day.ToString(), calibrationStartDate.Month.ToString(),
+                    tmp = MarketData.getLastStockPrices(tmpStockTicker, calibrationStartDate.Day.ToString(), calibrationStartDate.Month.ToString(),
                     calibrationStartDate.Year.ToString(), CurrentDate.Day.ToString(), CurrentDate.Month.ToString(), CurrentDate.Year.ToString());
                     if (tmp != null)
                     {
@@ -304,7 +304,7 @@ namespace Peps
             {
                 for (int i = 0; i < size; i++)
                 {
-                    previousStocksPrices[i, cpt] = (double)entry.Value[i];
+                    previousStocksPrices[i, cpt] = Double.Parse(((String)entry.Value[i]).Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
                     SetStockToFxList(stockToFxIndex, entry.Key, cpt);
                     if (previousStocksPrices[i, cpt] < 0.01) throw new Exception();
                 }
@@ -340,10 +340,12 @@ namespace Peps
             {
                 if (property.Name.Substring(0, 2).Equals("Fx"))
                 {
-                    fxPrices = MarketData.getPreviousCurrencyPricesFromWeb(property.Name.Substring(2), calibrationStartDate.ToString("u"), CurrentDate.ToString("u"));
+                    //fxPrices = MarketData.getPreviousCurrencyPricesFromWeb(property.Name.Substring(2), calibrationStartDate.ToString("u"), CurrentDate.ToString("u"));
+                    fxPrices = MarketData.getPreviousCurrencyPrices(property.Name.Substring(2), calibrationStartDate, CurrentDate);
                     for (int j = 0; j < Math.Min(previousStocksPrices.GetLength(0), fxPrices.Count); j++)
                     {
-                        previousStocksPrices[j, cpt] = (double)fxPrices[j];
+                        previousStocksPrices[j, cpt] = Double.Parse(((String)fxPrices[j]).Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
+                        //previousStocksPrices[j, cpt] = (double)fxPrices[j];
                     }
                     cpt++;
                 }

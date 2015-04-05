@@ -81,12 +81,6 @@ namespace Peps
             this.PnLDiv.Text = (100 - Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision)).ToString();
             FillAssetsTable("27", "02", "2015");
             FillCurrenciesTable("2005-11-29", "2005-11-29");
-           
-            //for (int j = 0; j < CurrentPortfolio.index; j++)
-            //{
-            //    Chart1.Series.FindByName("ProductPrice").Points.Add(CurrentPortfolio.prix[j]);
-            //    Chart1.Series.FindByName("PortfolioPrice").Points.Add(CurrentPortfolio.pfvalue[j]);
-            //}
         }
 
      

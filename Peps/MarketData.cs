@@ -27,7 +27,8 @@ namespace Peps
 
         public MarketData()
         {
-            dates = new List<DateTime>(); 
+            dates = Utils.parseDates();
+            dates.Reverse();
             symbolToPricesList = new Dictionary<string, ArrayList>(); 
             String rate = Properties.Resources.rate;
             this.rates = Utils.parseFileToMatrix(rate, null);
@@ -88,9 +89,8 @@ namespace Peps
                         {
                             DateTime startDate = Utils.createDateTime(startYear, startMonth, startDay);
                             DateTime endDate = Utils.createDateTime(endYear, endMonth, endDay);
-                            ArrayList fxPrices;
-                            fxPrices = getPreviousCurrencyPricesFromWeb(property.Name.Substring(2), startDate.ToString("u"), endDate.ToString("u"));
-                            symbolToPricesList.Add(property.Name.Substring(2), fxPrices);
+
+                            symbolToPricesList.Add(property.Name.Substring(2), new ArrayList(redis.GetAllItemsFromList(property.Name.Substring(2))));
                         }
                     }
                 }
@@ -135,11 +135,11 @@ namespace Peps
         {
             ArrayList prices = new ArrayList();
             DateTime startDate = Utils.createDateTime(startYear, startMonth, startDay);
-            int startIndex = this.dates.IndexOf(startDate);
+            int endIndex = this.dates.IndexOf(startDate);
             DateTime endDate = Utils.createDateTime(endYear, endMonth, endDay);
-            int endIndex = this.dates.IndexOf(endDate);
+            int startIndex = this.dates.IndexOf(endDate);
             prices = this.symbolToPricesList[symbol];
-            return prices.GetRange(startIndex, startIndex - endIndex) ;
+            return prices.GetRange(startIndex, startIndex -endIndex) ;
 
         }
 
@@ -198,8 +198,8 @@ namespace Peps
         public ArrayList getPreviousCurrencyPrices(string symbol, DateTime startDate, DateTime endDate)
         {
             ArrayList prices = new ArrayList();          
-            int startIndex = this.dates.IndexOf(startDate);    
-            int endIndex = this.dates.IndexOf(endDate);
+            int endIndex = this.dates.IndexOf(startDate);    
+            int startIndex = this.dates.IndexOf(endDate);
             prices = this.symbolToPricesList[symbol];
             return prices.GetRange(startIndex, startIndex - endIndex);
         }

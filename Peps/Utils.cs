@@ -73,14 +73,15 @@ namespace Peps
             return intArray;
         }
 
-        public static List<string> parseDates(String file)
+        public static List<DateTime> parseDates()
         {
-            List<String> dates = new List<String>();
+            String file = Properties.Resources.Market2;
+            List<DateTime> dates = new List<DateTime>();
             String[] lines = file.Split('\n').Where(x => x != "" && x != null).ToArray();
-            for (int i = 1; i < lines.Length; i++)
+            for (int i = 0; i < lines.Length; i++)
             {
                 String[] items = lines[i].Trim().Split(' ');
-                dates.Add(items[0]);
+                dates.Add(Utils.createDateTime(items[0].Split('-')[0], items[0].Split('-')[1], items[0].Split('-')[2]));
             }
             return dates;
         }
