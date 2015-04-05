@@ -91,11 +91,11 @@ namespace Peps
             if (stringFirstDateInDatabase != null && stringLastDateInDatabase != null)
             {
                 if (lastDBAvailableDate.CompareTo(today) == -1)
-                {
+            {
                     loadMarketDataFromWeb(lastDBAvailableDate, today);
                     lastDBAvailableDate = today;
                     dumpToRedis(lastDBAvailableDate, today);
-                }
+                        }
 
                 foreach (string symbol in symbolList)
                 {
@@ -119,34 +119,36 @@ namespace Peps
                 dumpToRedis(minimumDateToRetrieve, today);
             }
         }
-
+               
         private void loadMarketDataFromWeb(DateTime startDate, DateTime endDate)
         {
             SortedList<DateTime, double> symbolData;
             foreach (string symbol in symbolList)
             {
                 symbolData = marketDataDictionary[symbol];
+                loadSymbolFromWeb(symbol, startDate, endDate);
+            }  
+        }  
+
+        public void loadSymbolFromWeb(string symbol, DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                string url, urlFormated;
                 if (currencySymbols.Contains(symbol))
                 {
-                    loadSymbolFromWeb(symbol, currencyURL, startDate, endDate);
+                    url = currencyURL;
+                    urlFormated = string.Format(url, symbol, startDate.ToString(dateFormat), endDate.ToString(dateFormat));
+                } else {
+                    url = urlPrototype;
+                    urlFormated = string.Format(url, symbol, startDate.Month, startDate.Day, startDate.Year,
+                        endDate.Month, endDate.Day, endDate.Year, "d");
                 }
-                else
-                {
-                    loadSymbolFromWeb(symbol, urlPrototype, startDate, endDate);
-                }
-            }
-        }
-
-        public void loadSymbolFromWeb(string symbol, string url, DateTime startDate, DateTime endDate){
-             try
-            {
-                string urlFormated = string.Format(urlPrototype, symbol, startDate.Month, startDate.Day, startDate.Year,
-                    endDate.Month, endDate.Day, endDate.Year, "d");
                 var webClient = new WebClient();
                 String csvData = webClient.DownloadString(urlFormated);
                 string[] rows = csvData.Replace("\r", "").Split('\n');
                 for (int i = rows.Length - 2; i >= 1; i--)
-                {
+                {   
                     string[] splittedRow = rows[i].Split(',')[0].Split('-');
                     int year = Int32.Parse(splittedRow[0], CultureInfo.InvariantCulture);
                     int month = Int32.Parse(splittedRow[1], CultureInfo.InvariantCulture);
@@ -156,8 +158,8 @@ namespace Peps
                     int index = 6;
                     if (currencySymbols.Contains(symbol)) index = 1;
                     marketDataDictionary[symbol][date] = Double.Parse(rows[i].Split(',')[index], CultureInfo.InvariantCulture);
+                    }                        
                 }
-            }
             catch
             {
                 Console.WriteLine("No files for the stock " + symbol + " for the specified date range founded on the server.");
@@ -170,10 +172,10 @@ namespace Peps
             SortedList<DateTime, double> pricesDictionary = marketDataDictionary[symbol];
             int startIndex = pricesDictionary.IndexOfKey(startDate);
             int endIndex = pricesDictionary.IndexOfKey(endDate);
-            return pricesDictionary.Values.ToList().GetRange(startIndex, startIndex - endIndex);
+            return pricesDictionary.Values.ToList().GetRange(startIndex, endIndex - startIndex);
         }
 
-        public double getStockPrice(string symbol, DateTime date)
+        public double getStockPriceFromWeb(string symbol, DateTime date)
         {
             try
             {
@@ -190,11 +192,16 @@ namespace Peps
             }
         }
 
-        public double getLastCurrencyPrice(string symbol, DateTime startDate, DateTime endDate)
+        public double getPrice(string symbol, DateTime date)
+        {
+            return marketDataDictionary[symbol][date];
+        }
+
+        public double getLastCurrencyPriceFromWeb(string symbol, DateTime startDate, DateTime endDate)
         {
             try
             {
-                string url = string.Format(currencyURL, symbol, startDate.ToString(dateFormat), endDate.ToString(dateFormat));
+                string url = string.Format(currencyURL, symbol, startDate.ToString(dateFormat), startDate.AddDays(1).ToString(dateFormat));
                 var webClient = new WebClient();
                 string csvData = webClient.DownloadString(url);
                 string[] rows = csvData.Replace("\r", "").Split('\n');

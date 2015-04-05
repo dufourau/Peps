@@ -49,7 +49,7 @@ namespace Peps
             redisManager.ExecAs<Portfolio>(redisPf => {
                 using (var redis = new RedisClient(Properties.Settings.Default.RedisDatabaseURL))
                 {
-                    var pf = this;
+                var pf = this;
                     pf.Id = 1;
                     redisPf.StoreAsHash(pf);
                 }
@@ -74,7 +74,7 @@ namespace Peps
             Portfolio portfolio = null;
 
             redisManager.ExecAs<Portfolio>(redis =>
-            {
+        {
                 portfolio = redis.GetFromHash(1);
             });
 
@@ -84,8 +84,8 @@ namespace Peps
             }
             else
             {
-                portfolio.MarketData = new MarketData();
-                portfolio.Wrapper = new WrapperClass();
+            portfolio.MarketData = new MarketData();
+            portfolio.Wrapper = new WrapperClass();
             }
             return portfolio;
         }
@@ -122,7 +122,7 @@ namespace Peps
                 {
                     PreviousStocksPrices[j, RBSindex] = PreviousStocksPrices[j, RBSindex] * PreviousStocksPrices[j, Properties.Settings.Default.AssetNb + 1] / 100.0;
                     PreviousStocksPrices[j, CitiGroupIndex] = PreviousStocksPrices[j, CitiGroupIndex] * PreviousStocksPrices[j, Properties.Settings.Default.AssetNb + 3];
-                }
+        }
                 performComputations(t, Utils.Convert2dArrayto1d(computePast(t)));
                 //TO DO: 
                 double actualizationFactor = Math.Exp((PreviousInterestRates[0] / 100) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
@@ -209,15 +209,15 @@ namespace Peps
             this.Delta = Wrapper.getDelta();
         }
 
+        //live = true => request to yahoo finance
+        //live = false => search in our database
         private void initComputationParameters()
         {
             StockToFxIndex = new double[Properties.Settings.Default.AssetNb];
-            PreviousStocksPrices = new double[Properties.Settings.Default.VolCalibrationDaysNb + 1, Properties.Settings.Default.AssetNb + Properties.Settings.Default.FxNb];
             PreviousInterestRates = new double[Properties.Settings.Default.FxNb + Properties.Settings.Default.AssetNb + 1];
 
-            //NO CALL TO YAHOO FINANCE => throw too much request exception
-            //GET DATA From Portfolio, it's persistent
-            FillPreviousStockPrices(PreviousStocksPrices, StockToFxIndex);
+            
+            PreviousStocksPrices = FillPreviousStockPrices( StockToFxIndex);
             FillFxRates(PreviousStocksPrices);
             FillPreviousInterestRates(PreviousInterestRates);
         }
@@ -259,20 +259,22 @@ namespace Peps
             }
         }
 
-        //TO DO get real rate for all date
         private void FillPreviousInterestRates(double[] previousInterestRates)
         {
             int index = this.MarketData.dates.ToList().IndexOf(this.CurrentDate);
-            previousInterestRates[0] = this.MarketData.rates[index][0];
+            previousInterestRates[0] = this.MarketData.rates[index][0] / 100;
             for (int i = 1; i < Properties.Settings.Default.AssetNb; i++) previousInterestRates[i] = 0;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 1] = this.MarketData.rates[index][1]/100;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 2] = this.MarketData.rates[index][2]/100; 
-            previousInterestRates[Properties.Settings.Default.AssetNb + 3] = this.MarketData.rates[index][3]/100;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 4] = this.MarketData.rates[index][4]/100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 1] = this.MarketData.rates[index][1] / 100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 2] = this.MarketData.rates[index][2] / 100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 3] = this.MarketData.rates[index][3] / 100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 4] = this.MarketData.rates[index][4] / 100;
         }
 
-        private void FillPreviousStockPrices(double[,] previousStocksPrices, double[] stockToFxIndex)
+      
+
+        private double[,] FillPreviousStockPrices(double[] stockToFxIndex)
         {
+            double[,] previousStocksPrices;
             string tmpStockTicker;
             DateTime calibrationStartDate = CurrentDate.AddDays(-Properties.Settings.Default.VolCalibrationDaysNb);
             int size = Properties.Settings.Default.VolCalibrationDaysNb + 1;
@@ -291,6 +293,7 @@ namespace Peps
                         CitiGroupIndex = cpt;
 
                     tmp = MarketData.getPricesRange(tmpStockTicker, calibrationStartDate, CurrentDate);
+
                     if (tmp != null)
                     {
                         symbolToPricesList.Add(property.Name, tmp);
@@ -301,7 +304,7 @@ namespace Peps
                     cpt++;
                 }
             }
-
+            previousStocksPrices = new double[size, Properties.Settings.Default.AssetNb + Properties.Settings.Default.FxNb];
             cpt = 0;
             foreach (KeyValuePair<String, List<double>> entry in symbolToPricesList)
             {
@@ -313,6 +316,7 @@ namespace Peps
                 }
                 cpt++;
             }
+            return previousStocksPrices;
         }
 
         void SetStockToFxList(double[] stockToFxIndex, string stockSymbol, int stockIndex)
@@ -343,8 +347,8 @@ namespace Peps
             {
                 if (property.Name.Substring(0, 2).Equals("Fx"))
                 {
-                    //fxPrices = MarketData.getPreviousCurrencyPricesFromWeb(property.Name.Substring(2), calibrationStartDate.ToString("u"), CurrentDate.ToString("u"));
-                    fxPrices = MarketData.getPricesRange(property.Name.Substring(2), calibrationStartDate, CurrentDate);
+                    fxPrices = MarketData.getPricesRange(property.Name.Substring(2), calibrationStartDate, CurrentDate);  
+                        
                     for (int j = 0; j < Math.Min(previousStocksPrices.GetLength(0), fxPrices.Count); j++)
                     {
                         previousStocksPrices[j, cpt] = fxPrices[j];

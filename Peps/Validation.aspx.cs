@@ -75,7 +75,7 @@ namespace Peps
             this.IcInterval.Text = Math.Round(CurrentPortfolio.Wrapper.getIC(), Properties.Settings.Default.Precision).ToString();
             this.PnLDiv.Text = (100 - Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision)).ToString();
             FillAssetsTable(new DateTime(2015, 02, 27));
-            FillCurrenciesTable(new DateTime(2005, 11, 29), new DateTime(2005, 11, 29));
+            FillCurrenciesTable(new DateTime(2005, 11, 29));
 
             //for (int j = 0; j < CurrentPortfolio.index; j++)
             //{
@@ -86,11 +86,11 @@ namespace Peps
 
 
 
-        private void FillCurrenciesTable(DateTime fxStartDate, DateTime fxEndDate)
+        private void FillCurrenciesTable(DateTime fxStartDate)
         {
             double[] deltaVect = CurrentPortfolio.Wrapper.getDelta();
             int cpt = Properties.Settings.Default.AssetNb;
-            string tmp;
+            double tmp;
             foreach (PropertyInfo property in
                 typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
             {
@@ -107,8 +107,8 @@ namespace Peps
                     tr.Cells.Add(name);
 
                     TableCell price = new TableCell();
-                    tmp = CurrentPortfolio.MarketData.getLastCurrencyPrice(property.Name.Substring(2), fxStartDate, fxEndDate) + "€";
-                    price.Text = tmp + " €";
+                    tmp = CurrentPortfolio.MarketData.getPrice(property.Name.Substring(2), fxStartDate);
+                    price.Text = Math.Round(tmp, Properties.Settings.Default.Precision) + " €";
                     tr.Cells.Add(price);
 
                     TableCell delta = new TableCell();
@@ -116,7 +116,7 @@ namespace Peps
                     tr.Cells.Add(delta);
 
                     TableCell totalValue = new TableCell();
-                    totalValue.Text = (Math.Round(Double.Parse(tmp, CultureInfo.InvariantCulture) * deltaVect[cpt], Properties.Settings.Default.Precision)).ToString();
+                    totalValue.Text = (Math.Round(tmp * deltaVect[cpt], Properties.Settings.Default.Precision)).ToString();
                     tr.Cells.Add(totalValue);
 
                     stocksTable.Rows.Add(tr);
@@ -150,7 +150,7 @@ namespace Peps
 
                     tmpStockTicker = Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1];
                     TableCell price = new TableCell();
-                    tmp = CurrentPortfolio.MarketData.getStockPrice(tmpStockTicker, date) + "€";
+                    tmp = CurrentPortfolio.MarketData.getPrice(tmpStockTicker, date) + "€";
                     price.Text = tmp + " €";
                     tr.Cells.Add(price);
 

@@ -46,12 +46,12 @@ namespace Peps
         public void load_computation(Object sender, EventArgs e)
         {
                 //Init the Display
-                initDisplay();
+                initDisplay();              
                 //Compute delta and price at date 0          
                 CurrentPortfolio.compute();
                 //Display the result of the computation
                 displayData();
-        }
+            }
 
         public void computeHedge(Object sender, EventArgs e){
             CurrentPortfolio.computeHedge();
@@ -87,7 +87,7 @@ namespace Peps
         {
             double[] deltaVect = CurrentPortfolio.Wrapper.getDelta();
             int cpt = Properties.Settings.Default.AssetNb;
-            string tmp;
+            double tmp;
             foreach (PropertyInfo property in
                 typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
             {
@@ -104,8 +104,8 @@ namespace Peps
                     tr.Cells.Add(name);
 
                     TableCell price = new TableCell();
-                    tmp = CurrentPortfolio.MarketData.getLastCurrencyPrice(property.Name.Substring(2), fxStartDate, fxEndDate) + "€";
-                    price.Text = tmp + " €";
+                    tmp = CurrentPortfolio.MarketData.getPrice(property.Name.Substring(2), fxStartDate);
+                    price.Text = Math.Round(tmp, Properties.Settings.Default.Precision).ToString() + " €";
                     tr.Cells.Add(price);
 
                     TableCell delta = new TableCell();
@@ -113,7 +113,7 @@ namespace Peps
                     tr.Cells.Add(delta);
 
                     TableCell totalValue = new TableCell();
-                    totalValue.Text = (Math.Round(Double.Parse(tmp, CultureInfo.InvariantCulture) * deltaVect[cpt], Properties.Settings.Default.Precision)).ToString();
+                    totalValue.Text = (Math.Round(tmp * deltaVect[cpt], Properties.Settings.Default.Precision)).ToString();
                     tr.Cells.Add(totalValue);
 
                     stocksTable.Rows.Add(tr);
@@ -128,7 +128,7 @@ namespace Peps
             double[] deltaVect = CurrentPortfolio.Wrapper.getDelta();
             string tmpStockTicker;
             int cpt = 0;
-            string tmp;
+            double tmp;
             foreach (PropertyInfo property in
                 typeof(Properties.Resources).GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
             {
@@ -147,8 +147,8 @@ namespace Peps
 
                     tmpStockTicker = Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1];
                     TableCell price = new TableCell();
-                    tmp = CurrentPortfolio.MarketData.getStockPrice(tmpStockTicker, date) + "€";
-                    price.Text = tmp + " €";
+                    tmp = CurrentPortfolio.MarketData.getPrice(tmpStockTicker, date);
+                    price.Text = Math.Round(tmp, Properties.Settings.Default.Precision) + " €";
                     tr.Cells.Add(price);
 
                     TableCell delta = new TableCell();
@@ -157,7 +157,7 @@ namespace Peps
                     tr.Cells.Add(delta);
 
                     TableCell totalValue = new TableCell();
-                    totalValue.Text = (Math.Round(Double.Parse(tmp, CultureInfo.InvariantCulture) * deltaVect[cpt], Properties.Settings.Default.Precision)).ToString();
+                    totalValue.Text = (Math.Round(tmp * deltaVect[cpt], Properties.Settings.Default.Precision)).ToString();
                     tr.Cells.Add(totalValue);
 
                     stocksTable.Rows.Add(tr);
