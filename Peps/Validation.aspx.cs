@@ -14,7 +14,7 @@ namespace Peps
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            CurrentPortfolio.CurrentDate = new DateTime(2015, 11, 30);
         }
 
         public Portfolio CurrentPortfolio
@@ -28,7 +28,7 @@ namespace Peps
         }
 
 
-        public void load_computation(Object sender, EventArgs e)
+        public void loadComputation(Object sender, EventArgs e)
         {
             String str = Request.Form[DisplayCalendar.UniqueID];
             //Init the Display
@@ -42,7 +42,7 @@ namespace Peps
             }
             initDisplay();
             //Compute delta and price at date 0                     
-            CurrentPortfolio.compute(true);          
+            CurrentPortfolio.compute(false);          
             //Display the result of the computation
             displayData();
 
@@ -51,6 +51,8 @@ namespace Peps
         public void computeHedge(Object sender, EventArgs e)
         {
             CurrentPortfolio.computeHedge();
+            CurrentPortfolio.compute(false);
+            displayData();
         }
 
 
@@ -64,18 +66,22 @@ namespace Peps
             CashGBP.Text = "0";
             CashYen.Text = "0";
         }
-
-        //HERE: 
+   
         //Display logic
         public void displayData()
         {
             InitialCash.Text = Math.Round(CurrentPortfolio.InitialCash, Properties.Settings.Default.Precision).ToString();
             this.PdtValue.Text = Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision).ToString();
-            this.PtfValue.Text = Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision).ToString();
+            this.PtfValue.Text = Math.Round(CurrentPortfolio.PortfolioValue, Properties.Settings.Default.Precision).ToString();
             this.IcInterval.Text = Math.Round(CurrentPortfolio.Wrapper.getIC(), Properties.Settings.Default.Precision).ToString();
-            this.PnLDiv.Text = (100 - Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision)).ToString();
-            FillAssetsTable("27", "02", "2015");
+            this.PnLDiv.Text = Math.Round(CurrentPortfolio.ProfitAndLoss, Properties.Settings.Default.Precision).ToString();
+            CashEuro.Text = Math.Round(CurrentPortfolio.Cash, Properties.Settings.Default.Precision).ToString();
+            //Use current date instead
+            FillAssetsTable("30", "11", "2005");
             FillCurrenciesTable("2005-11-29", "2005-11-29");
+            date.Text = "Current Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
+        
+
 
             //for (int j = 0; j < CurrentPortfolio.index; j++)
             //{
@@ -88,7 +94,7 @@ namespace Peps
 
         private void FillCurrenciesTable(string fxStartDate, string fxEndDate)
         {
-            double[] deltaVect = CurrentPortfolio.Wrapper.getDelta();
+            double[] deltaVect = CurrentPortfolio.Delta;
             int cpt = Properties.Settings.Default.AssetNb;
             string tmp;
             foreach (PropertyInfo property in
@@ -128,7 +134,7 @@ namespace Peps
         //day et year: normaux
         private void FillAssetsTable(string day, string month, string year)
         {
-            double[] deltaVect = CurrentPortfolio.Wrapper.getDelta();
+            double[] deltaVect = CurrentPortfolio.Delta;
             string tmpStockTicker;
             int cpt = 0;
             string tmp;

@@ -13,6 +13,15 @@ namespace Peps {
     public partial class Validation {
         
         /// <summary>
+        /// date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal date;
+        
+        /// <summary>
         /// DisplayCalendar control.
         /// </summary>
         /// <remarks>
