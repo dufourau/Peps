@@ -135,7 +135,7 @@ namespace Peps.Properties {
 
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("11983")] //6379
+        [global::System.Configuration.DefaultSettingValueAttribute("11983")] //
         public int RedisPort
         {
             get
