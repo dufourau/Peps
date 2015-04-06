@@ -71,10 +71,20 @@ namespace Peps
 
         public ArrayList getAllPricesAtDate(DateTime date)
         {
+            date = Utils.GetWorkingWeekday(date);
             ArrayList prices = new ArrayList();
             foreach (string symbol in symbolList)
             {
-                prices.Add(marketDataDictionary[symbol][date]);
+                //Bug: missing values
+                if (!(marketDataDictionary[symbol]).ContainsKey(date))
+                {
+                    prices.Add(marketDataDictionary[symbol][new DateTime(2005,11,30)]);
+                }
+                else
+                {
+                    prices.Add(marketDataDictionary[symbol][date]);
+                }
+
             }
             return prices;
         }
@@ -176,11 +186,20 @@ namespace Peps
 
         public List<double> getPricesRange(string symbol, DateTime startDate, DateTime endDate)
         {
-            ArrayList prices = new ArrayList();
+
             SortedList<DateTime, double> pricesDictionary = marketDataDictionary[symbol];
             int startIndex = pricesDictionary.IndexOfKey(startDate);
+            while(startIndex == -1){
+                startIndex = pricesDictionary.IndexOfKey(startDate.AddDays(1));
+            }
             int endIndex = pricesDictionary.IndexOfKey(endDate);
-            return pricesDictionary.Values.ToList().GetRange(startIndex, endIndex - startIndex);
+            while (startIndex == -1)
+            {
+                endIndex = pricesDictionary.IndexOfKey(startDate.AddDays(1));
+            }          
+            List<double> prices = pricesDictionary.Values.ToList().GetRange(startIndex, endIndex - startIndex);
+            prices.Reverse();
+            return prices;
         }
 
         public double getStockPriceFromWeb(string symbol, DateTime date)
@@ -202,7 +221,17 @@ namespace Peps
 
         public double getPrice(string symbol, DateTime date)
         {
-            return marketDataDictionary[symbol][date];
+            double assetPrice = marketDataDictionary[symbol][date];
+            if(symbol.Equals("RBS.L"))
+            {
+                assetPrice *= marketDataDictionary["GBPEUR"][date] / 100;
+               
+            }
+            if(symbol.Equals("C")){
+                assetPrice *= marketDataDictionary["USDEUR"][date] / 100;
+              
+            }
+           return assetPrice;
         }
 
         public double getLastCurrencyPriceFromWeb(string symbol, DateTime startDate, DateTime endDate)

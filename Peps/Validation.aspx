@@ -112,7 +112,7 @@
                                        <form runat="server">
                                             <span class="pull-right"> 
                                                   
-                                                    <asp:TextBox ID="DisplayCalendar" type="text" placeholder="11/30/2015" runat="server" ReadOnly="true"></asp:TextBox>
+                                                    <asp:TextBox ID="DisplayCalendar" type="text" placeholder="11/30/2005" runat="server" ReadOnly="true"></asp:TextBox>
                                                     <asp:Button  OnClick="loadComputation" class="btn btn-xs btn-default fa fa-download"  Text="Load" runat="server"> 
 
                                                     </asp:Button>
@@ -145,8 +145,9 @@
                                                 <asp:TableCell><b>ISIN</b></asp:TableCell>
                                                 <asp:TableCell>Name</asp:TableCell>
                                                 <asp:TableCell>Single Price</asp:TableCell>
-                                                <asp:TableCell>Quantity (delta)</asp:TableCell>
+                                                <asp:TableCell>Quantity To Buy(delta)</asp:TableCell>
                                                 <asp:TableCell>Total value</asp:TableCell>
+                                                <asp:TableCell>Quantity</asp:TableCell>
                                             </asp:TableRow>
                                          
                                       </asp:Table>  
