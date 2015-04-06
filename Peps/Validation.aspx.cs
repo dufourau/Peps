@@ -66,6 +66,7 @@ namespace Peps
             CurrentPortfolio.setInterestRate();
             CurrentPortfolio.computeHedge();
             CurrentPortfolio.compute();
+            displayData();
             
         }
 

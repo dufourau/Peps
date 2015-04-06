@@ -277,7 +277,7 @@ namespace Peps
         {
             int offset = this.MarketData.rates.Length;
             int index = this.MarketData.dates.ToList().IndexOf(this.CurrentDate);
-            previousInterestRates[0] = this.MarketData.rates[offset - index][0];
+            previousInterestRates[0] = this.MarketData.rates[offset - index][0]/100;
             for (int i = 1; i < Properties.Settings.Default.AssetNb; i++) previousInterestRates[i] = 0;
             previousInterestRates[Properties.Settings.Default.AssetNb + 1] = this.MarketData.rates[offset-index][1] / 100;
             previousInterestRates[Properties.Settings.Default.AssetNb + 2] = this.MarketData.rates[offset-index][2] / 100;

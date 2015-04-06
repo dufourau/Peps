@@ -193,7 +193,7 @@ namespace Peps
                 startIndex = pricesDictionary.IndexOfKey(startDate.AddDays(1));
             }
             int endIndex = pricesDictionary.IndexOfKey(endDate);
-            while (startIndex == -1)
+            while (endIndex == -1)
             {
                 endIndex = pricesDictionary.IndexOfKey(startDate.AddDays(1));
             }          
