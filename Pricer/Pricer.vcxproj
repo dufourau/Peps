@@ -90,7 +90,7 @@
       <AdditionalLibraryDirectories>$(SolutionDir)\pnl-win32-1.7.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)Debug\Pricer.dll" "$(SolutionDir)Peps\bin\Pricer.dll"</Command>
+      <Command>copy "$(OutputPath)\Pricer.dll" "$(SolutionDir)Peps\bin\Pricer.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
