@@ -75,7 +75,7 @@ namespace Peps
             ArrayList prices = new ArrayList();
             foreach (string symbol in symbolList)
             {
-                
+                //Bug: missing values
                 if (!(marketDataDictionary[symbol]).ContainsKey(date))
                 {
                     prices.Add(marketDataDictionary[symbol][new DateTime(2005,11,30)]);
@@ -189,7 +189,14 @@ namespace Peps
 
             SortedList<DateTime, double> pricesDictionary = marketDataDictionary[symbol];
             int startIndex = pricesDictionary.IndexOfKey(startDate);
+            while(startIndex == -1){
+                startIndex = pricesDictionary.IndexOfKey(startDate.AddDays(1));
+            }
             int endIndex = pricesDictionary.IndexOfKey(endDate);
+            while (startIndex == -1)
+            {
+                endIndex = pricesDictionary.IndexOfKey(startDate.AddDays(1));
+            }          
             List<double> prices = pricesDictionary.Values.ToList().GetRange(startIndex, endIndex - startIndex);
             prices.Reverse();
             return prices;

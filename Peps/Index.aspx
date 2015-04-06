@@ -94,9 +94,9 @@
                                         <form runat="server">
                                             <span class="pull-right"> 
                                             
-                                                    <asp:Button  OnClick="loadComputation" class="btn btn-xs btn-default fa fa-download"  Text="Load" runat="server"> 
+                                                    <asp:Button ID="Load" OnClick="loadComputation" class="btn btn-xs btn-default fa fa-download"  Text="Load" runat="server"> 
                                                     </asp:Button>
-                                                    <asp:Button OnClick="computeHedge" class="btn btn-xs btn-default glyphicon glyphicon-refresh" Text="Refresh" runat="server">                                             
+                                                    <asp:Button ID="Update" OnClick="computeHedge" class="btn btn-xs btn-default glyphicon glyphicon-refresh" Text="Refresh" runat="server">                                             
                                                     </asp:Button>
                                             
 

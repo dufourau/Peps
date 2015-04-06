@@ -19,8 +19,12 @@ namespace Peps
                 if (CurrentPortfolio == null)
                 {
                     CurrentPortfolio = Portfolio.find();
-                    //CurrentPortfolio.CurrentDate = new DateTime(2005, 11, 30);
-        }
+                    
+                }
+                else
+                {
+                    displayData();
+                }
             }
         }
 
@@ -48,8 +52,10 @@ namespace Peps
                 CurrentPortfolio.CurrentDate = Utils.createDateTime(y,m,d);
             }
             initDisplay();
-            //Compute delta and price at date 0                     
-            CurrentPortfolio.compute();          
+            //Compute delta and price at date t                
+            CurrentPortfolio.compute();
+            CurrentPortfolio.InitPortfolio(Properties.Settings.Default.Nominal - CurrentPortfolio.ProductPrice, CurrentPortfolio.ProductPrice);
+
             //Display the result of the computation
             displayData();
 
@@ -57,9 +63,10 @@ namespace Peps
 
         public void computeHedge(Object sender, EventArgs e)
         {
+            CurrentPortfolio.setInterestRate();
             CurrentPortfolio.computeHedge();
             CurrentPortfolio.compute();
-            displayData();
+            
         }
 
 
@@ -78,7 +85,7 @@ namespace Peps
         public void displayData()
         {
             InitialCash.Text = Math.Round(CurrentPortfolio.InitialCash, Properties.Settings.Default.Precision).ToString();
-            this.PdtValue.Text = Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision).ToString();
+            this.PdtValue.Text = Math.Round(CurrentPortfolio.ProductPrice, Properties.Settings.Default.Precision).ToString();
             this.PtfValue.Text = Math.Round(CurrentPortfolio.PortfolioValue, Properties.Settings.Default.Precision).ToString();
             this.IcInterval.Text = Math.Round(CurrentPortfolio.Wrapper.getIC(), Properties.Settings.Default.Precision).ToString();
             this.PnLDiv.Text = Math.Round(CurrentPortfolio.ProfitAndLoss, Properties.Settings.Default.Precision).ToString();
@@ -86,7 +93,7 @@ namespace Peps
             //Use current date instead
             FillAssetsTable(CurrentPortfolio.CurrentDate);
             FillCurrenciesTable(CurrentPortfolio.CurrentDate);
-            date.Text = "Next Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
+            date.Text = "Current Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
 
 
             //TODO display graph of all data values

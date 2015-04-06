@@ -34,7 +34,7 @@ namespace Peps
                 if (CurrentPortfolio == null)
                 {
                     CurrentPortfolio = Portfolio.find();
-                    CurrentPortfolio.CurrentDate = new DateTime(2005, 11, 30);
+                    
                     CurrentPortfolio.MarketData.loadAllStockPrices();
                     CurrentPortfolio.save();
                 }
@@ -44,18 +44,22 @@ namespace Peps
 
         public void loadComputation(Object sender, EventArgs e)
         {
+                
+                CurrentPortfolio.CurrentDate = new DateTime(2005, 11, 30);
                 //Init the Display
                 initDisplay();              
                 //Compute delta and price at date 0          
                 CurrentPortfolio.compute();
                 //Display the result of the computation
                 displayData();
+                Update.Enabled = true;
         }
 
         public void computeHedge(Object sender, EventArgs e){
             
             CurrentPortfolio.computeHedge();
             displayData();
+            Update.Enabled = false;
         }
 
 
