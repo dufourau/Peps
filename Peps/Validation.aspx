@@ -34,6 +34,26 @@
             });
         });
     </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            Morris.Line({
+                element: 'portfolio-chart',
+                data: JSON.parse('<%= chartData %>'),
+                xkey: 'date',
+                ykeys: ['productPrice', 'portfolioValue'],
+                labels: ['Product Price', 'Porfolio Value'],
+                pointSize: 2,
+                smooth : false,
+                hideHover: 'auto',
+                ymin : 'auto',
+                ymax : 'auto'
+            });
+
+        });
+    </script>
     
     
 </head>
@@ -51,7 +71,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="Default.aspx">Gestion Moduleis</a>
+                <a class="navbar-brand" href="Index.aspx">Gestion Moduleis</a>
             </div>
 
         <ul class="nav navbar-right top-nav">
@@ -101,7 +121,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            General <small>Product hedging</small>
+                            Validation <small>Product hedging</small>
                         </h1>
                         <div class="breadcrumb">
                                  <div class="row">
@@ -276,7 +296,7 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Portfolio's value evolution</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="morris-area-chart"></div>
+                                <div id="portfolio-chart"></div>
                             </div>
                         </div>
                     </div>
@@ -384,7 +404,6 @@
     <!-- Morris Charts JavaScript -->
     <script src="js/plugins/morris/raphael.min.js"></script>
     <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
 
     <!-- Flot Charts JavaScript -->
     <!--[if lte IE 8]><script src="js/excanvas.min.js"></script><![endif]-->

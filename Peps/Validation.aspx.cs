@@ -52,6 +52,7 @@ namespace Peps
                 CurrentPortfolio.CurrentDate = Utils.createDateTime(y,m,d);
             }
             initDisplay();
+            CurrentPortfolio.resetHistory();
             //Compute delta and price at date t                
             CurrentPortfolio.compute();
             CurrentPortfolio.InitPortfolio(Properties.Settings.Default.Nominal - CurrentPortfolio.ProductPrice, CurrentPortfolio.ProductPrice);
@@ -70,7 +71,6 @@ namespace Peps
             
         }
 
-
         //TODO: refactor with the same function in index Index
         public void initDisplay()
         {
@@ -81,6 +81,8 @@ namespace Peps
             CashGBP.Text = "0";
             CashYen.Text = "0";
         }
+
+
 
         //Display logic
         public void displayData()
@@ -95,14 +97,19 @@ namespace Peps
             FillAssetsTable(CurrentPortfolio.CurrentDate);
             FillCurrenciesTable(CurrentPortfolio.CurrentDate);
             date.Text = "Current Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
-
-
             //TODO display graph of all data values
             //for (int j = 0; j < CurrentPortfolio.index; j++)
             //{
             //    Chart1.Series.FindByName("ProductPrice").Points.Add(CurrentPortfolio.prix[j]);
             //    Chart1.Series.FindByName("PortfolioPrice").Points.Add(CurrentPortfolio.pfvalue[j]);
             //}
+        }
+
+        public string chartData {
+            get
+            {
+                return CurrentPortfolio.historyToJSONString();
+            }
         }
 
 

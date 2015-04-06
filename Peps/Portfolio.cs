@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.Script.Serialization;
 using TeamDev.Redis;
 using Wrapper;
 
@@ -66,6 +67,8 @@ namespace Peps
             this.RBSindex = 18;
             this.NumberOfAsset = Properties.Settings.Default.AssetNb + Properties.Settings.Default.FxNb;
             this.QuantityOfAssets = new double[NumberOfAsset];
+            this.ProductPriceHistory = new List<double>();
+            this.PortfolioValueHistory = new List<double>();
             
         }
 
@@ -140,6 +143,8 @@ namespace Peps
                 double actualizationFactor = Math.Exp((PreviousInterestRates[0] / 100) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
                 this.InitialCash = Properties.Settings.Default.Nominal - this.Wrapper.getPrice();
             }
+            PortfolioValueHistory.Add(PortfolioValue);
+            ProductPriceHistory.Add(ProductPrice);
             this.save();
         }
         
@@ -428,6 +433,36 @@ namespace Peps
                 this.TrackingError = this.PortfolioValue - this.ProductPrice;
                 this.ProfitAndLoss = this.TrackingError + this.InitialCash;
             }
+        }
+        
+        private class MorrisData
+        {
+            public string date { get; set; }
+            public double productPrice { get; set; }
+            public double portfolioValue { get; set; }
+        }
+
+        public string historyToJSONString() {
+            var array = new List<MorrisData>();
+            List<DateTime> datesList = MarketData.dates.ToList();
+            int firstIndex = datesList.IndexOf(CurrentDate);
+            for (int i = 0; i < PortfolioValueHistory.Count; i++)
+            {
+                array.Add(new MorrisData
+                {
+                    date = datesList[firstIndex + i].ToString(MarketData.dateFormat),
+                    productPrice = ProductPriceHistory[i],
+                    portfolioValue = PortfolioValueHistory[i]
+                });
+            }
+            var serializer = new JavaScriptSerializer();
+            return serializer.Serialize(array);
+        }
+
+        internal void resetHistory()
+        {
+            this.ProductPriceHistory = new List<double>();
+            this.PortfolioValueHistory = new List<double>();
         }
     }
 }
