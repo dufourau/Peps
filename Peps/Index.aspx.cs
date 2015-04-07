@@ -47,7 +47,6 @@ namespace Peps
                     CurrentPortfolio.save();
                 }
             }
-            displayData();
         }
 
         public void loadComputation(Object sender, EventArgs e)
@@ -148,7 +147,7 @@ namespace Peps
         //day et year: normaux
         private void FillAssetsTable(DateTime date)
         {
-            double[] deltaVect = CurrentPortfolio.Wrapper.getDelta();
+            double[] deltaVect = CurrentPortfolio.Delta;
             string tmpStockTicker;
             int cpt = 0;
             double tmp;
