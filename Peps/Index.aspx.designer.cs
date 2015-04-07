@@ -31,13 +31,13 @@ namespace Peps {
         protected global::System.Web.UI.WebControls.Literal date;
         
         /// <summary>
-        /// Contrôle Load.
+        /// Contrôle Compute.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Load;
+        protected global::System.Web.UI.WebControls.LinkButton Compute;
         
         /// <summary>
         /// Contrôle Update.
@@ -46,7 +46,7 @@ namespace Peps {
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Update;
+        protected global::System.Web.UI.WebControls.LinkButton Update;
         
         /// <summary>
         /// Contrôle stocksTable.
@@ -112,39 +112,39 @@ namespace Peps {
         protected global::System.Web.UI.WebControls.Literal CashEuro;
         
         /// <summary>
-        /// Contrôle CashGBP.
+        /// Contrôle Button1.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal CashGBP;
+        protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
-        /// Contrôle CashDollar.
+        /// Contrôle Button2.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal CashDollar;
+        protected global::System.Web.UI.WebControls.Button Button2;
         
         /// <summary>
-        /// Contrôle CashYen.
+        /// Contrôle Button3.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal CashYen;
+        protected global::System.Web.UI.WebControls.Button Button3;
         
         /// <summary>
-        /// Contrôle CashCHF.
+        /// Contrôle Button4.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal CashCHF;
+        protected global::System.Web.UI.WebControls.Button Button4;
     }
 }

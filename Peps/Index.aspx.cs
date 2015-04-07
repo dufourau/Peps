@@ -45,26 +45,45 @@ namespace Peps
                     
                     CurrentPortfolio.MarketData.loadAllStockPrices();
                     CurrentPortfolio.save();
+                    CurrentPortfolio.ModelId = 1;
                 }
             }
         }
 
         public void loadComputation(Object sender, EventArgs e)
         {
-            CurrentPortfolio.CurrentDate = new DateTime(2005, 11, 30);
-            //Init the Display
-            initDisplay();
-            //Compute delta and price at date 0          
-            CurrentPortfolio.compute();
-            //Display the result of the computation
-            displayData();
-            Update.Enabled = true;
+                CurrentPortfolio.CurrentDate = new DateTime(2005, 11, 30);
+                //Init the Display
+                initDisplay();              
+                //Compute delta and price at date 0          
+                CurrentPortfolio.compute();
+                //Display the result of the computation
+                displayData();
+                Update.Enabled = true;
         }
 
         public void computeHedge(Object sender, EventArgs e){
             CurrentPortfolio.computeHedge();
             displayData();
             Update.Enabled = false;
+        }
+
+        //Load the current model
+        public void loadModel1(Object sender, EventArgs e)
+        {
+            CurrentPortfolio.ModelId = 1;
+        }
+        public void loadModel2(Object sender, EventArgs e)
+        {
+            CurrentPortfolio.ModelId = 2;
+        }
+        public void loadModel3(Object sender, EventArgs e)
+        {
+            CurrentPortfolio.ModelId = 3;
+        }
+        public void loadModel4(Object sender, EventArgs e)
+        {
+            CurrentPortfolio.ModelId = 4;
         }
 
         public void dumpDatabase(Object sender, EventArgs e)
@@ -77,10 +96,6 @@ namespace Peps
         {
             InitialCash.Text = "0";
             CashEuro.Text = "0";
-            CashDollar.Text = "0";
-            CashCHF.Text = "0";
-            CashGBP.Text = "0";
-            CashYen.Text = "0";     
         }
 
 

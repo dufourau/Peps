@@ -52,6 +52,73 @@ void MonteCarlo::estimVolHistMethod(const PnlMat* historicalStockPrices, PnlVect
 
 }
 
+void MonteCarlo::priceStoch(double &prix, double &ic) {
+	
+	double dt = 1 / 252.;
+
+	//pnl_mat_print(calibration_data);
+	//mod_->calibrate(calibrationData, dt);
+
+	// All fx's history rates must be set before this call
+	for (int i = 0; i < this->mod_->stochIRates_.size(); i++)
+		this->mod_->stochIRates_[i]->calibrateParametersWithAttributeHistLeastSquare();
+
+	PnlMat *generatedPath = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
+	double payoff = 0, discount;
+	double sumPayoff = 0;
+	double sumPayoffSquare = 0;
+	prix = 0;
+	ic = 0;
+	for (int i = 0; i < this->samples_; i++)
+	{
+		// Following line must be done in assetStochRate method
+		//	this->mod_->stochIRates_[0]->generateFxDiscountFactors(discount, 0, this->opt_->TimeSteps_, this->opt_->T_, rng);
+		this->mod_->assetStochRate(generatedPath, this->opt_->T_, this->opt_->TimeSteps_, this->rng);
+		payoff = this->opt_->payoff(generatedPath);
+		discount = this->mod_->stochIRates_[0]->getDiscountFactor(0, this->opt_->TimeSteps_, this->opt_->T_, rng);
+		discount = exp(-discount);
+		sumPayoff += (payoff * discount);
+		sumPayoffSquare += (payoff * discount)*(payoff * discount);
+	}
+	prix = sumPayoff / this->samples_;
+	double x = ((sumPayoffSquare / this->samples_) - (sumPayoff / this->samples_)*(sumPayoff / this->samples_));
+	ic = 2 * 1.96*sqrt(x) / sqrt(this->samples_);
+	pnl_mat_free(&generatedPath);
+}
+
+void MonteCarlo::priceStoch(const PnlMat *past, double t, double &prix, double &ic) {
+	double dt = 1 / 252.;
+
+	//pnl_mat_print(calibration_data);
+	//mod_->calibrate(calibrationData, dt);
+
+	// All fx's history rates must be set before this call
+	for (int i = 0; i < this->mod_->stochIRates_.size(); i++)
+		this->mod_->stochIRates_[i]->calibrateParametersWithAttributeHistLeastSquare();
+
+	PnlMat *generatedPath = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
+	double payoff = 0, discount;
+	double sumPayoff = 0;
+	double sumPayoffSquare = 0;
+	prix = 0;
+	ic = 0;
+	for (int i = 0; i < this->samples_; i++)
+	{
+		// Following line must be done in assetStochRate method
+		//	this->mod_->stochIRates_[0]->generateFxDiscountFactors(discount, 0, this->opt_->TimeSteps_, this->opt_->T_, rng);
+		this->mod_->assetStochRate(generatedPath, t, this->opt_->T_, this->opt_->TimeSteps_, this->rng, past);
+		payoff = this->opt_->payoff(generatedPath);
+		discount = this->mod_->stochIRates_[0]->getDiscountFactor(0, this->opt_->TimeSteps_, this->opt_->T_, rng);
+		discount = exp(-discount);
+		sumPayoff += (payoff * discount);
+		sumPayoffSquare += (payoff * discount)*(payoff * discount);
+	}
+	prix = sumPayoff / this->samples_;
+	double x = ((sumPayoffSquare / this->samples_) - (sumPayoff / this->samples_)*(sumPayoff / this->samples_));
+	ic = 2 * 1.96*sqrt(x) / sqrt(this->samples_);
+	pnl_mat_free(&generatedPath);
+}
+
 void MonteCarlo::price(double &prix, double &ic)
 {
 	PnlMat *generatedPath = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
@@ -92,6 +159,60 @@ void MonteCarlo::price(const PnlMat *past, double t, double &prix, double &ic)
 	}
 	prix = exp(-this->mod_->r_*(this->opt_->T_ - t))*(sumPayoff / this->samples_);
 	double x = exp(-2 * this->mod_->r_*(this->opt_->T_ - t))*(sumPayoffSquare / this->samples_) - prix*prix;
+	if (abs(x) < precision)
+		x = 0;
+	ic = 2 * 1.96*sqrt(x) / sqrt(this->samples_);
+	pnl_mat_free(&generatedPath);
+}
+
+void MonteCarlo::priceTForward(double &prix, double &ic)
+{
+	PnlMat *generatedPath = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
+	double payoff = 0;
+	double sumPayoff = 0;
+	double sumPayoffSquare = 0;
+	double zeroCoupon0_T = 0;
+	this->mod_->stochIRates_[0]->priceZeroCoupon(zeroCoupon0_T, 0, this->opt_->T_);
+	prix = 0;
+	ic = 0;
+	pnl_mat_set_row(generatedPath, this->mod_->spot_, 0);
+	for (int i = 0; i < this->samples_; i++)
+	{
+		this->mod_->forward(generatedPath, this->opt_->T_, this->opt_->TimeSteps_, this->rng);
+		payoff = this->opt_->payoff(generatedPath);
+		sumPayoff += payoff;
+		sumPayoffSquare += payoff*payoff;
+	}
+	prix = zeroCoupon0_T*(sumPayoff / this->samples_);
+	double x = zeroCoupon0_T*zeroCoupon0_T*((sumPayoffSquare / this->samples_) - (sumPayoff / this->samples_)*(sumPayoff / this->samples_));
+	ic = 2 * 1.96*sqrt(x) / sqrt(this->samples_);
+	pnl_mat_free(&generatedPath);
+}
+
+void MonteCarlo::priceTForward(const PnlMat *past, double t, double &prix, double &ic)
+{
+	PnlMat *generatedPath = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
+	PnlMat *path = pnl_mat_copy(past);
+	double payoff = 0;
+	double sumPayoff = 0;
+	double sumPayoffSquare = 0;
+	double precision = this->samples_*(1.0e-16);
+	double zeroCoupon0_T = 0;
+	double step = this->opt_->T_ / this->opt_->TimeSteps_;
+	this->mod_->stochIRates_[0]->priceZeroCoupon(zeroCoupon0_T, t, this->opt_->T_);
+	prix = 0;
+	ic = 0;
+
+	for (int i = 0; i < this->samples_; i++)
+	{
+		this->mod_->forward(generatedPath, t, this->opt_->TimeSteps_, this->opt_->T_, this->rng, path);
+		//pnl_mat_print(generatedPath);
+		payoff = this->opt_->payoff(generatedPath);
+		sumPayoff += payoff;
+		sumPayoffSquare += payoff*payoff;
+	}
+	prix = zeroCoupon0_T*(sumPayoff / this->samples_);
+	double x = zeroCoupon0_T*zeroCoupon0_T*(sumPayoffSquare / this->samples_) - prix*prix;
 	if (abs(x) < precision)
 		x = 0;
 	ic = 2 * 1.96*sqrt(x) / sqrt(this->samples_);
@@ -185,6 +306,73 @@ void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta)
 	{
 		pnl_vect_set(St, d, MGET(past, lastIndexOfPast, d));
 		pnl_vect_set(delta, d, GET(delta, d)*exp(-this->mod_->r_*(this->opt_->T_ - t)) / (this->samples_*this->h_ * 2 * GET(St, d)));
+	}
+	pnl_mat_free(&generatedPath);
+	pnl_mat_free(&shiftPath_Right);
+	pnl_mat_free(&shiftPath_Left);
+	pnl_vect_free(&St);
+}
+
+void MonteCarlo::deltaTForward(const PnlMat *past, double t, PnlVect *delta)// on doit avoir l'historique des forwards 
+{
+	pnl_vect_set_all(delta, 0);//de taille size + 1
+	PnlMat *generatedPath = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
+	PnlMat * path = pnl_mat_copy(past);
+	PnlMat *shiftPath_Right = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
+	PnlMat *shiftPath_Left = pnl_mat_create(this->opt_->TimeSteps_ + 1, this->opt_->size_);
+	int nbAssets = this->mod_->size_ - this->mod_->stochIRates_.size() + 1;
+	double d1, sigma_d, a, a_d, vol, vol_d;
+	double tmp = 0;
+	double zeroCoupn0_T;
+	double step = this->opt_->T_ - t;
+	vol = this->mod_->stochIRates_[0]->vol_;
+	a = this->mod_->stochIRates_[0]->reversionSpeed_;
+	this->mod_->stochIRates_[0]->priceZeroCoupon(zeroCoupn0_T, t, this->opt_->T_);
+	// The vector St
+	PnlVect *St = pnl_vect_create_from_zero(this->opt_->size_);
+	int lastIndexOfPast = 0;
+	if (t == 0.0)
+		pnl_vect_clone(St, this->mod_->spot_);
+	else
+	{
+		double pas = this->opt_->T_ / this->opt_->TimeSteps_;
+		double dt = t / pas;
+		double Error = abs(dt - round(dt)) / (dt);
+		if (Error <= 0.05)
+			lastIndexOfPast = round(dt);
+		else
+			lastIndexOfPast = floor(dt) + 1;
+	}
+
+	for (int j = 0; j < this->samples_; j++)
+	{
+		//Generation d'une trajectoire forward
+		this->mod_->forward(generatedPath, t, this->opt_->TimeSteps_, this->opt_->T_, this->rng, path);
+		for (int d = 0; d < nbAssets; d++)
+		{
+			// Shift à droite
+			this->mod_->shift_asset(shiftPath_Right, generatedPath, d, this->h_, t, this->opt_->T_, this->opt_->TimeSteps_);
+			// Shift à droite
+			this->mod_->shift_asset(shiftPath_Left, generatedPath, d, -this->h_, t, this->opt_->T_, this->opt_->TimeSteps_);
+			// Delta payoff Right Left
+			tmp = this->opt_->payoff(shiftPath_Right) - this->opt_->payoff(shiftPath_Left);
+			LET(delta, d) += tmp;
+		}
+		for (int d = nbAssets; d < this->mod_->size_; d++)
+		{
+			// Shift à droite
+			this->mod_->shift_asset(shiftPath_Right, generatedPath, d, this->h_, t, this->opt_->T_, this->opt_->TimeSteps_);
+			// Shift à droite
+			this->mod_->shift_asset(shiftPath_Left, generatedPath, d, -this->h_, t, this->opt_->T_, this->opt_->TimeSteps_);
+			// Delta payoff Right Left
+			tmp = this->opt_->payoff(shiftPath_Right) - this->opt_->payoff(shiftPath_Left);
+			LET(delta, d) += tmp;
+		}
+	}
+	for (int d = 0; d < this->opt_->size_; d++)
+	{
+		LET(St, d) = MGET(past, lastIndexOfPast, d);
+		LET(delta, d) = GET(delta, d)*zeroCoupn0_T*zeroCoupn0_T / (this->samples_*this->h_ * 2 * GET(St, d));
 	}
 	pnl_mat_free(&generatedPath);
 	pnl_mat_free(&shiftPath_Right);

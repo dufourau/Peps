@@ -34,6 +34,25 @@ namespace Wrapper {
 
 
 	}
+
+	void WrapperClass::computePriceStoch(array<double>^ stockPrices, array<double>^ interestRates, array<double>^ stockToFxIndex,
+		int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int nbDatesStockPrices, double finiteDifferenceStep, array<double>^ histEur, array<double>^ histChf, array<double>^ histGbp, array<double>^ histJpy, array<double>^ histUsd){
+		double ic, px;
+
+		pin_ptr<double> stocktoCurrIndex = &stockToFxIndex[0];
+		pin_ptr<double> interestRate = &interestRates[0];
+		pin_ptr<double> stocks = &stockPrices[0];
+		pin_ptr<double> phistEur = &histEur[0];
+		pin_ptr<double> phistChf = &histChf[0];
+		pin_ptr<double> phistGbp = &histGbp[0];
+		pin_ptr<double> phistJpy = &histJpy[0];
+		pin_ptr<double> phistUsd = &histUsd[0];
+
+		compute_price_stoch(ic, px, stocks, interestRate, stocktoCurrIndex, assetNb, fxNb, maturity, mcSamples, timeSteps, nbDatesStockPrices, finiteDifferenceStep,phistEur,phistChf,phistGbp,phistJpy, phistUsd);
+		this->confidenceInterval = ic;
+		this->prix = px;
+
+	}
 	void WrapperClass::computeDelta(array<double>^ stockPrices, array<double>^ interestRates, array<double>^ stockToFxIndex,
 		int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int nbDatesStockPrices, double finiteDifferenceStep){
 

@@ -103,7 +103,6 @@
                 <div id="page-wrapper">
 
             <div class="container-fluid">
-
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
@@ -116,15 +115,22 @@
                                         <span class="pull-left">  <i class="fa fa-dashboard"></i>  <asp:Literal ID="date" runat="server">Current date: 30/11/2005</asp:Literal> </span>
                                     </div>
                                     <div class="col-lg-6 text-center">
-                                        <span class="pull-right"> 
+                                            <span class="pull-right"> 
                                             
-                                                <asp:Button ID="Load" OnClick="loadComputation" class="btn btn-xs btn-default fa fa-download"  Text="Load First Date" runat="server"> 
-                                                </asp:Button>
-                                                <asp:Button ID="Update" OnClick="computeHedge" class="btn btn-xs btn-default glyphicon glyphicon-refresh" Text="Refresh" runat="server">                                             
-                                                </asp:Button>
+                                                    <asp:LinkButton ID="Compute" OnClick="loadComputation" CssClass="btn btn-xs btn-default "  Text="Compute" runat="server"> 
+                                                        Compute 
+                                                        <i aria-hidden="true" class="fa fa-download"></i>
+                                                    </asp:LinkButton>
+                                      
+                                               
+                                           
+                                                    <asp:LinkButton ID="Update" OnClick="computeHedge" CssClass="btn btn-xs btn-default" Text="Buy" runat="server">      
+                                                        Buy                                       
+                                                         <i aria-hidden="true" class="glyphicon glyphicon-refresh"></i>
+                                                    </asp:LinkButton>
                                             
 
-                                        </span>
+                                            </span>
                                     </div>
                                 </div>
                         </div>
@@ -278,9 +284,9 @@
                             <div class="panel-body">
                                 <div id="portfolio-chart"></div>
                             </div>
-                        </div>
                     </div>
-                </div>
+                        </div>
+                 </div>
                  <div class="row">
                     <div class="col-lg-6">
                         <div class="panel panel-default">
@@ -296,22 +302,6 @@
                                     <a href="#" class="list-group-item">
                                         <span class="badge"><asp:Literal ID="CashEuro" runat="server" /></span>
                                         <i class="fa fa-fw fa-money"></i> Cash Euro
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge"><asp:Literal ID="CashGBP" runat="server" /></span>
-                                        <i class="fa fa-fw fa-money"></i> Cash GBP
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge"><asp:Literal ID="CashDollar" runat="server" /></span>
-                                        <i class="fa fa-fw fa-money"></i> Cash Dollar
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge"><asp:Literal ID="CashYen" runat="server" /></span>
-                                        <i class="fa fa-fw fa-money"></i> Cash Yen
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge"><asp:Literal ID="CashCHF" runat="server" /></span>
-                                        <i class="fa fa-fw fa-money"></i> Cash CHF
                                     </a>
                                 </div>
                                 <div class="text-right">
@@ -339,11 +329,15 @@
                                         <button type="button" class="btn btn-default">Choose pricing model</button>
                                         <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="#">Black Scholes - Constant Parameters</a></li>
-                                            <li><a href="#">Black Scholes - Vasicek Interest Rate Model</a></li>
-                                            <li><a href="#">Black Scholes - Hull White Interest Rate Model</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="#">Heston Model</a></li>
+                                             <asp:Button ID="Button1" OnClick="loadModel1" CssClass="btn btn-xs btn-default fa fa-download"  Text="Black Scholes - Constant Parameters" runat="server"> 
+                                                    </asp:Button>
+                                             <asp:Button ID="Button2" OnClick="loadModel2" CssClass="btn btn-xs btn-default fa fa-download"  Text="Black Scholes - Vasicek Interest Rate Model" runat="server"> 
+                                                    </asp:Button>
+                                             <asp:Button ID="Button3" OnClick="loadModel3" CssClass="btn btn-xs btn-default fa fa-download"  Text="Black Scholes - CIR Rate Model" runat="server"> 
+                                                    </asp:Button>
+                                             <asp:Button ID="Button4" OnClick="loadModel4" CssClass="btn btn-xs btn-default fa fa-download"  Text="Forward" runat="server"> 
+                                                    </asp:Button>
+                                            
                                         </ul>
                                     </div>
                               </div>
@@ -361,8 +355,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
-
+                </div> 
             </div>
             <!-- /.container-fluid -->
         </div>

@@ -34,10 +34,6 @@ public:
 	*/
 	void price(double &prix, double &ic);
 
-	void price_master(double &prix, double &ic);
-
-	void price_slave(double &prix, double &ic);
-
 	/**
 	* Calcule le prix de l'option à la date t
 	*
@@ -95,6 +91,15 @@ public:
 
 	//suppose estimatedVol is already allocated with the right nb of elts
 	void estimVolHistMethod(const PnlMat* historicalStockPrices, PnlVect* estimatedVol, double timeStep);
+	
+	//Compute price with vasicek at date 0
+	void priceStoch(double &prix, double &ic);
+	//Compute price with vasicek at date t
+	void priceStoch(const PnlMat *past, double t, double &prix, double &ic);
+	//Compute price and delta using forward mesure
+	void priceTForward(double &prix, double &ic);
+	void priceTForward(const PnlMat *past, double t, double &prix, double &ic);
+	void deltaTForward(const PnlMat *past, double t, PnlVect *delta);
 };
 
 #endif /* _MC_H */

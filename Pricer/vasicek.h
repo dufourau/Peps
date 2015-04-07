@@ -5,26 +5,39 @@
 #include "pnl/pnl_matrix.h"
 #include <cmath>
 #include "irate.h"
-#include <cassert>
-#include <stdexcept> 
 
 /// \brief Classe Option PERFORMANCE
 class Vasicek : public IRate
 {
 public:
 
-	double longTermMean_ = 0;
-	double reversionSpeed_ = 0;
-	double vol_ = 0;
 
-	Vasicek();
+
+	double historyRateTimeStep = 1. / 252.;
+
+
+
+	Vasicek(const PnlVect *histValues);
 	virtual ~Vasicek();
-
+	void buildSumsUtils(const PnlVect *histShortRate, double &Rx, double &Ry, double &Rxx, double &Ryy, double &Rxy);
 	void calibrateParametersLeastSquare(const PnlVect *histShortRate, double historyRateTimeStep);
 	void calibrateParametersMaxLikelihood(const PnlVect *histShortRate, double historyRateTimeStep);
+	void priceZeroCoupon(double& price, double t, double maturity);
 
-	void getDiscountFactor(double &result, double t, int N, double T,
+	double getA(double t, double maturity);
+
+	double getIntA(double t, double maturity); // integrale de A
+
+	double getIntA2(double t, double maturity); // integrale de A*A
+
+	double getIntAAf(const IRate* rate, double t, double maturity);// integrale de A * Af d un autre taux
+
+	void calibrateParametersWithAttributeHistLeastSquare();
+
+	double getDiscountFactor(double t, int N, double T,
 		PnlRng *rng);
+
+	void generateDiscountFactor(double t, int N, double T, PnlRng *rng);
 
 private:
 	void simuRatePath(PnlVect *path, double t, int N, double T,

@@ -190,12 +190,14 @@ namespace Peps
             SortedList<DateTime, double> pricesDictionary = marketDataDictionary[symbol];
             int startIndex = pricesDictionary.IndexOfKey(startDate);
             while(startIndex == -1){
-                startIndex = pricesDictionary.IndexOfKey(startDate.AddDays(1));
+                startDate = startDate.AddDays(1);
+                startIndex = pricesDictionary.IndexOfKey(startDate);
             }
             int endIndex = pricesDictionary.IndexOfKey(endDate);
             while (endIndex == -1)
             {
-                endIndex = pricesDictionary.IndexOfKey(startDate.AddDays(1));
+                endDate = endDate.AddDays(1);
+                endIndex = pricesDictionary.IndexOfKey(endDate);
             }          
             List<double> prices = pricesDictionary.Values.ToList().GetRange(startIndex, endIndex - startIndex);
             prices.Reverse();
