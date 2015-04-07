@@ -126,6 +126,7 @@
     <Content Include="font-awesome\scss\_stacked.scss" />
     <Content Include="font-awesome\scss\_variables.scss" />
     <Content Include="Validation.aspx" />
+    <Content Include="ClassDiagram2.cd" />
     <None Include="Properties\PublishProfiles\moduleis - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\moduleis - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
@@ -277,8 +278,6 @@
     <Compile Include="Validation.aspx.designer.cs">
       <DependentUpon>Validation.aspx</DependentUpon>
     </Compile>
-    <Compile Include="YahooFinance.cs" />
-    <Compile Include="Price.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -327,6 +326,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\</OutputPath>
@@ -364,6 +364,12 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(SolutionDir)pnl-win32-1.7.1\lib\libblas.dll" "$(TargetDir)"
+copy "$(SolutionDir)pnl-win32-1.7.1\lib\liblapack.dll" "$(TargetDir)"
+copy "$(SolutionDir)pnl-win32-1.7.1\lib\libpnl.dll" "$(TargetDir)"
+copy "$(SolutionDir)pnl-win32-1.7.1\lib\libpnl.lib" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
