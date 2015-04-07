@@ -79,14 +79,6 @@
                         <h1 class="page-header">
                             Charts
                         </h1>
-                        <ol class="breadcrumb">
-                            <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
-                            </li>
-                            <li class="active">
-                                <i class="fa fa-bar-chart-o"></i> Charts
-                            </li>
-                        </ol>
                     </div>
                 </div>
                 <!-- /.row -->
