@@ -87,7 +87,7 @@ namespace Peps
             Portfolio portfolio = null;
 
             redisManager.ExecAs<Portfolio>(redis =>
-        {
+            {
                 portfolio = redis.GetById(1);
             });
 
@@ -143,9 +143,22 @@ namespace Peps
                 double actualizationFactor = Math.Exp((PreviousInterestRates[0] / 100) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
                 this.InitialCash = Properties.Settings.Default.Nominal - this.Wrapper.getPrice();
             }
-            PortfolioValueHistory.Add(PortfolioValue);
-            ProductPriceHistory.Add(ProductPrice);
+            
             this.save();
+        }
+
+        double handleRBS_C(ArrayList prices, int index){
+            double assetPrice = (double)prices[index];
+            if (index == RBSindex)
+            {
+                assetPrice *= ((double)prices[Properties.Settings.Default.AssetNb + 1]) / 100.0;
+
+            }
+            if (index == CitiGroupIndex)
+            {
+                assetPrice *= ((double)prices[Properties.Settings.Default.AssetNb + 3]) / 100.0;
+            }
+            return assetPrice;
         }
         
 
@@ -163,32 +176,32 @@ namespace Peps
                     ArrayList prices = MarketData.getAllPricesAtDate(date);
                     for (int j = 0; j < prices.Count; j++)
                     {
-                        past[cpt, j] = (double)prices[j];
+                                        
+                        past[cpt, j] = handleRBS_C(prices, j);
                     }
                     cpt++;
                 }
             }
             else
             {
-                 past = new double[(int)Math.Floor(t)+1,this.NumberOfAsset];
+                 past = new double[(int)Math.Floor(t)+2,this.NumberOfAsset];
                  int cpt = 0;
-                 for (int i = 2005; i < 2005 + (int)Math.Floor(t); i++)
+                 for (int i = 2005; i <= 2005 + (int)Math.Floor(t); i++)
                  {
                      DateTime date = new DateTime(i, 11,30);
                      date = Utils.GetWorkingWeekday(date);
                      ArrayList prices = MarketData.getAllPricesAtDate(date);
                      for (int j = 0; j < prices.Count; j++)
                      {
-                         
-                         past[cpt, j] = (double) prices[j];
+
+                         past[cpt, j] = handleRBS_C(prices, j);
                      }
                      cpt++;
                  }
                  ArrayList lastPrices = MarketData.getAllPricesAtDate(CurrentDate);
                  for (int j = 0; j < lastPrices.Count; j++)
-                {
-                    
-                     past[cpt, j] = (double) lastPrices[j];
+                 {
+                    past[cpt, j] = handleRBS_C(lastPrices, j);
                  }
             }
             return past;
@@ -213,13 +226,13 @@ namespace Peps
         private void performComputations(double t, double[] oneDPast)
         {
             double[] oneDpreviousStocksPrices = Utils.Convert2dArrayto1d(PreviousStocksPrices);
-            Wrapper.computePrice(oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
+            Wrapper.computePrice(t,oneDPast,oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
                 Properties.Settings.Default.AssetNb, Properties.Settings.Default.FxNb, Properties.Settings.Default.Maturity,
                 Properties.Settings.Default.McSamplesNb, Properties.Settings.Default.TimeSteps, PreviousStocksPrices.GetLength(0),
                 Properties.Settings.Default.StepFiniteDifference);
             this.ProductPrice = Wrapper.getPrice();
 
-            Wrapper.computeDelta(oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
+            Wrapper.computeDelta(t,oneDPast,oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
                 Properties.Settings.Default.AssetNb, Properties.Settings.Default.FxNb, Properties.Settings.Default.Maturity,
                 Properties.Settings.Default.McSamplesNb, Properties.Settings.Default.TimeSteps, PreviousStocksPrices.GetLength(0),
                 Properties.Settings.Default.StepFiniteDifference);
@@ -282,12 +295,12 @@ namespace Peps
         {
             int offset = this.MarketData.rates.Length;
             int index = this.MarketData.dates.ToList().IndexOf(this.CurrentDate);
-            previousInterestRates[0] = this.MarketData.rates[offset - index][0]/100;
+            previousInterestRates[0] = this.MarketData.rates[offset - index][0] / 100;
             for (int i = 1; i < Properties.Settings.Default.AssetNb; i++) previousInterestRates[i] = 0;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 1] = this.MarketData.rates[offset-index][1] / 100;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 2] = this.MarketData.rates[offset-index][2] / 100;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 3] = this.MarketData.rates[offset-index][3] / 100;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 4] = this.MarketData.rates[offset-index][4] / 100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 1] = this.MarketData.rates[offset - index][1] / 100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 2] = this.MarketData.rates[offset - index][2] / 100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 3] = this.MarketData.rates[offset - index][3] / 100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 4] = this.MarketData.rates[offset - index][4] / 100;
 
             //previousInterestRates[0] = 0.02;
             //for (int i = 1; i < Properties.Settings.Default.AssetNb; i++) previousInterestRates[i] = 0;
@@ -419,7 +432,7 @@ namespace Peps
                        
                     }
                     if(i == CitiGroupIndex){
-                        assetPrice *= ((double) assetPrices[Properties.Settings.Default.AssetNb + 3]) / 100.0;
+                        assetPrice *= ((double) assetPrices[Properties.Settings.Default.AssetNb + 3]);
                     }
 
                     
@@ -432,6 +445,8 @@ namespace Peps
                 this.PortfolioValue = portfolioValue;
                 this.TrackingError = this.PortfolioValue - this.ProductPrice;
                 this.ProfitAndLoss = this.TrackingError + this.InitialCash;
+                PortfolioValueHistory.Add(PortfolioValue);
+                ProductPriceHistory.Add(ProductPrice);
             }
         }
         

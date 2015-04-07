@@ -221,14 +221,23 @@ namespace Peps
 
         public double getPrice(string symbol, DateTime date)
         {
-            double assetPrice = marketDataDictionary[symbol][date];
+            double assetPrice ;
+            //Bug: missing values
+            if (!(marketDataDictionary[symbol]).ContainsKey(date))
+            {
+                assetPrice = marketDataDictionary[symbol][new DateTime(2005, 11, 30)];
+            }
+            else
+            {
+                assetPrice = (marketDataDictionary[symbol][date]);
+            }
             if(symbol.Equals("RBS.L"))
             {
                 assetPrice *= marketDataDictionary["GBPEUR"][date] / 100;
                
             }
             if(symbol.Equals("C")){
-                assetPrice *= marketDataDictionary["USDEUR"][date] / 100;
+                assetPrice *= marketDataDictionary["USDEUR"][date];
               
             }
            return assetPrice;

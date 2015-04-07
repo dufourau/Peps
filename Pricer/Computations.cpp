@@ -35,10 +35,10 @@ void Computations::compute_price(double &ic, double &prix, double t, double *pas
 	PnlMat* marketPath = pnl_mat_create_from_ptr(dimStockPast, assetNb + fxNb, stockPrices);
 	int m;
 	if (floor(t)==t){
-		m = floor(t);
+		m = floor(t)+1;
 	}
 	else{
-		m = floor(t)+1;
+		m = floor(t)+2;
 	}
 	PnlMat* pastMat = pnl_mat_create_from_ptr(m, assetNb + fxNb, past);
 
@@ -91,10 +91,10 @@ void Computations::compute_delta(double *delta, double t, double *past, double *
 	PnlVect* deltaVect = pnl_vect_create(assetNb + fxNb);
 	int m;
 	if (floor(t) == t){
-		m = floor(t);
+		m = floor(t)+2;
 	}
 	else{
-		m = floor(t) + 1;
+		m = floor(t) + 3;
 	}
 	PnlMat* pastMat = pnl_mat_create_from_ptr(m, assetNb + fxNb, past);
 	PnlVect* spot_ = pnl_vect_create(assetNb + fxNb);
