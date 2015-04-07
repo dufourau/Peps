@@ -30,7 +30,7 @@
                 defaultDate: date,
                 changeYear: true,
                 minDate: date,
-                maxDate: new Date(2015, 1, 30)
+                maxDate: new Date()
             });
         });
     </script>
@@ -49,7 +49,8 @@
                 smooth : false,
                 hideHover: 'auto',
                 ymin : 'auto',
-                ymax : 'auto'
+                ymax : 'auto', 
+                lineColors: ['#3498db', '#e74c3c']
             });
 
         });

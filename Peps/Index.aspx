@@ -18,9 +18,30 @@
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript">
 
+        $(document).ready(function () {
+
+            Morris.Line({
+                element: 'portfolio-chart',
+                data: JSON.parse('<%= chartData %>'),
+                xkey: 'date',
+                ykeys: ['productPrice', 'portfolioValue'],
+                labels: ['Product Price', 'Porfolio Value'],
+                pointSize: 2,
+                smooth: false,
+                hideHover: 'auto',
+                ymin: 'auto',
+                ymax: 'auto',
+                lineColors: ['#3498db', '#e74c3c']
+            });
+
+        });
+    </script>
 </head>
 <body>
+    <form runat="server">
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -40,7 +61,11 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> User <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-database"></i>Dump DB</a>
+                            <a href="#">
+                                <i class="fa fa-fw fa-database">
+                                    <asp:Button ID="ButtonDumpDatabase" OnClick="dumpDatabase" class="btn btn-xs btn-default glyphicon glyphicon-refresh" Text="Refresh" runat="server"></asp:Button>
+                                </i>          
+                            </a>
                         </li>
                         <li>
                             <a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-fw fa-gear" ></i> Settings</a>
@@ -91,17 +116,15 @@
                                         <span class="pull-left">  <i class="fa fa-dashboard"></i>  <asp:Literal ID="date" runat="server">Current date: 30/11/2005</asp:Literal> </span>
                                     </div>
                                     <div class="col-lg-6 text-center">
-                                        <form runat="server">
-                                            <span class="pull-right"> 
+                                        <span class="pull-right"> 
                                             
-                                                    <asp:Button ID="Load" OnClick="loadComputation" class="btn btn-xs btn-default fa fa-download"  Text="Load" runat="server"> 
-                                                    </asp:Button>
-                                                    <asp:Button ID="Update" OnClick="computeHedge" class="btn btn-xs btn-default glyphicon glyphicon-refresh" Text="Refresh" runat="server">                                             
-                                                    </asp:Button>
+                                                <asp:Button ID="Load" OnClick="loadComputation" class="btn btn-xs btn-default fa fa-download"  Text="Load First Date" runat="server"> 
+                                                </asp:Button>
+                                                <asp:Button ID="Update" OnClick="computeHedge" class="btn btn-xs btn-default glyphicon glyphicon-refresh" Text="Refresh" runat="server">                                             
+                                                </asp:Button>
                                             
 
-                                            </span>
-                                        </form>                
+                                        </span>
                                     </div>
                                 </div>
                         </div>
@@ -246,7 +269,18 @@
                     </div>
                         </div>
                  </div>
-               
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Portfolio's value evolution</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="portfolio-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                  <div class="row">
                     <div class="col-lg-6">
                         <div class="panel panel-default">
@@ -358,5 +392,6 @@
     <script src="js/plugins/flot/jquery.flot.resize.js"></script>
     <script src="js/plugins/flot/jquery.flot.pie.js"></script>
     <script src="js/plugins/flot/flot-data.js"></script>
+</form>
 </body>
 </html>

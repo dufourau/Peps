@@ -27,6 +27,14 @@ namespace Peps
             set { Session["Pf"] = value; }
         }
 
+        public string chartData
+        {
+            get
+            {
+                return CurrentPortfolio.historyToJSONString();
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -38,28 +46,31 @@ namespace Peps
                     CurrentPortfolio.MarketData.loadAllStockPrices();
                     CurrentPortfolio.save();
                 }
-                
             }
+            displayData();
         }
 
         public void loadComputation(Object sender, EventArgs e)
         {
-                
-                CurrentPortfolio.CurrentDate = new DateTime(2005, 11, 30);
-                //Init the Display
-                initDisplay();              
-                //Compute delta and price at date 0          
-                CurrentPortfolio.compute();
-                //Display the result of the computation
-                displayData();
-                Update.Enabled = true;
+            CurrentPortfolio.CurrentDate = new DateTime(2005, 11, 30);
+            //Init the Display
+            initDisplay();
+            //Compute delta and price at date 0          
+            CurrentPortfolio.compute();
+            //Display the result of the computation
+            displayData();
+            Update.Enabled = true;
         }
 
         public void computeHedge(Object sender, EventArgs e){
-            
             CurrentPortfolio.computeHedge();
             displayData();
             Update.Enabled = false;
+        }
+
+        public void dumpDatabase(Object sender, EventArgs e)
+        {
+            CurrentPortfolio.MarketData.loadAllStockPrices();
         }
 
 
@@ -113,12 +124,15 @@ namespace Peps
                     price.Text = Math.Round(tmp, Properties.Settings.Default.Precision).ToString() + " €";
                     tr.Cells.Add(price);
 
+                    double deltaTmp = 0;
+                    if (deltaVect != null) deltaTmp = deltaVect[cpt];
+
                     TableCell delta = new TableCell();
-                    delta.Text = Math.Round(deltaVect[cpt], Properties.Settings.Default.Precision).ToString();
+                    delta.Text = Math.Round(deltaTmp, Properties.Settings.Default.Precision).ToString();
                     tr.Cells.Add(delta);
 
                     TableCell totalValue = new TableCell();
-                    totalValue.Text = (Math.Round(tmp * deltaVect[cpt], Properties.Settings.Default.Precision)).ToString();
+                    totalValue.Text = (Math.Round(tmp * deltaTmp, Properties.Settings.Default.Precision)).ToString();
                     tr.Cells.Add(totalValue);
 
                     TableCell quantity = new TableCell();
@@ -162,11 +176,17 @@ namespace Peps
 
                     TableCell delta = new TableCell();
 
-                    delta.Text = Math.Round(deltaVect[cpt], Properties.Settings.Default.Precision).ToString();
+                    double deltaTmp = 0;
+                    if (deltaVect != null) deltaTmp = deltaVect[cpt];
+
+                    delta.Text = Math.Round(deltaTmp, Properties.Settings.Default.Precision).ToString();
                     tr.Cells.Add(delta);
 
                     TableCell totalValue = new TableCell();
-                    totalValue.Text = (Math.Round(tmp * deltaVect[cpt], Properties.Settings.Default.Precision)).ToString();
+
+
+
+                    totalValue.Text = (Math.Round(tmp * deltaTmp, Properties.Settings.Default.Precision)).ToString();
                     tr.Cells.Add(totalValue);
 
                     TableCell quantity = new TableCell();
@@ -191,4 +211,5 @@ namespace Peps
         */
 
     }
+
 }

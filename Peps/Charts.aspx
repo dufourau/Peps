@@ -76,196 +76,21 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">
-                            Charts
-                        </h1>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge"><small>1.48</small>09/<small>1.48</small>11</div>
-                                         <div class="col-md-6">Sell</div>
-                                         <div class="col-md-6">Buy</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">EUR/USD</span>
-                                    <span class="pull-right"><i class="fa fa-money"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
+                        <div class="col-md-4">
+                            <h1 class="page-header" style="border-bottom:0px">
+                                Charts
+                            </h1>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-green">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge"><small>1.48</small>09/<small>1.48</small>11</div>
-                                         <div class="col-md-6">Sell</div>
-                                         <div class="col-md-6">Buy</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">EUR/GBP</span>
-                                    <span class="pull-right"><i class="fa fa-money"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge"><small>1.48</small>09/<small>1.48</small>11</div>
-                                         <div class="col-md-6">Sell</div>
-                                         <div class="col-md-6">Buy</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">EUR/JPY</span>
-                                    <span class="pull-right"><i class="fa fa-money"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-red">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-9 text-center">
-                                        <div class="huge">
-                                            <small>1.48</small>09/<small>1.48</small>11
-                                        </div>
-                                         <div class="col-md-6">Sell</div>
-                                         <div class="col-md-6">Buy</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">EUR/CHF</span>
-                                    <span class="pull-right"><i class="fa fa-money"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Flot Charts -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2 class="page-header">Flot Charts</h2>
-                        <p class="lead">Pre-simulated validation charts</p>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Line Graph Example with Tooltips</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-line-chart"></div>
-                                </div>
+                        <div class="col-md-8">
+                            <div class="page-header" style="border-bottom:0px">
+                                <h4 style="color:#e74c3c">
+                                    <i class="fa fa-fw fa-bar-chart-o"></i>Portfolio Value
+                                </h4>
+                                <h4 style="color:#3498db">
+                                    <i class="fa fa-fw fa-bar-chart-o"></i>Product Value
+                                </h4>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="panel panel-green">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Pie Chart Example with Tooltips</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-pie-chart"></div>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Multiple Axes Line Graph Example with Tooltips and Raw Data</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-multiple-axes-chart"></div>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="panel panel-red">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Moving Line Chart</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-moving-line-chart"></div>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Bar Graph with Tooltips</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-bar-chart"></div>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-                <!-- Morris Charts -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2 class="page-header">Morris Charts</h2>
-                        <p class="lead"> Pre-simulated Morris Charts</p>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -274,10 +99,10 @@
                     <div class="col-lg-12">
                         <div class="panel panel-green">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Area Line Graph Example with Tooltips</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Prix du produit calculé avec données réelles, taux d'intérêts constants, 5000 itérations de Monte Carlo, et une maturité de 8,5 an</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="morris-area-chart"></div>
+                                <div id="price-1"></div>
                             </div>
                         </div>
                     </div>
@@ -285,47 +110,49 @@
                 <!-- /.row -->
 
                 <div class="row">
-                    <div class="col-lg-4">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Donut Chart Example</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-donut-chart"></div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-12">
                         <div class="panel panel-red">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Line Graph Example with Tooltips</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Prix du produit calculé avec données simulées, en stressant la volatilité de 30%, taux d'intérêts constants, 1000 itérations de Monte Carlo et une maturité de 5 ans</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="morris-line-chart"></div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
+                                <div id="price-2"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="panel panel-primary">
+                </div>
+                
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-yellow">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Bar Graph Example</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Prix du produit calculé avec données réelles, taux d'intérêts suivant le modèle de Vasicek, 1000 itérations de Monte Carlo et une maturité de 5 ans</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="morris-bar-chart"></div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+                                <div id="price-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Résultat du calcul du prix d'une option Quanto de dimension 2, de strike 50, maturité 1, spot {500, 10} et de volatilité {0.4, 0,2}</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-6">
+                                    <div id="quanto1"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="quanto2"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- /.row -->
 
             </div>
             <!-- /.container-fluid -->

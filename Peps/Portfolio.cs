@@ -69,7 +69,6 @@ namespace Peps
             this.QuantityOfAssets = new double[NumberOfAsset];
             this.ProductPriceHistory = new List<double>();
             this.PortfolioValueHistory = new List<double>();
-            
         }
 
         public void InitPortfolio(double InitialCash, double Cash){
@@ -478,6 +477,12 @@ namespace Peps
         {
             this.ProductPriceHistory = new List<double>();
             this.PortfolioValueHistory = new List<double>();
+        }
+
+        public void reset()
+        {
+            this.CurrentDate = new DateTime(2005, 11, 30);
+            resetHistory();
         }
     }
 }
