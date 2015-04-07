@@ -297,17 +297,17 @@ namespace Peps
             int index = this.MarketData.dates.ToList().IndexOf(this.CurrentDate);
             previousInterestRates[0] = this.MarketData.rates[offset - index][0] / 100;
             for (int i = 1; i < Properties.Settings.Default.AssetNb; i++) previousInterestRates[i] = 0;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 1] = this.MarketData.rates[offset - index][1] / 100;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 2] = this.MarketData.rates[offset - index][2] / 100;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 3] = this.MarketData.rates[offset - index][3] / 100;
-            previousInterestRates[Properties.Settings.Default.AssetNb + 4] = this.MarketData.rates[offset - index][4] / 100;
-
+            previousInterestRates[Properties.Settings.Default.AssetNb + 1] = this.MarketData.rates[offset - index][3] / 100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 2] = this.MarketData.rates[offset - index][1] / 100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 3] = this.MarketData.rates[offset - index][4] / 100;
+            previousInterestRates[Properties.Settings.Default.AssetNb + 4] = this.MarketData.rates[offset - index][2] / 100;
+            
             //previousInterestRates[0] = 0.02;
             //for (int i = 1; i < Properties.Settings.Default.AssetNb; i++) previousInterestRates[i] = 0;
-            //previousInterestRates[Properties.Settings.Default.AssetNb + 1] = 0.0075;
-            //previousInterestRates[Properties.Settings.Default.AssetNb + 2] = 0.0475;
-            //previousInterestRates[Properties.Settings.Default.AssetNb + 3] = 0.0004;
-            //previousInterestRates[Properties.Settings.Default.AssetNb + 4] = 0.0407;
+            //previousInterestRates[Properties.Settings.Default.AssetNb + 1] = 0.0075;CHF
+            //previousInterestRates[Properties.Settings.Default.AssetNb + 2] = 0.0475;GBP
+            //previousInterestRates[Properties.Settings.Default.AssetNb + 3] = 0.0004;JPY
+            //previousInterestRates[Properties.Settings.Default.AssetNb + 4] = 0.0407;USD
         
         }
 

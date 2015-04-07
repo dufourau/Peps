@@ -133,10 +133,10 @@
                                             <span class="pull-right"> 
                                                   
                                                     <asp:TextBox ID="DisplayCalendar" type="text" placeholder="11/30/2005" runat="server" ReadOnly="true"></asp:TextBox>
-                                                    <asp:Button  OnClick="loadComputation" class="btn btn-xs btn-default fa fa-download"  Text="Load" runat="server"> 
+                                                    <asp:Button  OnClick="loadComputation" CssClass="btn btn-xs btn-default"  Text="Load" runat="server"> 
 
                                                     </asp:Button>
-                                                    <asp:Button OnClick="computeHedge" class="btn btn-xs btn-default glyphicon glyphicon-refresh" Text="Refresh" runat="server"> 
+                                                    <asp:Button OnClick="computeHedge" CssClass="btn btn-xs btn-default" Text="Update" runat="server"> 
                                              
                                                     </asp:Button>
                                              
@@ -318,22 +318,7 @@
                                         <span class="badge"><asp:Literal ID="CashEuro" runat="server" /></span>
                                         <i class="fa fa-fw fa-money"></i> Cash Euro
                                     </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge"><asp:Literal ID="CashGBP" runat="server" /></span>
-                                        <i class="fa fa-fw fa-money"></i> Cash GBP
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge"><asp:Literal ID="CashDollar" runat="server" /></span>
-                                        <i class="fa fa-fw fa-money"></i> Cash Dollar
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge"><asp:Literal ID="CashYen" runat="server" /></span>
-                                        <i class="fa fa-fw fa-money"></i> Cash Yen
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge"><asp:Literal ID="CashCHF" runat="server" /></span>
-                                        <i class="fa fa-fw fa-money"></i> Cash CHF
-                                    </a>
+                                    
                                 </div>
                                 <div class="text-right">
                                     <a href="#">View All Stocks <i class="fa fa-arrow-circle-right"></i></a>
@@ -360,11 +345,11 @@
                                         <button type="button" class="btn btn-default">Choose pricing model</button>
                                         <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="#">Black Scholes - Constant Parameters</a></li>
-                                            <li><a href="#">Black Scholes - Vasicek Interest Rate Model</a></li>
-                                            <li><a href="#">Black Scholes - Hull White Interest Rate Model</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="#">Heston Model</a></li>
+                                            <asp:Button  OnClick="loadModel1" CssClass="btn btn-xs btn-default"  Text="Black Scholes - Constant Parameters" runat="server" />
+                                            <asp:Button  OnClick="loadModel2" CssClass="btn btn-xs btn-default"  Text="Black Scholes - Hull White Interest Rate Model" runat="server" />
+                                            <asp:Button  OnClick="loadModel3" CssClass="btn btn-xs btn-default"  Text="Black Scholes - Constant Parameters" runat="server" />
+                                            <asp:Button  OnClick="loadModel4" CssClass="btn btn-xs btn-default"  Text="Forward" runat="server" />
+                                                                                       
                                         </ul>
                                     </div>
                               </div>
@@ -378,7 +363,8 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        
+                        
                       </div>
                     </div>
                   </div>

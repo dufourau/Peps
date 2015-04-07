@@ -9,7 +9,7 @@
     <title>PEPS</title>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
-    s
+    
     <!-- Custom CSS -->
     <link href="css/sb-admin.css" rel="stylesheet"/>
 
@@ -94,9 +94,9 @@
                                         <form runat="server">
                                             <span class="pull-right"> 
                                             
-                                                    <asp:Button ID="Load" OnClick="loadComputation" class="btn btn-xs btn-default fa fa-download"  Text="Load" runat="server"> 
+                                                    <asp:Button ID="Compute" OnClick="loadComputation" CssClass="btn btn-xs btn-default fa fa-download"  Text="Compute" runat="server"> 
                                                     </asp:Button>
-                                                    <asp:Button ID="Update" OnClick="computeHedge" class="btn btn-xs btn-default glyphicon glyphicon-refresh" Text="Refresh" runat="server">                                             
+                                                    <asp:Button ID="Update" OnClick="computeHedge" CssClass="btn btn-xs btn-default glyphicon glyphicon-refresh" Text="Buy" runat="server">                                             
                                                     </asp:Button>
                                             
 
@@ -262,23 +262,7 @@
                                     <a href="#" class="list-group-item">
                                         <span class="badge"><asp:Literal ID="CashEuro" runat="server" /></span>
                                         <i class="fa fa-fw fa-money"></i> Cash Euro
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge"><asp:Literal ID="CashGBP" runat="server" /></span>
-                                        <i class="fa fa-fw fa-money"></i> Cash GBP
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge"><asp:Literal ID="CashDollar" runat="server" /></span>
-                                        <i class="fa fa-fw fa-money"></i> Cash Dollar
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge"><asp:Literal ID="CashYen" runat="server" /></span>
-                                        <i class="fa fa-fw fa-money"></i> Cash Yen
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge"><asp:Literal ID="CashCHF" runat="server" /></span>
-                                        <i class="fa fa-fw fa-money"></i> Cash CHF
-                                    </a>
+                                    </a>                                 
                                 </div>
                                 <div class="text-right">
                                     <a href="#">View All Stocks <i class="fa fa-arrow-circle-right"></i></a>
