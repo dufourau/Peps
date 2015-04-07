@@ -7,10 +7,14 @@
 #include <cmath>
 #include <ctime>
 #include <cassert>
+#include <vector>
+#include "irate.h"
 
 /// \brief Modèle de Black Scholes
+
 class BS
 {
+
 public:
 	int size_; /// nombre d'actifs du modèle
 	double r_; /// taux d'intérêt
@@ -21,8 +25,15 @@ public:
 	PnlVect *trend_; /// vecteur des tendances des sous-jacent
 	PnlMat *L; /// Cholesky factorization of the correlation matrix
 
+	//vector of size nbCurrencies + 1
+	std::vector<IRate*> stochIRates_;
+
+	PnlMat *normalMat_;
 	BS(int size_, double r_, PnlVect* dividend_, PnlVect* spot_);
 	~BS();
+
+
+	//void calibrateInterestRateParameters(std::vector<PnlVect*> histRates);
 
 	/**
 	* Génère une trajectoire du modèle et la stocke dans path
@@ -33,6 +44,8 @@ public:
 	* @param[in] N nombre de dates de constatation
 	*/
 	void asset(PnlMat *path, double T, int N, PnlRng *rng);
+
+	void assetAnti(PnlMat *path, double T, int N, PnlRng *rng);
 
 	/**
 	* Calcule une trajectoire du sous-jacent connaissant le
@@ -80,7 +93,12 @@ public:
 
 	void calibrate(const PnlMat* past, double dt);
 
+	void assetStochRate(PnlMat *path, double T, int N, PnlRng *rng);
+	void assetStochRate(PnlMat *path, double t, double T, int N, PnlRng *rng, const PnlMat *past);
+	void forward(PnlMat *path, double T, int N, PnlRng *rng);
+	void forward(PnlMat *path, double t, int N, double T, PnlRng *rng, const PnlMat *past);
 };
+
 
 
 #endif /* _BS_H */

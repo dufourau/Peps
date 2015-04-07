@@ -116,7 +116,7 @@
          <div id="page-wrapper">
 
             <div class="container-fluid">
-                    
+               <form runat="server">     
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
@@ -129,20 +129,26 @@
                                         <span class="pull-left">  <i class="fa fa-dashboard"></i>   <asp:Literal ID="date" runat="server">Current date: 30/11/2005</asp:Literal></span>
                                     </div>
                                     <div class="col-lg-6 text-center">
-                                       <form runat="server">
+                                       
                                             <span class="pull-right"> 
                                                   
                                                     <asp:TextBox ID="DisplayCalendar" type="text" placeholder="11/30/2005" runat="server" ReadOnly="true"></asp:TextBox>
-                                                    <asp:Button  OnClick="loadComputation" CssClass="btn btn-xs btn-default"  Text="Load" runat="server"> 
-
-                                                    </asp:Button>
-                                                    <asp:Button OnClick="computeHedge" CssClass="btn btn-xs btn-default" Text="Update" runat="server"> 
-                                             
-                                                    </asp:Button>
+                                               
+                                                    <asp:LinkButton ID="Compute" OnClick="loadComputation" CssClass="btn btn-xs btn-default "  Text="Load" runat="server"> 
+                                                        Load 
+                                                        <i aria-hidden="true" class="fa fa-download"></i>
+                                                    </asp:LinkButton>
+                                      
+                                               
+                                           
+                                                    <asp:LinkButton ID="Update" OnClick="computeHedge" CssClass="btn btn-xs btn-default" Text="Update" runat="server">                                             
+                                                         Update
+                                                         <i aria-hidden="true" class="glyphicon glyphicon-refresh"></i>
+                                                    </asp:LinkButton>
                                              
 
                                             </span>
-                                        </form>
+                                        
                                                        
                                     </div>
                                 </div>
@@ -369,7 +375,7 @@
                     </div>
                   </div>
                 </div>
-
+             </form>
             </div>
             <!-- /.container-fluid -->
         </div>

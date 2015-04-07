@@ -16,7 +16,7 @@ namespace Peps
         private static long CurrentId = 0;
 
         public long Id { get; set; }
-
+        public long ModelId { get; set; }
         public int NumberOfAsset { get; set; }
         public DateTime CurrentDate { get; set; }
         //Quantity of each asset in the portfolio
@@ -34,7 +34,7 @@ namespace Peps
         public double[] Delta { get; set; }
         public double TransactionFees { get; set; }
         double[,] PreviousStocksPrices { get; set; }
-        double[] PreviousInterestRates { get; set; }
+        public double[] PreviousInterestRates { get; set; }
         double[] StockToFxIndex{ get; set; }
         int RBSindex { get; set; }       
         int CitiGroupIndex { get; set; }
@@ -59,6 +59,7 @@ namespace Peps
 
         public Portfolio(WrapperClass wrapper, MarketData marketData)
         {
+            this.ModelId = 1;
             this.Wrapper = wrapper;
             this.MarketData = marketData;
             //Cash in EUR
@@ -140,8 +141,8 @@ namespace Peps
                 }
                 performComputations(t, Utils.Convert2dArrayto1d(computePast(t)));
                 //TO DO: 
-                double actualizationFactor = Math.Exp((PreviousInterestRates[0] / 100) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
-                this.InitialCash = Properties.Settings.Default.Nominal - this.Wrapper.getPrice();
+                double actualizationFactor = Math.Exp((PreviousInterestRates[0]) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
+               
             }
             
             this.save();
@@ -210,10 +211,46 @@ namespace Peps
         private void performInitialComputations()
         {
             double [] oneDpreviousStocksPrices = Utils.Convert2dArrayto1d(PreviousStocksPrices);
-            Wrapper.computePrice(oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
+            if(ModelId == 1){
+                Wrapper.computePrice(oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
                 Properties.Settings.Default.AssetNb, Properties.Settings.Default.FxNb, Properties.Settings.Default.Maturity,
                 Properties.Settings.Default.McSamplesNb, Properties.Settings.Default.TimeSteps, PreviousStocksPrices.GetLength(0),
                 Properties.Settings.Default.StepFiniteDifference);
+            }
+            else if(ModelId == 2)
+            {
+                double[] histEur = new double[47];
+                double[] histChf = new double[47];
+                double[] histGbp = new double[47];
+                double[] histJpy = new double[47];
+                double[] histUsd = new double[47];
+
+                int offset = this.MarketData.rates.Length;
+                int index = this.MarketData.dates.ToList().IndexOf(this.CurrentDate);
+
+                for (int i = 0; i < 47; i++)
+                {
+                    histEur[i] = this.MarketData.rates[offset - index - i][0] / 100;
+                    histChf[i] = this.MarketData.rates[offset - index - i][3] / 100;
+                    histGbp[i] = this.MarketData.rates[offset - index - i][1] / 100;
+                    histJpy[i] = this.MarketData.rates[offset - index - i][4] / 100;
+                    histUsd[i] = this.MarketData.rates[offset - index - i][2] / 100;
+
+                }
+                Wrapper.computePriceStoch( oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
+                    Properties.Settings.Default.AssetNb, Properties.Settings.Default.FxNb, Properties.Settings.Default.Maturity,
+                    Properties.Settings.Default.McSamplesNb, Properties.Settings.Default.TimeSteps, PreviousStocksPrices.GetLength(0),
+                    Properties.Settings.Default.StepFiniteDifference, histEur, histChf, histGbp, histJpy, histUsd);
+            }
+            else if (ModelId == 3)
+            {
+
+            }
+            else if (ModelId == 3)
+            {
+
+            }
+            
             this.ProductPrice = Wrapper.getPrice();
 
             Wrapper.computeDelta(oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
@@ -226,10 +263,46 @@ namespace Peps
         private void performComputations(double t, double[] oneDPast)
         {
             double[] oneDpreviousStocksPrices = Utils.Convert2dArrayto1d(PreviousStocksPrices);
-            Wrapper.computePrice(t,oneDPast,oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
-                Properties.Settings.Default.AssetNb, Properties.Settings.Default.FxNb, Properties.Settings.Default.Maturity,
-                Properties.Settings.Default.McSamplesNb, Properties.Settings.Default.TimeSteps, PreviousStocksPrices.GetLength(0),
-                Properties.Settings.Default.StepFiniteDifference);
+            if (ModelId == 1)
+            {
+                Wrapper.computePrice(t,oneDPast,oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
+                    Properties.Settings.Default.AssetNb, Properties.Settings.Default.FxNb, Properties.Settings.Default.Maturity,
+                    Properties.Settings.Default.McSamplesNb, Properties.Settings.Default.TimeSteps, PreviousStocksPrices.GetLength(0),
+                    Properties.Settings.Default.StepFiniteDifference);
+            }
+            else if(ModelId == 2)
+            {
+                double[] histEur = new double[47];
+                double[] histChf = new double[47];
+                double[] histGbp = new double[47];
+                double[] histJpy = new double[47];
+                double[] histUsd = new double[47];
+        
+                int offset = this.MarketData.rates.Length;
+                int index = this.MarketData.dates.ToList().IndexOf(this.CurrentDate);
+        
+                for(int i = 0 ; i<47; i++){
+                    histEur[i] = this.MarketData.rates[offset - index-i][0]/100;
+                    histChf[i] = this.MarketData.rates[offset - index-i][3]/100;
+                    histGbp[i] = this.MarketData.rates[offset - index-i][1]/100;
+                    histJpy[i] = this.MarketData.rates[offset - index-i][4]/100;
+                    histUsd[i] = this.MarketData.rates[offset - index-i][2]/100;
+                    
+                }
+                //Wrapper.computePriceStoch(t,oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
+                //    Properties.Settings.Default.AssetNb, Properties.Settings.Default.FxNb, Properties.Settings.Default.Maturity,
+                //    Properties.Settings.Default.McSamplesNb, Properties.Settings.Default.TimeSteps, PreviousStocksPrices.GetLength(0),
+                //    Properties.Settings.Default.StepFiniteDifference,histEur,histChf,histGbp, histJpy, histUsd);
+
+            }
+            else if (ModelId == 3)
+            {
+
+            }
+            else if (ModelId == 3)
+            {
+
+            }
             this.ProductPrice = Wrapper.getPrice();
 
             Wrapper.computeDelta(t,oneDPast,oneDpreviousStocksPrices, PreviousInterestRates, StockToFxIndex,
@@ -301,13 +374,6 @@ namespace Peps
             previousInterestRates[Properties.Settings.Default.AssetNb + 2] = this.MarketData.rates[offset - index][1] / 100;
             previousInterestRates[Properties.Settings.Default.AssetNb + 3] = this.MarketData.rates[offset - index][4] / 100;
             previousInterestRates[Properties.Settings.Default.AssetNb + 4] = this.MarketData.rates[offset - index][2] / 100;
-            
-            //previousInterestRates[0] = 0.02;
-            //for (int i = 1; i < Properties.Settings.Default.AssetNb; i++) previousInterestRates[i] = 0;
-            //previousInterestRates[Properties.Settings.Default.AssetNb + 1] = 0.0075;CHF
-            //previousInterestRates[Properties.Settings.Default.AssetNb + 2] = 0.0475;GBP
-            //previousInterestRates[Properties.Settings.Default.AssetNb + 3] = 0.0004;JPY
-            //previousInterestRates[Properties.Settings.Default.AssetNb + 4] = 0.0407;USD
         
         }
 

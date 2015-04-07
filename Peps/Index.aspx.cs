@@ -37,6 +37,7 @@ namespace Peps
                     
                     CurrentPortfolio.MarketData.loadAllStockPrices();
                     CurrentPortfolio.save();
+                    CurrentPortfolio.ModelId = 1;
                 }
                 
             }
@@ -62,15 +63,29 @@ namespace Peps
             Update.Enabled = false;
         }
 
+        //Load the current model
+        public void loadModel1(Object sender, EventArgs e)
+        {
+            CurrentPortfolio.ModelId = 1;
+        }
+        public void loadModel2(Object sender, EventArgs e)
+        {
+            CurrentPortfolio.ModelId = 2;
+        }
+        public void loadModel3(Object sender, EventArgs e)
+        {
+            CurrentPortfolio.ModelId = 3;
+        }
+        public void loadModel4(Object sender, EventArgs e)
+        {
+            CurrentPortfolio.ModelId = 4;
+        }
+
 
         public void initDisplay()
         {
             InitialCash.Text = "0";
-            CashEuro.Text = "0";
-            CashDollar.Text = "0";
-            CashCHF.Text = "0";
-            CashGBP.Text = "0";
-            CashYen.Text = "0";     
+            CashEuro.Text = "0"; 
         }
 
 

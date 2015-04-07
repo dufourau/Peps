@@ -26,11 +26,13 @@ namespace Wrapper {
 			confidenceInterval = prix = 0;
 			PL = 0;
 		};
-
+		
 		void computePrice(array<double>^ stockPrices, array<double>^ interestRates, array<double>^ stockToFxIndex,
 			int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int nbDatesStockPrices, double finiteDifferenceStep);
 		void computePrice(double t, array<double>^pastPrices, array<double>^ stockPrices, array<double>^ interestRates, array<double>^ stockToFxIndex,
 			int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int nbDatesStockPrices, double finiteDifferenceStep);
+		void computePriceStoch(array<double>^ stockPrices, array<double>^ interestRates, array<double>^ stockToFxIndex,
+			int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int nbDatesStockPrices, double finiteDifferenceStep, array<double>^ histEur, array<double>^ histChf, array<double>^ histGbp, array<double>^ histJpy, array<double>^ histUsd);
 		void computeDelta(array<double>^ stockPrices, array<double>^ interestRates, array<double>^ stockToFxIndex,
 			int assetNb, int fxNb, double maturity, int mcSamples, int timeSteps, int nbDatesStockPrices, double finiteDifferenceStep);
 		void computeDelta(double t, array<double>^pastPrices, array<double>^ stockPrices, array<double>^ interestRates, array<double>^ stockToFxIndex,

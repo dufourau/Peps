@@ -55,8 +55,11 @@ namespace Peps
             CurrentPortfolio.resetHistory();
             //Compute delta and price at date t                
             CurrentPortfolio.compute();
-            CurrentPortfolio.InitPortfolio(Properties.Settings.Default.Nominal - CurrentPortfolio.ProductPrice, CurrentPortfolio.ProductPrice);
-
+            DateTime initialDate = new DateTime(2005,11,30);
+            double nbdays = (CurrentPortfolio.CurrentDate - initialDate).TotalDays;
+            double actualizationFactor = Math.Exp((0.0239) * (nbdays / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
+            double initialCash = 8.5 * actualizationFactor;
+            CurrentPortfolio.InitPortfolio(initialCash, CurrentPortfolio.ProductPrice);
             //Display the result of the computation
             displayData();
 
@@ -76,10 +79,24 @@ namespace Peps
         {
             InitialCash.Text = "0";
             CashEuro.Text = "0";
-            CashDollar.Text = "0";
-            CashCHF.Text = "0";
-            CashGBP.Text = "0";
-            CashYen.Text = "0";
+        }
+
+        //Load the current model
+        public void loadModel1(Object sender, EventArgs e)
+        {
+            CurrentPortfolio.ModelId = 1;
+        }
+        public void loadModel2(Object sender, EventArgs e)
+        {
+            CurrentPortfolio.ModelId = 2;
+        }
+        public void loadModel3(Object sender, EventArgs e)
+        {
+            CurrentPortfolio.ModelId = 3;
+        }
+        public void loadModel4(Object sender, EventArgs e)
+        {
+            CurrentPortfolio.ModelId = 4;
         }
 
 
@@ -97,12 +114,7 @@ namespace Peps
             FillAssetsTable(CurrentPortfolio.CurrentDate);
             FillCurrenciesTable(CurrentPortfolio.CurrentDate);
             date.Text = "Current Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
-            //TODO display graph of all data values
-            //for (int j = 0; j < CurrentPortfolio.index; j++)
-            //{
-            //    Chart1.Series.FindByName("ProductPrice").Points.Add(CurrentPortfolio.prix[j]);
-            //    Chart1.Series.FindByName("PortfolioPrice").Points.Add(CurrentPortfolio.pfvalue[j]);
-            //}
+           
         }
 
         public string chartData {

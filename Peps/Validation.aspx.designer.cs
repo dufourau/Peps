@@ -31,6 +31,24 @@ namespace Peps {
         protected global::System.Web.UI.WebControls.TextBox DisplayCalendar;
         
         /// <summary>
+        /// Compute control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton Compute;
+        
+        /// <summary>
+        /// Update control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton Update;
+        
+        /// <summary>
         /// stocksTable control.
         /// </summary>
         /// <remarks>
