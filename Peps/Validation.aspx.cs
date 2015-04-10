@@ -24,6 +24,7 @@ namespace Peps
                 }
                 else
                 {
+                    CurrentPortfolio.MarketData.loadAllStockPrices();
                     displayData();
                 }
             }
