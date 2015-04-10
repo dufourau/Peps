@@ -97,7 +97,7 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="panel panel-green">
+                        <div class="panel panel-red">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Prix du produit calculé avec données réelles, taux d'intérêts constants, 5000 itérations de Monte Carlo, et une maturité de 8,5 an</h3>
                             </div>
@@ -125,12 +125,25 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="panel panel-yellow">
+                        <div class="panel panel-red">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Prix du produit calculé avec données réelles, taux d'intérêts suivant le modèle de Vasicek, 1000 itérations de Monte Carlo et une maturité de 5 ans</h3>
                             </div>
                             <div class="panel-body">
                                 <div id="price-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Couverture du produit et des taux, avec des taux d'intérêts suivant le modèle de Vasicek, 1000 itérations et maturité 1 an</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="price-4"></div>
                             </div>
                         </div>
                     </div>

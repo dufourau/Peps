@@ -124,10 +124,13 @@
                         <h1 class="page-header">
                             Validation <small>Product hedging</small>
                         </h1>
+                        <asp:Panel ID="Error_panel" CssClass="alert alert-danger" runat="server" Visible="false">
+                            <asp:Literal ID="Error_message" runat="server"></asp:Literal>
+                        </asp:Panel>
                         <div class="breadcrumb">
                                  <div class="row">
                                     <div class="col-lg-6">
-                                        <span class="pull-left">  <i class="fa fa-dashboard"></i>   <asp:Literal ID="date" runat="server">Current date: 30/11/2005</asp:Literal></span>
+                                        <span class="pull-left">  <i class="fa fa-dashboard"></i>   <asp:Literal ID="date" runat="server">Current date : </asp:Literal></span>
                                     </div>
                                     <div class="col-lg-6 text-center">
                                        

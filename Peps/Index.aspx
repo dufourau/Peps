@@ -62,9 +62,10 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#">
-                                <i class="fa fa-fw fa-database">
-                                    <asp:Button ID="ButtonDumpDatabase" OnClick="dumpDatabase" class="btn btn-xs btn-default glyphicon glyphicon-refresh" Text="Refresh" runat="server"></asp:Button>
-                                </i>          
+                                <asp:LinkButton ID="ButtonDumpDatabase" OnClick="dumpDatabase" runat="server"> 
+                                    <i aria-hidden="true" class="fa fa-database"></i>
+                                    DumpDatabase
+                                </asp:LinkButton>
                             </a>
                         </li>
                         <li>
@@ -73,7 +74,10 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-repeat"></i> Restart</a>
+                            <asp:LinkButton ID="LinkButtonReload" OnClick="reload" Text="Compute" runat="server"> 
+                                Restart
+                                <i aria-hidden="true" class="fa fa-repeat"></i>
+                            </asp:LinkButton>
                         </li>
                     </ul>
                 </li>
@@ -109,27 +113,21 @@
                         <h1 class="page-header">
                             General <small>Product hedging</small>
                         </h1>
+                        <asp:Panel ID="Error_panel" CssClass="alert alert-danger" runat="server" Visible="false">
+                            <asp:Literal ID="Error_message" runat="server"></asp:Literal>
+                        </asp:Panel>
                         <div class="breadcrumb">
                                  <div class="row">
                                     <div class="col-lg-6">
-                                        <span class="pull-left">  <i class="fa fa-dashboard"></i>  <asp:Literal ID="date" runat="server">Current date: 30/11/2005</asp:Literal> </span>
+                                        <span class="pull-left">  <i class="fa fa-dashboard"></i>  <asp:Literal ID="date" runat="server"></asp:Literal> </span>
                                     </div>
                                     <div class="col-lg-6 text-center">
                                             <span class="pull-right"> 
                                             
-                                                    <asp:LinkButton ID="Compute" OnClick="loadComputation" CssClass="btn btn-xs btn-default "  Text="Compute" runat="server"> 
-                                                        Compute 
-                                                        <i aria-hidden="true" class="fa fa-download"></i>
-                                                    </asp:LinkButton>
-                                      
-                                               
-                                           
-                                                    <asp:LinkButton ID="Update" OnClick="computeHedge" CssClass="btn btn-xs btn-default" Text="Buy" runat="server">      
-                                                        Buy                                       
-                                                         <i aria-hidden="true" class="glyphicon glyphicon-refresh"></i>
-                                                    </asp:LinkButton>
-                                            
-
+                                                <asp:LinkButton ID="Compute" OnClick="compute" CssClass="btn btn-xs btn-default "  Text="Compute" runat="server"> 
+                                                    Price & Hedge
+                                                    <i aria-hidden="true" class="fa fa-download"></i>
+                                                </asp:LinkButton>
                                             </span>
                                     </div>
                                 </div>

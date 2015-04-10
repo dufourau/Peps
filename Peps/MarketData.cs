@@ -18,7 +18,7 @@ namespace Peps
         //All the dates
         public SortedSet<DateTime> dates;
         // List of symbols including currencies symbols
-        private List<string> symbolList;
+        public List<string> symbolList { get; set; }
         // List of currency symbols (exchange rates)
         private List<string> currencySymbols;
         //All the rates
@@ -30,7 +30,7 @@ namespace Peps
         public DateTime minimumDateToRetrieve = new DateTime(2005, 6, 30);
 
         public static string urlPrototype = @"http://ichart.finance.yahoo.com/table.csv?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g={7}&ignore=.csv";
-        public static string currencyURL = @"https://www.quandl.com/api/v1/datasets/CURRFX/{0}.csv?&trim_start={1}&trim_end={2}";
+        public static string currencyURL = @"https://www.quandl.com/api/v1/datasets/CURRFX/{0}.csv?&trim_start={1}&trim_end={2}&auth_token=HGnD6ap9xCEmzjzrRqNq";
         public static string dateFormat = @"yyyy-MM-dd";
 
         public MarketData()
@@ -91,6 +91,8 @@ namespace Peps
 
         public void loadAllStockPrices(){
 
+            dates = new SortedSet<DateTime>();
+
             string stringFirstDateInDatabase, stringLastDateInDatabase;
 
             DateTime today = DateTime.Today;
@@ -100,7 +102,6 @@ namespace Peps
                 stringFirstDateInDatabase = redis.GetValue("firstDate");
                 stringLastDateInDatabase = redis.GetValue("lastDate");
             }
-
             if (stringFirstDateInDatabase != null) firstDBAvailableDate = DateTime.ParseExact(stringFirstDateInDatabase, dateFormat, null);
             if (stringLastDateInDatabase != null) lastDBAvailableDate = DateTime.ParseExact(stringLastDateInDatabase, dateFormat, null);
 
@@ -188,18 +189,25 @@ namespace Peps
         {
 
             SortedList<DateTime, double> pricesDictionary = marketDataDictionary[symbol];
+            List<double> prices;
             int startIndex = pricesDictionary.IndexOfKey(startDate);
             while(startIndex == -1){
                 startDate = startDate.AddDays(1);
                 startIndex = pricesDictionary.IndexOfKey(startDate);
             }
             int endIndex = pricesDictionary.IndexOfKey(endDate);
-            while (endIndex == -1)
+            if (endIndex == -1){
+                prices = new List<double>();
+                while (startDate.CompareTo(endDate) <= 0)
+                {
+                    prices.Add(getPrice(symbol, startDate));
+                    startDate = startDate.AddDays(1);
+                }
+            }
+            else
             {
-                endDate = endDate.AddDays(1);
-                endIndex = pricesDictionary.IndexOfKey(endDate);
-            }          
-            List<double> prices = pricesDictionary.Values.ToList().GetRange(startIndex, endIndex - startIndex);
+                prices = pricesDictionary.Values.ToList().GetRange(startIndex, endIndex - startIndex);
+            }
             prices.Reverse();
             return prices;
         }
@@ -227,7 +235,7 @@ namespace Peps
             //Bug: missing values
             if (!(marketDataDictionary[symbol]).ContainsKey(date))
             {
-                assetPrice = marketDataDictionary[symbol][new DateTime(2005, 11, 30)];
+                return getPrice(symbol, date.AddDays(-1));
             }
             else
             {
@@ -235,11 +243,11 @@ namespace Peps
             }
             if(symbol.Equals("RBS.L"))
             {
-                assetPrice *= marketDataDictionary["GBPEUR"][date] / 100;
+                assetPrice *= getPrice("GBPEUR",date) / 100;
                
             }
             if(symbol.Equals("C")){
-                assetPrice *= marketDataDictionary["USDEUR"][date];
+                assetPrice *= getPrice("USDEUR",date);
               
             }
            return assetPrice;

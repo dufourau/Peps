@@ -42,7 +42,10 @@ namespace Peps
         double[,] hedgingPreviousStocksPrices { get; set; }
         double[] hedgeDPreviousStockPrices { get; set; }
 
-        public void save(){
+        public bool Initialized { get; set; }
+        public bool DeltaComputedButNotBought { get; set; }
+
+        public void save(bool gestion){
             /*
             * Redis DEMO: save the portefolio to the database
             */
@@ -51,7 +54,7 @@ namespace Peps
                 using (var redis = new RedisClient(Properties.Settings.Default.RedisDatabaseURL, Properties.Settings.Default.RedisPort, Properties.Settings.Default.RedisPassword))
                 {
                     var pf = this;
-                    pf.Id = 1;
+                    pf.Id = gestion?1:2;
                     redisPf.Store(pf);
                 }
             });
@@ -65,11 +68,13 @@ namespace Peps
             //Cash in EUR
             this.InitialCash = 0;
             this.Cash = 0;
-            this.RBSindex = 18;
+            this.RBSindex = MarketData.symbolList.IndexOf("RBS.L");
             this.NumberOfAsset = Properties.Settings.Default.AssetNb + Properties.Settings.Default.FxNb;
             this.QuantityOfAssets = new double[NumberOfAsset];
             this.ProductPriceHistory = new List<double>();
             this.PortfolioValueHistory = new List<double>();
+            this.Initialized = false;
+            this.DeltaComputedButNotBought = false;
         }
 
         public void InitPortfolio(double InitialCash, double Cash){
@@ -78,9 +83,10 @@ namespace Peps
                 this.PortfolioValue = Cash;
                 this.ProfitAndLoss = InitialCash;
                 for (int i = 0; i < NumberOfAsset; i++) { QuantityOfAssets[i] = 0; }
+                this.Initialized = true;
         }
 
-        public static Portfolio find()
+        public static Portfolio find(bool gestion)
         {
             var redisManager = new PooledRedisClientManager(Properties.Settings.Default.RedisPassword + "@" + Properties.Settings.Default.RedisDatabaseURL + ":" + Properties.Settings.Default.RedisPort);
 
@@ -88,7 +94,7 @@ namespace Peps
 
             redisManager.ExecAs<Portfolio>(redis =>
             {
-                portfolio = redis.GetById(1);
+                portfolio = redis.GetById(gestion?1:2);
             });
 
             if (portfolio == null)
@@ -140,11 +146,9 @@ namespace Peps
                 }
                 performComputations(t, Utils.Convert2dArrayto1d(computePast(t)));
                 //TO DO: 
-                double actualizationFactor = Math.Exp((PreviousInterestRates[0]) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));
-               
+                double actualizationFactor = Math.Exp((PreviousInterestRates[0]) * (1 / (Properties.Settings.Default.RebalancingNb / Properties.Settings.Default.Maturity)));               
             }
-            
-            this.save();
+            DeltaComputedButNotBought = true;
         }
 
         double handleRBS_C(ArrayList prices, int index){
@@ -156,7 +160,7 @@ namespace Peps
             }
             if (index == CitiGroupIndex)
             {
-                assetPrice *= ((double)prices[Properties.Settings.Default.AssetNb + 3]) / 100.0;
+                assetPrice *= ((double)prices[Properties.Settings.Default.AssetNb + 3]);
             }
             return assetPrice;
         }
@@ -366,7 +370,9 @@ namespace Peps
         private void FillPreviousInterestRates(double[] previousInterestRates)
         {
             int offset = this.MarketData.rates.Length;
-            int index = this.MarketData.dates.ToList().IndexOf(this.CurrentDate);
+            List<DateTime> datesList = this.MarketData.dates.ToList();
+            int index = datesList.IndexOf(this.CurrentDate);
+            if (index == -1) index = datesList.Count - 1;
             previousInterestRates[0] = this.MarketData.rates[offset - index][0] / 100;
             for (int i = 1; i < Properties.Settings.Default.AssetNb; i++) previousInterestRates[i] = 0;
             previousInterestRates[Properties.Settings.Default.AssetNb + 1] = this.MarketData.rates[offset - index][3] / 100;
@@ -394,9 +400,7 @@ namespace Peps
                 if (property.Name.Length == 12)
                 {
                     tmpStockTicker = Properties.Resources.ResourceManager.GetString(property.Name).Split(';')[1];
-                    if (tmpStockTicker.Contains("RBS"))
-                        RBSindex = cpt;
-                    else if (tmpStockTicker.Equals("C"))
+                    if (tmpStockTicker.Equals("C"))
                         CitiGroupIndex = cpt;
 
                     tmp = MarketData.getPricesRange(tmpStockTicker, calibrationStartDate, CurrentDate);
@@ -494,7 +498,6 @@ namespace Peps
                     if(i == RBSindex)
                     {
                         assetPrice *= ((double) assetPrices[Properties.Settings.Default.AssetNb + 1])/ 100.0;
-                       
                     }
                     if(i == CitiGroupIndex){
                         assetPrice *= ((double) assetPrices[Properties.Settings.Default.AssetNb + 3]);
@@ -513,6 +516,7 @@ namespace Peps
                 PortfolioValueHistory.Add(PortfolioValue);
                 ProductPriceHistory.Add(ProductPrice);
             }
+            this.DeltaComputedButNotBought = false;
         }
         
         private class MorrisData
@@ -525,7 +529,16 @@ namespace Peps
         public string historyToJSONString() {
             var array = new List<MorrisData>();
             List<DateTime> datesList = MarketData.dates.ToList();
-            int firstIndex = datesList.IndexOf(CurrentDate);
+            int firstIndex;
+            try
+            {
+                firstIndex = datesList.IndexOf(CurrentDate) - PortfolioValueHistory.Count;
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                return "";
+            }
+            if (firstIndex == -1) return "";
             for (int i = 0; i < PortfolioValueHistory.Count; i++)
             {
                 array.Add(new MorrisData
@@ -550,5 +563,6 @@ namespace Peps
             this.CurrentDate = new DateTime(2005, 11, 30);
             resetHistory();
         }
+
     }
 }

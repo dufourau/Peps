@@ -124,7 +124,8 @@ namespace Peps.Properties {
 
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("pub-redis-11983.us-east-1-1.2.ec2.garantiadata.com")]//"localhost")] //
+        //[global::System.Configuration.DefaultSettingValueAttribute("pub-redis-11983.us-east-1-1.2.ec2.garantiadata.com")]//"localhost")] //
+        [global::System.Configuration.DefaultSettingValueAttribute("localhost")]
         public string RedisDatabaseURL
         {
             get
@@ -135,7 +136,8 @@ namespace Peps.Properties {
 
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("11983")] //
+        [global::System.Configuration.DefaultSettingValueAttribute("6379")]
+        //[global::System.Configuration.DefaultSettingValueAttribute("11983")]
         public int RedisPort
         {
             get

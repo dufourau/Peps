@@ -21,10 +21,10 @@ namespace Peps
         {
             get
             {
-                object temp = Session["Pf"];
+                object temp = Session["Pf1"];
                 return temp == null ? null : (Portfolio)temp;
             }
-            set { Session["Pf"] = value; }
+            set { Session["Pf1"] = value; }
         }
 
         public string chartData
@@ -41,31 +41,85 @@ namespace Peps
             {
                 if (CurrentPortfolio == null)
                 {
-                    CurrentPortfolio = Portfolio.find();
+                    CurrentPortfolio = Portfolio.find(true);
+                    if (CurrentPortfolio.CurrentDate.CompareTo(new DateTime(1,1,1))==0)
+                    {
+                        CurrentPortfolio = new Portfolio(new WrapperClass(), new MarketData());
+                        CurrentPortfolio.save(true);
+                    }
                     
                     CurrentPortfolio.MarketData.loadAllStockPrices();
-                    CurrentPortfolio.save();
-                    CurrentPortfolio.ModelId = 1;
+                    displayData();
+                }
+                else
+                {
+                    displayData();
                 }
             }
         }
 
-        public void loadComputation(Object sender, EventArgs e)
+        public void reload(Object sender, EventArgs e)
         {
-                CurrentPortfolio.CurrentDate = new DateTime(2005, 11, 30);
-                //Init the Display
-                initDisplay();              
-                //Compute delta and price at date 0          
-                CurrentPortfolio.compute();
-                //Display the result of the computation
+            CurrentPortfolio.CurrentDate = new DateTime(2005, 11, 30);
+            CurrentPortfolio.reset();
+            //Init the Display
+            initDisplay();
+            //Compute delta and price at date 0          
+            CurrentPortfolio.compute();
+            displayData();
+        }
+
+        public void compute(Object sender, EventArgs e)
+        {
+            if (!CurrentPortfolio.Initialized)
+            {
+                Error_message.Text = "Please reload the portfolio first";
+                Error_panel.Visible = true;
+                return;
+            }
+            if (CurrentPortfolio.CurrentDate.CompareTo(DateTime.Today.AddDays(-1)) >= 0)
+            {
                 displayData();
-                Update.Enabled = true;
+                Error_message.Text = "You already computed the product price and deltas today.";
+                Error_panel.Visible = true;
+                return;
+            }
+            CurrentPortfolio.setInterestRate();
+            CurrentPortfolio.computeHedge();
+            CurrentPortfolio.compute();
+            CurrentPortfolio.save(true);
+            displayData();
+        }
+
+        private void colorDeltaColumn()
+        {
+            for (int i = 0; i <= stocksTable.Rows.Count - 1; i++)
+            {
+                TableCell tc = stocksTable.Rows[i].Cells[3];
+                tc.Attributes.Add("Class", "alert-success");
+            }
+        }
+
+        private void uncolorDeltaColumn()
+        {
+            for (int i = 0; i <= stocksTable.Rows.Count - 1; i++)
+            {
+                TableCell tc = stocksTable.Rows[i].Cells[3];
+                tc.Attributes.Remove("Class");
+            }
         }
 
         public void computeHedge(Object sender, EventArgs e){
+            if (!CurrentPortfolio.Initialized)
+            {
+                Error_message.Text = "Please reload the portfolio first";
+                Error_panel.Visible = true;
+                return;
+            }
+            CurrentPortfolio.setInterestRate();
             CurrentPortfolio.computeHedge();
+            CurrentPortfolio.save(true);
             displayData();
-            Update.Enabled = false;
         }
 
         //Load the current model
@@ -89,6 +143,7 @@ namespace Peps
         public void dumpDatabase(Object sender, EventArgs e)
         {
             CurrentPortfolio.MarketData.loadAllStockPrices();
+            Server.Transfer("Index.aspx");
         }
 
 
@@ -102,15 +157,17 @@ namespace Peps
         //Display logic
         public void displayData()
         {
+            if (CurrentPortfolio == null || !CurrentPortfolio.Initialized) return;
+            Error_panel.Visible = false;
             InitialCash.Text = Math.Round(CurrentPortfolio.InitialCash, Properties.Settings.Default.Precision).ToString();
-            this.PdtValue.Text = Math.Round(CurrentPortfolio.Wrapper.getPrice(), Properties.Settings.Default.Precision).ToString();
+            this.PdtValue.Text = Math.Round(CurrentPortfolio.ProductPrice, Properties.Settings.Default.Precision).ToString();
             this.PtfValue.Text = Math.Round(CurrentPortfolio.PortfolioValue, Properties.Settings.Default.Precision).ToString();
             this.IcInterval.Text = Math.Round(CurrentPortfolio.Wrapper.getIC(), Properties.Settings.Default.Precision).ToString();
             this.PnLDiv.Text = Math.Round(CurrentPortfolio.ProfitAndLoss, Properties.Settings.Default.Precision).ToString();
             CashEuro.Text = Math.Round(CurrentPortfolio.Cash, Properties.Settings.Default.Precision).ToString();
             FillAssetsTable(CurrentPortfolio.CurrentDate);
             FillCurrenciesTable(CurrentPortfolio.CurrentDate);
-            date.Text = "Next Date: " + CurrentPortfolio.CurrentDate.ToShortDateString();
+            date.Text = "Last computation date: " + CurrentPortfolio.CurrentDate.AddDays(1).ToShortDateString();
         }
 
         private void FillCurrenciesTable(DateTime fxStartDate)
